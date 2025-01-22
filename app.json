@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "pipingdatalt",
+    "slug": "pipingdatalt",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./logo-icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.production.pipingdatalt",
+      "buildNumber": "1"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./logo-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.production.pipingdatalt"
+    },
+    "web": {
+      "favicon": "./logo-icon.png"
+    },
+    "owner": "jos59",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
