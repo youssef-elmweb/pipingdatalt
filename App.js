@@ -89,8 +89,6 @@ export default function App() {
     const [statusModalUtilities, setStatusModalUtilities] = useState(false);
     const [statusModalPrinters, setStatusModalPrinters] = useState(false);
     const [statusModalInfos, setStatusModalInfos] = useState(false);
-    const [statusModalInputNumber, setStatusModalInputNumber] = useState(false);
-    const [statusModalGeneratrices, setStatusModalGeneratrices] = useState(false);
 
     const [idSettingsMeasure, setIdSettingsMeasure] = useState(0);
     const [idSettingsDiameter, setIdSettingsDiameter] = useState(0);
@@ -536,7 +534,7 @@ return (
             
             {(elbowLayer != "reducer" ?
                 <View key={"square-screen-options-footer"} style={[ { width: width, minHeight: height*0.19, maxHeight: height*0.19, justifyContent: "flex-end", alignItems: "center", backgroundColor: "transparent" } ]}> 
-                    {(elbowLayer != "elbow-slices" ?
+                    {(elbowLayer == "elbow" ?
                         <View style={[ { width: width*0.85, paddingLeft: 3, paddingRight: 3, paddingBottom: height*0.025, flexDirection: 'row', justifyContent: 'space-between', alignItems: "center", backgroundColor: "transparent" } ]}>
                             <View style={[ {width: width*0.425, flexDirection: 'row', justifyContent: 'space-between', alignItems: "center", backgroundColor: "transparent"} ]} key="bloc-formats" id="formats">
                                 <Pressable style={[ styles.format, {height: height*0.045, paddingLeft: width*0.0225, paddingRight: width*0.0225} ]} backgroundColor={(formatElbow === 4 ? "forestgreen" : "#525252")} onPressOut={ () => { setFormatElbow(4), FORMAT.setValue(4) }}><Text style={[ {fontSize: width*0.04, fontWeight: '600', color: 'white'} ]}>{`2D`}</Text></Pressable>
@@ -556,12 +554,7 @@ return (
                                     disabled={statutSwitch}
                                 />}
                             </View>
-                        </View> : 
-
-                        <View style={[ {width: width, paddingLeft: 7.5, flexDirection: "row", justifyContent: "center", alignItems: "flex-start", backgroundColor: "transparent"} ]}>
-                            {blocGeneratricesValues}
-                        </View>
-                    )}
+                        </View> : false)}
                     
 
                     <View>

@@ -29,6 +29,10 @@
     "owner": "jos59",
     "assetBundlePatterns": [
       "**/*"
+    ],
+    "plugins": [
+      "expo-tracking-transparency",
+      "react-native-google-mobile-ads"
     ]
   }
 }
