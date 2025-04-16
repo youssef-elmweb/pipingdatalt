@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { Dimensions, Animated } from "react-native";
+import React, { useState } from "react";
+import { Dimensions } from "react-native";
 import { G } from 'react-native-svg';
 import { ReTextSvg } from "./ReTextSvg.js";
 
-import { runOnJS, runOnUI, useSharedValue, useAnimatedReaction, useDerivedValue } from 'react-native-reanimated';
+import { runOnJS, useAnimatedReaction } from 'react-native-reanimated';
 
 import { DATAS_PIPES } from '../datas/datas_pipes.js';
 import { DATAS_TRIGONOMETRICS } from "../datas/datas_trigonometrics.js";
@@ -11,7 +11,7 @@ import { UNITS_MEASURES } from '../datas/units_measures.js';
 
 export function ListCurvesStd (props) {
 
-    const [angle, setAngle] = useState(null);
+    const [, setAngle] = useState(null);
 
     const { width, height } = Dimensions.get("window");
 
@@ -31,9 +31,6 @@ export function ListCurvesStd (props) {
     const RADIUSEXTRA = (width*0.8);
     const RADIUSINTRA = (width*0.24);
     const UNITMEASURE = parseFloat(UNITS_MEASURES[props.idSettingsMeasure].unit).toFixed(props.idSettingsDatas);
-    
-
-    console.log("pour 60°", Number(parseFloat(((((DATAS_PIPES[props.currentDiameter][props.formatElbow] - (DATAS_PIPES[props.currentDiameter][props.norme] / 2)) * DATAS_TRIGONOMETRICS.piOverTwo) / 90) * 60) * UNITMEASURE).toFixed(props.idSettingsDatas)));
 
 
     for (let i = 15; i < 76; i+=15) {

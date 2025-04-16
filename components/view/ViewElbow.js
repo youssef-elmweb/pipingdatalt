@@ -1,4 +1,4 @@
-import { React, useEffect, useMemo } from "react";
+import { React, useMemo } from "react";
 import { StyleSheet, Dimensions } from "react-native";
 
 import * as functions from "../../library/functions.js";
@@ -9,10 +9,10 @@ import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-g
 
 import { Elbow } from  "../../components/Elbow.js";
 import { ListCurvesStd } from "../ListCurvesStd.js";
-import { ReTextSvg } from "../ReTextSvg.js";
 
 import { DATAS_ELBOWS } from "../../datas/datas_elbows.js";
 import { DATAS_TRIGONOMETRICS } from "../../datas/datas_trigonometrics.js";
+
 
 ////////////////////////////////////////////// ELBOW
 ////////////////////////////////////////////////////////////////////
@@ -20,33 +20,23 @@ export function ViewElbow (props) {
 
     const { width, height } = Dimensions.get("window");
 
-    const angle = useSharedValue(props.curvesMeasure.angle._value);
-    const ReTextSvgAnimated = Animated.createAnimatedComponent(ReTextSvg);
+    const angle = useSharedValue(Number.parseFloat(props.curvesMeasure.angle._value).toFixed(props.baseAngle._value));
 
-    useEffect(() => {
-        console.log(angle.value, "angle on ViewElbow");
-    })
-
-    const renderDatasAngleOnUi = (localValueAngle) => { 
-        DATAS_ELBOWS.angle = Number(parseFloat(localValueAngle).toFixed(0));
+    const renderDatasForDatas = (localValueAngle) => { 
+        DATAS_ELBOWS.angle = Number(parseFloat(localValueAngle).toFixed(props.baseAngle._value));
         props.shareAngleElbow(DATAS_ELBOWS);
     }
 
-    const renderPathAngle = (localValueAngle) => {
+    const renderAngleForPaths = (localValueAngle) => {
         "worklet";
-        angle.value = localValueAngle;
+        angle.value = localValueAngle;   
     }
 
-    const renderPathAngleOnJs = (localValueAngle) => {
-        "worklet";
-        renderPathAngle(localValueAngle);   
-    }
-
-    const getAngle = (localValueAngle, renderDatasOnUi, renderValueOnJs) => { 
+    const getAngle = (localValueAngle, renderDatasForDatas, renderAngleForPaths) => { 
         "worklet";
 
-        runOnJS(renderDatasOnUi)(localValueAngle);
-        renderValueOnJs(parseFloat(localValueAngle).toFixed(2));
+        runOnJS(renderDatasForDatas)(localValueAngle);
+        renderAngleForPaths(parseFloat(localValueAngle).toFixed(2));
     }
 
     const ELBOW_MEMOIZED = useMemo(() => {
@@ -60,27 +50,26 @@ export function ViewElbow (props) {
             let localAngle;
 
                 if (event.absoluteY > (((height*0.5) + (width*0.52))) - (Math.sin(DATAS_TRIGONOMETRICS.oneDegreRad) * event.absoluteX)) { 
-                    //runOnJS(getAngle)(1); 
-                    getAngle(1, renderDatasAngleOnUi, renderPathAngleOnJs);
+
+                    getAngle(1, renderDatasForDatas, renderAngleForPaths);
                 
                     return;
                 }
                 if (event.absoluteY < ((height*0.5) + (width*0.45)) && event.absoluteX < (width*0.1)) {
-                    //runOnJS(getAngle)(90); 
-                    getAngle(90, renderDatasAngleOnUi, renderPathAngleOnJs);
+
+                    getAngle(90, renderDatasForDatas, renderAngleForPaths);
                 
                     return;
                 }   else if (event.absoluteX < (width*0.15)) {
-                        //runOnJS(getAngle)(90); 
-                        getAngle(90, renderDatasAngleOnUi, renderPathAngleOnJs);
+
+                        getAngle(90, renderDatasForDatas, renderAngleForPaths);
                     
                         return;
                     }   else {
                             hypotenuse = functions.getHypotenuse((event.absoluteX - (width*0.15)).toFixed(2), (((height*0.5) + (width*0.52)) - event.absoluteY).toFixed(2));  
                             localAngle = functions.getAngleByAbscissa((event.absoluteX - (width*0.15)).toFixed(2), hypotenuse.toFixed(2));
                             
-                            //runOnJS(getAngle)(parseFloat(localAngle.toFixed(/*props.baseAngle._value*/0)));  
-                            getAngle(localAngle, renderDatasAngleOnUi, renderPathAngleOnJs);
+                            getAngle(localAngle, renderDatasForDatas, renderAngleForPaths);
                         }
         })
         .onEnd(() => {
@@ -93,7 +82,7 @@ export function ViewElbow (props) {
             <GestureDetector gesture={panGesture}>
                 <Animated.View>
                     <Svg style={[ styles.elementSvg ]} viewBox={`-${width*0.1} -${(height*0.48)} ${width} ${(height*0.5)}`}> 
-                        {ELBOW_MEMOIZED}
+                        { ELBOW_MEMOIZED }
 
                         { (props.checkboxDatasInterfaceState == true ? 
                             <G>

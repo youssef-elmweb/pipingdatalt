@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Button, Alert } from "react-native";
+import { View, Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MobileAds, InterstitialAd, AdEventType, TestIds } from "react-native-google-mobile-ads";
 

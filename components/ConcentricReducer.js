@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Animated, Dimensions } from "react-native";
+import { Dimensions } from "react-native";
 import { G, Path } from 'react-native-svg';
+
+import Animated, {  useAnimatedProps } from 'react-native-reanimated';
+
+import { DATAS_TRIGONOMETRICS } from '../datas/datas_trigonometrics.js';
 
 
 export function ConcentricReducer (props) {
@@ -19,21 +23,35 @@ export function ConcentricReducer (props) {
     }) 
 
 
+    const rightSide = useAnimatedProps(() => {
+        let diameterReductionDiffInverse = props.diameterReductionDiffInverse.value;
+    
+        return { d: `M ${Math.round(width*0.5)} ${props.absolutePositionHeight.value} L ${width*0.5 + ((width*0.2 + diameterReductionDiffInverse))} ${props.absolutePositionHeight.value} L ${Math.round(width*0.7)} ${Math.round(height*0.36)}` };
+    });
+
+
     return (
 
         <G>
-            <PathAnimated strokeLinecap="square" strokeLinejoin={"bevel"} fill="none" strokeWidth="1" stroke={"lime"} d={props.heightTop} />
+            {/*<PathAnimated strokeLinecap="square" strokeLinejoin={"bevel"} fill="none" strokeWidth="1" stroke={"lime"} d={props.heightTop} />
             <PathAnimated strokeLinecap="square" strokeLinejoin={"bevel"} fill="none" strokeWidth="1" stroke={"deepskyblue"} d={props.heightBottom} />
 
-            <PathAnimated strokeLinecap="square" strokeLinejoin={"bevel"} fill="none" strokeWidth="1.25" stroke={"white"} d={ props.rightSide } />
-            <PathAnimated strokeLinecap="square" strokeLinejoin={"bevel"} fill="none" strokeWidth="1.25" stroke={"white"} d={ props.leftSide } />
+            <PathAnimated strokeLinecap="square" strokeLinejoin={"bevel"} fill="none" strokeWidth="2.75" stroke={"white"} d={ props.rightSide } />
+            <PathAnimated strokeLinecap="square" strokeLinejoin={"bevel"} fill="none" strokeWidth="2.75" stroke={"white"} d={ props.leftSide } />*/}
 
-            <PathAnimated strokeLinecap="square" strokeLinejoin={"bevel"} fill="none" strokeWidth="1.25" stroke={currentMinDiameter} d={ props.rightSideBottom } />
-            <PathAnimated strokeLinecap="square" strokeLinejoin={"bevel"} fill="none" strokeWidth="1.25" stroke={currentMinDiameter} d={ props.leftSideBottom } />
+            <PathAnimated strokeLinecap="square" strokeLinejoin={"bevel"} fill="none" strokeWidth="2.75" stroke={"white"} animatedProps={ rightSide } />
 
-            <Path strokeLinecap="square" strokeLinejoin={"bevel"} fill="none" strokeWidth="1.25" stroke={"magenta"} d={`M ${width*0.3} ${Math.round(height*0.36)} L ${width*0.7} ${Math.round(height*0.36)}`} />
-            <Path strokeLinecap="square" strokeLinejoin={"bevel"} fill="none" strokeWidth="1.25" stroke={"aqua"} d={`M ${width*0.1} ${Math.round(height*0.775)} L ${width*0.9} ${Math.round(height*0.775)}`} />
+            <PathAnimated strokeLinecap="square" strokeLinejoin={"bevel"} fill="none" strokeWidth="2.75" stroke={currentMinDiameter} d={ props.rightSideBottom } />
+            {/*<PathAnimated strokeLinecap="square" strokeLinejoin={"bevel"} fill="none" strokeWidth="2.75" stroke={currentMinDiameter} d={ props.leftSideBottom } />*/}
+
+            <Path strokeLinecap="square" strokeLinejoin={"bevel"} fill="none" strokeWidth="2.75" stroke={"magenta"} d={`M ${width*0.3} ${Math.round(height*0.36)} L ${width*0.7} ${Math.round(height*0.36)}`} />
+            <Path strokeLinecap="square" strokeLinejoin={"bevel"} fill="none" strokeWidth="2.75" stroke={"aqua"} d={`M ${width*0.1} ${Math.round(height*0.775)} L ${width*0.9} ${Math.round(height*0.775)}`} />
         </G>
     )
 }
+
+
+
+
+
 
