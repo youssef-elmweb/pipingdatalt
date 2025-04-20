@@ -1,4 +1,4 @@
-import { React, useRef, useEffect, useState } from "react";
+import { React, useRef, useEffect, useState, useMemo } from "react";
 import { View, Text, Image, Switch, StatusBar, Pressable, TouchableHighlight, StyleSheet, useWindowDimensions, Animated, Platform, Dimensions } from "react-native";
 
 import { ReText } from  "./components/ReText";
@@ -48,7 +48,7 @@ export default function App() {
     const RADIUS = useRef(new Animated.Value(DATAS_ELBOWS.radius)).current;
 
     const DIAMETER_INFERIOR_REDUCER = useRef(new Animated.Value(0)).current; // index of diameters array
-    const DIAMETER_SUPERIOR_REDUCER = useRef(new Animated.Value(0)).current; // index of diameters array
+    const DIAMETER_SUPERIOR_REDUCER = useRef(new Animated.Value(1)).current; // index of diameters array
     const ABSOLUTE_POSITION_HEIGHT = useRef(new Animated.Value(DATAS_REDUCER.absolutePositionHeight)).current;
     const CURRENT_DIAMETER_REDUCER_CONC = useRef(new Animated.Value(DATAS_REDUCER.currentDiameterRedConc)).current;
     const CURRENT_DIAMETER_REDUCER_EXC = useRef(new Animated.Value(DATAS_REDUCER.currentDiameterRedExc)).current;
@@ -56,6 +56,12 @@ export default function App() {
     const HEIGHT_REDUCER_BOTTOM = useRef(new Animated.Value(DATAS_REDUCER.heightReducerBottom)).current;
     const CURVE_REDUCER_TOP = useRef(new Animated.Value(DATAS_REDUCER.curveReducerTop)).current;
     const CURVE_REDUCER_BOTTOM = useRef(new Animated.Value(DATAS_REDUCER.curveReducerBottom)).current;
+
+
+
+    const DIAMETER_REDUCTION_DIFF_INVERSE = useRef(new Animated.Value(Math.round((Math.round(width*0.8)-Math.round(width*0.4)) / 2))).current;
+
+    
 
     const FORMAT = useRef(new Animated.Value(3)).current;
     const DIAMETER = useRef(new Animated.Value(0)).current; // index of diameters array
@@ -96,6 +102,10 @@ export default function App() {
     const [idSettingsDatas, setIdSettingsDatas] = useState(2);
 
     const [checkboxDatasInterfaceState, setCheckboxDatasInterfaceState] = useState(true);
+
+    const [tempElbowDiameterInferior, setTempElbowDiameterInferior] = useState(0);
+    const [tempReducerDiameterInferior, setTempReducerDiameterInferior] = useState(1);
+    const [tempReducerDiameterSuperior, setTempReducerDiameterSuperior] = useState(1); 
 
     useEffect(() => {
         EXTRA.setValue(EXTRA._value);
@@ -169,21 +179,38 @@ export default function App() {
         let heightReducer = (diameterSuperior - diameterInferior) * 3;
         let diameterReductionDiff = ((diameterSuperior - diameterInferior) * 0.5);
         let angle = Math.asin(heightReducer / Math.hypot(heightReducer, diameterReductionDiff)) * DATAS_TRIGONOMETRICS.oneRad;
-        let curveReducer = heightReducer / Math.sin(angle * DATAS_TRIGONOMETRICS.oneDegreRad);
 
-        let heightReducerTop = (heightReducer) - Math.round(((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath));
+        let heightReducerTop = Number.parseFloat(((heightReducer) - ((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath)).toFixed(1));
         HEIGHT_REDUCER_TOP.setValue(Math.round(heightReducerTop));
         
         let heightReducerBottom = Number.parseFloat(((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath).toFixed(1));
-        HEIGHT_REDUCER_BOTTOM.setValue(heightReducerBottom);
+        HEIGHT_REDUCER_BOTTOM.setValue(Math.round(heightReducerBottom));
 
+        //let curveReducer = heightReducer / Math.sin(angle * DATAS_TRIGONOMETRICS.oneDegreRad);
+        let curveReducerTop = heightReducerTop / Math.sin(angle * DATAS_TRIGONOMETRICS.oneDegreRad); 
         let curveReducerBottom = heightReducerBottom / Math.sin(angle * DATAS_TRIGONOMETRICS.oneDegreRad);
-        let curveReducerTop = curveReducer - curveReducerBottom;
 
         let currentDiameterReductionDiff = Math.cos(angle * DATAS_TRIGONOMETRICS.oneDegreRad) * curveReducerBottom;
 
+                  
+
+        let hypotenuseBase = Math.hypot(DATAS_REDUCER.reducerHeight, DATAS_REDUCER.diameterReductionDiffBase);
+        let angleTest = Math.asin(DATAS_REDUCER.reducerHeight / hypotenuseBase) * DATAS_TRIGONOMETRICS.oneRad;
+
+        //let angleBase = Math.asin(Math.round(height - (height*0.225)) / (Math.hypot(Math.round(height - (height*0.225)), 79))) * DATAS_TRIGONOMETRICS.oneRad;
+        let hypotenuse = (((Math.round(DATAS_REDUCER.heightRemainder) - ABSOLUTE_POSITION_HEIGHT._value)) / (Math.sin(angleTest * DATAS_TRIGONOMETRICS.oneDegreRad)));
+        
+        let currentDiameterReductionDiffTest = Math.cos(angleTest * DATAS_TRIGONOMETRICS.oneDegreRad) * hypotenuse;
+        
+        let diameterReductionDiffInverse = Math.round(DATAS_REDUCER.diameterReductionDiffBase - Math.round(currentDiameterReductionDiffTest));
+        
+        DIAMETER_REDUCTION_DIFF_INVERSE.setValue(diameterReductionDiffInverse);
+        console.log("DATAS_REDUCER.heightRemainder  :", DATAS_REDUCER.heightRemainder , "ABSOLUTE_POSITION_HEIGHT._value :", ABSOLUTE_POSITION_HEIGHT._value, "angleTest :", Math.sin(angleTest), "depuis App.js");
+        console.log(diameterReductionDiffInverse, "diameterReductionDiffInverse.value dans App.js.js");
+        
+
         let currentDiameterRedConc = DATAS_PIPES[DIAMETER_INFERIOR_REDUCER._value][NORME._value] + ((diameterReductionDiff - currentDiameterReductionDiff) * 2);
-        let currentDiameterRedExc = DATAS_PIPES[DIAMETER_INFERIOR_REDUCER._value][NORME._value] + ((diameterReductionDiff - currentDiameterReductionDiff));
+        let currentDiameterRedExc = diameterInferior + ((diameterReductionDiff - currentDiameterReductionDiff));
 
         CURVE_REDUCER_TOP.setValue(Math.round(curveReducerTop));
         CURVE_REDUCER_BOTTOM.setValue(Math.round(curveReducerBottom));
@@ -199,19 +226,37 @@ export default function App() {
 
         let heightReducer = (diameterSuperior - diameterInferior) * 3;
         let diameterReductionDiff = ((diameterSuperior - diameterInferior) * 0.5);
-        let angle = Math.asin(heightReducer / Math.hypot(heightReducer, diameterReductionDiff)) * DATAS_TRIGONOMETRICS.oneRad;
-        let curveReducer = heightReducer / Math.sin(angle * DATAS_TRIGONOMETRICS.oneDegreRad);
+        let angle = Math.asin(heightReducer / Math.hypot(heightReducer, diameterReductionDiff)) * DATAS_TRIGONOMETRICS.oneRad;       
 
-        let heightReducerTop = (heightReducer) - Math.round(((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath));
+        let heightReducerTop = Number.parseFloat(((heightReducer) - ((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath)).toFixed(1));
         HEIGHT_REDUCER_TOP.setValue(Math.round(heightReducerTop));
         
         let heightReducerBottom = Number.parseFloat(((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath).toFixed(1));
-        HEIGHT_REDUCER_BOTTOM.setValue(heightReducerBottom); 
+        HEIGHT_REDUCER_BOTTOM.setValue(Math.round(heightReducerBottom));
 
+        //let curveReducer = heightReducer / Math.sin(angle * DATAS_TRIGONOMETRICS.oneDegreRad); 
+        let curveReducerTop = heightReducerTop / Math.sin(angle * DATAS_TRIGONOMETRICS.oneDegreRad); 
         let curveReducerBottom = heightReducerBottom / Math.sin(angle * DATAS_TRIGONOMETRICS.oneDegreRad);
-        let curveReducerTop = curveReducer - curveReducerBottom;
+        //let curveReducerTop = curveReducer - heightReducerBottom;
 
         let currentDiameterReductionDiff = Math.cos(angle * DATAS_TRIGONOMETRICS.oneDegreRad) * curveReducerBottom;
+
+
+
+        let hypotenuseBase = Math.hypot(DATAS_REDUCER.reducerHeight, DATAS_REDUCER.diameterReductionDiffBase);
+        let angleTest = Math.asin(DATAS_REDUCER.reducerHeight / hypotenuseBase) * DATAS_TRIGONOMETRICS.oneRad;
+
+        //let angleBase = Math.asin(Math.round(height - (height*0.225)) / (Math.hypot(Math.round(height - (height*0.225)), 79))) * DATAS_TRIGONOMETRICS.oneRad;
+        let hypotenuse = (((Math.round(DATAS_REDUCER.heightRemainder) - ABSOLUTE_POSITION_HEIGHT._value)) / (Math.sin(angleTest * DATAS_TRIGONOMETRICS.oneDegreRad)));
+        
+        let currentDiameterReductionDiffTest = Math.cos(angleTest * DATAS_TRIGONOMETRICS.oneDegreRad) * hypotenuse;
+        
+        let diameterReductionDiffInverse = Math.round(DATAS_REDUCER.diameterReductionDiffBase - Math.round(currentDiameterReductionDiffTest));
+
+        DIAMETER_REDUCTION_DIFF_INVERSE.setValue(diameterReductionDiffInverse);
+        console.log("DATAS_REDUCER.heightRemainder  :", DATAS_REDUCER.heightRemainder , "ABSOLUTE_POSITION_HEIGHT._value :", ABSOLUTE_POSITION_HEIGHT._value, "angleTest :", Math.sin(angleTest), "depuis App.js");
+        console.log(diameterReductionDiffInverse, "diameterReductionDiffInverse.value dans App.js.js");
+
 
         let currentDiameterRedConc = DATAS_PIPES[DIAMETER_INFERIOR_REDUCER._value][NORME._value] + ((diameterReductionDiff - currentDiameterReductionDiff) * 2);
         let currentDiameterRedExc = DATAS_PIPES[DIAMETER_INFERIOR_REDUCER._value][NORME._value] + ((diameterReductionDiff - currentDiameterReductionDiff));
@@ -313,6 +358,12 @@ export default function App() {
     }
     ///////////////// FUNCTIONS ////////////////////////////////////////
 
+
+    const TEST = useMemo(() => {
+        return <ViewReducer diameterReductionDiffInverse={DIAMETER_REDUCTION_DIFF_INVERSE} idLanguage={idLanguage} sizeText={sizeText} currentDiameterInferiorReducer={currentDiameterInferiorReducer} currentDiameterSuperiorReducer={currentDiameterSuperiorReducer} diameterSuperiorReducer={DIAMETER_SUPERIOR_REDUCER} diameterInferiorReducer={DIAMETER_INFERIOR_REDUCER} absolutePositionHeight={ABSOLUTE_POSITION_HEIGHT} currentReducer={currentReducer} currentDiameterRedConc={CURRENT_DIAMETER_REDUCER_CONC} currentDiameterRedExc={CURRENT_DIAMETER_REDUCER_EXC} norme={NORME} idSettingsMeasure={idSettingsMeasure} idSettingsDatas={idSettingsDatas} checkboxDatasInterfaceState={checkboxDatasInterfaceState} shareDiameterAndHeight={getDatasReducer} /> 
+    }, [])
+
+
     return (
         <View style={[ styles.container ]}>
             {/*///////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
@@ -364,7 +415,7 @@ export default function App() {
                     </View>
 
                     <View style={[ {width: width, padding: width*0.00725, flexDirection: "row", justifyContent: "space-around", alignItems: "center", backgroundColor: "#313131"} ]}>
-                        <Pressable style={[ styles.menuBox ]} backgroundColor={(elbowLayer === "elbow" ? "forestgreen" : "tomato")} onPressOut={ () => setCurrentInterface("elbow") }>
+                        <Pressable style={[ styles.menuBox ]} backgroundColor={(elbowLayer === "elbow" ? "forestgreen" : "tomato")} onPress={ () => { setCurrentInterface("elbow"); setTempElbowDiameterInferior(currentDiameter) } }>
                             <Image alt={"elbow"} style={[ { width: width*0.08, height: width*0.08 } ]} source={require('./assets/images/elbow.png')} />
                         </Pressable>
 
@@ -380,7 +431,7 @@ export default function App() {
                             <Image alt={"elbow-slices"} style={[ { width: width*0.08, height: width*0.08 } ]} source={require('./assets/images/elbow_slice.png')} />
                         </Pressable>
 
-                        <Pressable style={[ styles.menuBox ]} backgroundColor={(elbowLayer === 'reducer' ? "forestgreen" : "tomato")} onPressOut={ () => setCurrentInterface("reducer") }>
+                        <Pressable style={[ styles.menuBox ]} backgroundColor={(elbowLayer === 'reducer' ? "forestgreen" : "tomato")} onPress={ () => { setCurrentInterface("reducer"); setTempReducerDiameterInferior(currentDiameterInferiorReducer); setTempReducerDiameterSuperior(currentDiameterSuperiorReducer); } }>
                             <Image alt={"reducer"} style={[ { width: width*0.08, height: width*0.08 } ]} source={require('./assets/images/reducer_conc.png')} />
                         </Pressable>
                     </View>
@@ -532,7 +583,7 @@ export default function App() {
             : false)}
 
             {(elbowLayer == "reducer" ?
-                <ViewReducer idLanguage={idLanguage} sizeText={sizeText} currentDiameterInferiorReducer={currentDiameterInferiorReducer} currentDiameterSuperiorReducer={currentDiameterSuperiorReducer} diameterSuperiorReducer={DIAMETER_SUPERIOR_REDUCER} diameterInferiorReducer={DIAMETER_INFERIOR_REDUCER} absolutePositionHeight={ABSOLUTE_POSITION_HEIGHT} currentReducer={currentReducer} currentDiameterRedConc={CURRENT_DIAMETER_REDUCER_CONC} currentDiameterRedExc={CURRENT_DIAMETER_REDUCER_EXC} norme={NORME} idSettingsMeasure={idSettingsMeasure} idSettingsDatas={idSettingsDatas} checkboxDatasInterfaceState={checkboxDatasInterfaceState} shareDiameterAndHeight={getDatasReducer} /> 
+                TEST 
             : 
             false)}
             {/*///////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
@@ -574,6 +625,7 @@ export default function App() {
                             minimumValue = {0}
                             maximumValue = {DATAS_PIPES.length-1}
                             step = {1}
+                            value={tempElbowDiameterInferior}
                             minimumTrackTintColor = {"white"}
                             maximumTrackTintColor = {"white"}
                             onValueChange = {
@@ -604,6 +656,7 @@ export default function App() {
                         minimumValue = {0}
                         maximumValue = {DATAS_PIPES.length-1}
                         step = {1}
+                        value={tempReducerDiameterInferior}
                         minimumTrackTintColor = {"white"}
                         maximumTrackTintColor = {"white"}
                         onValueChange = {
@@ -633,7 +686,7 @@ export default function App() {
                             minimumValue = {0}
                             maximumValue = {DATAS_PIPES.length-1}
                             step = {1}
-                            value = {1}
+                            value = {tempReducerDiameterSuperior}
                             minimumTrackTintColor = {"white"}
                             maximumTrackTintColor = {"white"}
                             onValueChange = {
