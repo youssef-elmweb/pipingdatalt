@@ -1,38 +1,65 @@
-import React, { useState, useEffect } from 'react';
-import { Animated, Dimensions } from "react-native";
+import React from 'react';
+import { Dimensions } from "react-native";
 import { G, Path } from 'react-native-svg';
+
+import { DATAS_REDUCER } from '../datas/datas_reducers.js';
+
+import Animated, { useAnimatedProps } from 'react-native-reanimated';
+
+import { DATAS_TRIGONOMETRICS } from '../datas/datas_trigonometrics.js';
 
 
 export function ExcentricReducer (props) {
     
-    const [currentMinDiameter, setcurrentMinDiameter] = useState("white");
-
     const { width, height } = Dimensions.get("window");
+    const hypotenuseBaseBase = Math.hypot(DATAS_REDUCER.reducerHeight, DATAS_REDUCER.diameterReductionDiffBase);
+    const angleBase = Math.asin(DATAS_REDUCER.reducerHeight / hypotenuseBaseBase) * DATAS_TRIGONOMETRICS.oneRad;
+
 
     const PathAnimated = Animated.createAnimatedComponent(Path);
 
 
-    useEffect(() => {
-        props.currentDiameterRedExc.addListener((value) => { 
-            (value.value != 0 ? setcurrentMinDiameter(() => "yellow") : setcurrentMinDiameter(() => "white"));
-        })
-    }) 
+    const reducerSuperior = useAnimatedProps(() => {
+        let maxDiameter = Math.round(width*0.8);
+        let minDiameter = Math.round(width*0.4);
+
+        let absolutePositionHeight = props.absolutePositionHeight.value;
+
+        let hypotenuse = ((Math.round(height - (height*0.225)) - absolutePositionHeight) / (Math.sin(angleBase * DATAS_TRIGONOMETRICS.oneDegreRad)));
+        let diameterReductionDiff = Math.cos(angleBase * DATAS_TRIGONOMETRICS.oneDegreRad) * hypotenuse;
+
+        let diameterReductionDiffInverse = (Math.round((maxDiameter - minDiameter) / 2) - diameterReductionDiff);
+
+        return { d: `M ${Math.round(width*0.3)} ${Math.round(height*0.36)} L ${width*0.1 + ((width*0.2 - diameterReductionDiffInverse))} ${absolutePositionHeight} L ${width*0.5 + ((width*0.2))} ${absolutePositionHeight}` };
+    });
+
+    const rightHeightReducerSuperior = useAnimatedProps(() => {
+        let absolutePositionHeight = props.absolutePositionHeight.value;
+
+        return { d: `M ${Math.round(width*0.7)} ${Math.round(height*0.36)} L ${Math.round(width*0.7)} ${absolutePositionHeight}` };
+    });
+
+    const heightBottom = useAnimatedProps(() => {
+        let absolutePositionHeight = props.absolutePositionHeight.value;
+
+        return { d: `M ${width*0.5} ${Math.round(height*0.775)} L ${width*0.5} ${Math.round(absolutePositionHeight)}` };
+    });
 
 
     return (
 
         <G>
-            <PathAnimated strokeLinecap="square" strokeLinejoin={"bevel"} fill="none" strokeWidth="1" stroke={"lime"} d={props.heightTop} />
-            <PathAnimated strokeLinecap="square" strokeLinejoin={"bevel"} fill="none" strokeWidth="1" stroke={"deepskyblue"} d={props.heightBottom} />
+            <PathAnimated strokeLinecap="round" strokeLinejoin={"round"} fill="none" strokeWidth="2.5" stroke={"lime"} d={ `M ${width*0.5} ${Math.round(height*0.36)} L ${width*0.5} ${Math.round(height*0.775)}` } />
+            <PathAnimated strokeLinecap="round" strokeLinejoin={"round"} fill="none" strokeWidth="2.5" stroke={"deepskyblue"} animatedProps={ heightBottom } />
 
-            <PathAnimated strokeLinecap="square" strokeLinejoin={"bevel"} fill="none" strokeWidth="1.25" stroke={"white"} d={ props.excentricRightSide } />
-            <PathAnimated strokeLinecap="square" strokeLinejoin={"bevel"} fill="none" strokeWidth="1.25" stroke={"white"} d={ props.leftSide } />
+            <PathAnimated strokeLinecap="round" strokeLinejoin={"round"} fill="none" strokeWidth="2.75" stroke={"deepskyblue"} d={ `M ${Math.round(width*0.7)} ${Math.round(height*0.775)} L ${width*0.7} ${height*0.36}` } />
+            <PathAnimated strokeLinecap="round" strokeLinejoin={"round"} fill="none" strokeWidth="2.75" stroke={"yellow"} d={ `M ${Math.round(width*0.1)} ${Math.round(height*0.775)} L ${width*0.3} ${height*0.36}` } />
 
-            <PathAnimated strokeLinecap="square" strokeLinejoin={"bevel"} fill="none" strokeWidth="1.25" stroke={currentMinDiameter} d={ props.rightSideBottom } />
-            <PathAnimated strokeLinecap="square" strokeLinejoin={"bevel"} fill="none" strokeWidth="1.25" stroke={currentMinDiameter} d={ props.excentricLeftSideBottom } />
+            <PathAnimated strokeLinecap="round" strokeLinejoin={"round"} fill="none" strokeWidth="2.75" stroke={"white"} animatedProps={ reducerSuperior } />
+            <PathAnimated strokeLinecap="round" strokeLinejoin={"round"} fill="none" strokeWidth="2.75" stroke={"lime"} animatedProps={ rightHeightReducerSuperior } />
 
-            <Path strokeLinecap="square" strokeLinejoin={"bevel"} fill="none" strokeWidth="1.25" stroke={"magenta"} d={`M ${width*0.3} ${Math.round(height*0.36)} L ${width*0.7} ${Math.round(height*0.36)}`} />
-            <Path strokeLinecap="square" strokeLinejoin={"bevel"} fill="none" strokeWidth="1.25" stroke={"aqua"} d={`M ${width*0.1} ${Math.round(height*0.775)} L ${width*0.7} ${Math.round(height*0.775)}`} />
+            <Path strokeLinecap="round" strokeLinejoin={"round"} fill="none" strokeWidth="2.75" stroke={"magenta"} d={`M ${width*0.3} ${Math.round(height*0.36)} L ${width*0.7} ${Math.round(height*0.36)}`} />
+            <Path strokeLinecap="round" strokeLinejoin={"round"} fill="none" strokeWidth="2.75" stroke={"aqua"} d={`M ${width*0.1} ${Math.round(height*0.775)} L ${width*0.7} ${Math.round(height*0.775)}`} />
         </G>
     )
 }

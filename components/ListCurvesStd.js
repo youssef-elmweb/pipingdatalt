@@ -20,7 +20,7 @@ export function ListCurvesStd (props) {
         () => props.angle.value,
         (newValue, oldValue) => {
             if (newValue !== oldValue) {
-            runOnJS(setAngle)(newValue);
+                runOnJS(setAngle)(newValue);
             }
         }
     );

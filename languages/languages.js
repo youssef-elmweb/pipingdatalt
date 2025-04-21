@@ -72,7 +72,8 @@ export const languages =
                     modify_choice: "Modifier mon choix",
                     ad_preferences: "préférences publicités",
                     personalized_ad: "Publicité personnalisée",
-                    personalized_ad_text: "Les publicités seront personnalisées pour une expérience mieux adaptée"
+                    personalized_ad_text: "Les publicités seront personnalisées pour une expérience mieux adaptée",
+                    premium: "premium"
                 }, 
 
         "en":   {
@@ -145,7 +146,8 @@ export const languages =
                     modify_choice: "Modify my choice",
                     ad_preferences: "ad preferences",
                     personalized_ad: "Personalized ads",
-                    personalized_ad_text: "Ads will be personalized for a better-suited experience"
+                    personalized_ad_text: "Ads will be personalized for a better-suited experience",
+                    premium: "premium"
                 }, 
 
         "de":   {
@@ -218,7 +220,8 @@ export const languages =
                     modify_choice: "Meine Wahl ändern",
                     ad_preferences: "werbepräferenzen",
                     personalized_ad: "Personalisierte Werbung",
-                    personalized_ad_text: "Die Werbung wird personalisiert, um eine besser angepasste Erfahrung zu bieten"
+                    personalized_ad_text: "Die Werbung wird personalisiert, um eine besser angepasste Erfahrung zu bieten",
+                    premium: "Premium"
                 }, 
 
         "ne":   {
@@ -291,7 +294,8 @@ export const languages =
                     modify_choice: "Mijn keuze wijzigen",
                     ad_preferences: "Advertentievoorkeuren",
                     personalized_ad: "Gepersonaliseerde advertentie",
-                    personalized_ad_text: "Advertenties worden gepersonaliseerd voor een beter afgestemde ervaring"
+                    personalized_ad_text: "Advertenties worden gepersonaliseerd voor een beter afgestemde ervaring",
+                    premium: "Premium"
                 },
 
         "es":   {
@@ -365,7 +369,8 @@ export const languages =
                     modify_choice: "Modificar mi elección",
                     ad_preferences: "Preferencias de anuncios",
                     personalized_ad: "Publicidad personalizada",
-                    personalized_ad_text: "Los anuncios se personalizarán para una experiencia mejor adaptada"
+                    personalized_ad_text: "Los anuncios se personalizarán para una experiencia mejor adaptada",
+                    premium: "Premium"
                 },
 
         "po":   {
@@ -438,7 +443,8 @@ export const languages =
                     modify_choice: "Modificar minha escolha",
                     ad_preferences: "Preferências de anúncios",
                     personalized_ad: "Anúncio personalizado",
-                    personalized_ad_text: "Os anúncios serão personalizados para uma experiência mais adequada"
+                    personalized_ad_text: "Os anúncios serão personalizados para uma experiência mais adequada",
+                    premium: "Premium"
                 },
 
         "ro":   {
@@ -511,8 +517,8 @@ export const languages =
                     modify_choice: "Modifică alegerea mea",
                     ad_preferences: "Preferințe pentru reclame",
                     personalized_ad: "Publicitate personalizată",
-                    personalized_ad_text: "Reclamele vor fi personalizate pentru o experiență mai adaptată"
-
+                    personalized_ad_text: "Reclamele vor fi personalizate pentru o experiență mai adaptată",
+                    premium: "Premium"
                 },
 
         "it":   {
@@ -585,7 +591,8 @@ export const languages =
                     modify_choice: "Modifica la mia scelta",
                     ad_preferences: "Preferenze pubblicitarie",
                     personalized_ad: "Pubblicità personalizzata",
-                    personalized_ad_text: "Gli annunci saranno personalizzati per un'esperienza più adatta"         
+                    personalized_ad_text: "Gli annunci saranno personalizzati per un'esperienza più adatta",
+                    premium: "Premium"         
                 },
 
         "cs":   {
@@ -658,7 +665,8 @@ export const languages =
                     modify_choice: "Změnit mou volbu",
                     ad_preferences: "Reklamní preference",
                     personalized_ad: "Personalizovaná reklama",
-                    personalized_ad_text: "Reklamy budou personalizovány pro lépe přizpůsobený zážitek"        
+                    personalized_ad_text: "Reklamy budou personalizovány pro lépe přizpůsobený zážitek",
+                    premium: "Premium"         
                 },
 
         "ar":   {
@@ -731,7 +739,8 @@ export const languages =
                     modify_choice: "تعديل اختياري",
                     ad_preferences: "تفضيلات الإعلانات",
                     personalized_ad: "إعلان مخصص",
-                    personalized_ad_text: "سيتم تخصيص الإعلانات لتجربة أكثر توافقًا"
+                    personalized_ad_text: "سيتم تخصيص الإعلانات لتجربة أكثر توافقًا",
+                    premium: "بريميوم"
                 },
                 
         "co":   {
@@ -804,7 +813,8 @@ export const languages =
                     modify_choice: "내 선택 수정",
                     ad_preferences: "광고 기본 설정",
                     personalized_ad: "맞춤 광고",
-                    personalized_ad_text: "광고가 더 맞춤화된 경험을 위해 개인화됩니다"
+                    personalized_ad_text: "광고가 더 맞춤화된 경험을 위해 개인화됩니다",
+                    premium: "프리미엄"
         },
 
         "ru":   {
@@ -877,7 +887,8 @@ export const languages =
                     modify_choice: "Изменить мой выбор",
                     ad_preferences: "Настройки рекламы",
                     personalized_ad: "Персонализированная реклама",
-                    personalized_ad_text: "Реклама будет персонализирована для более подходящего опыта"
+                    personalized_ad_text: "Реклама будет персонализирована для более подходящего опыта",
+                    premium: "Премиум"
         },
 
         "hi":   { 
@@ -950,7 +961,8 @@ export const languages =
                     modify_choice: "मेरी पसंद संशोधित करें",
                     ad_preferences: "विज्ञापन प्राथमिकताएँ",
                     personalized_ad: "व्यक्तिगत विज्ञापन",
-                    personalized_ad_text: "विज्ञापन व्यक्तिगत रूप से बेहतर अनुभव के लिए अनुकूलित किए जाएंगे।"
+                    personalized_ad_text: "विज्ञापन व्यक्तिगत रूप से बेहतर अनुभव के लिए अनुकूलित किए जाएंगे।",
+                    premium: "प्रीमियम"
                 },
 
         "ur":   {
@@ -1023,7 +1035,8 @@ export const languages =
                     modify_choice: "میرا انتخاب تبدیل کریں",
                     ad_preferences: "اشتہاری ترجیحات",
                     personalized_ad: "ذاتی اشتہار",
-                    personalized_ad_text: "اشتہارات کو بہتر تجربے کے لیے ذاتی نوعیت کا بنایا جائے گا"
+                    personalized_ad_text: "اشتہارات کو بہتر تجربے کے لیے ذاتی نوعیت کا بنایا جائے گا",
+                    premium: "پریمیم"
                 },
 
         "sw":   {
@@ -1096,7 +1109,8 @@ export const languages =
                     modify_choice: "Badilisha chaguo langu",
                     ad_preferences: "Mapendeleo ya Matangazo",
                     personalized_ad: "Tangazo la kibinafsi",
-                    personalized_ad_text: "Matangazo yatabinafsishwa kwa uzoefu unaofaa zaidi"
+                    personalized_ad_text: "Matangazo yatabinafsishwa kwa uzoefu unaofaa zaidi",
+                    premium: "Premium"
             
                 },
 
@@ -1170,7 +1184,8 @@ export const languages =
                     modify_choice: "修改我的选择",
                     ad_preferences: "广告偏好",
                     personalized_ad: "个性化广告",
-                    personalized_ad_text: "广告将被个性化，以提供更合适的体验"
+                    personalized_ad_text: "广告将被个性化，以提供更合适的体验",
+                    premium: "高级"
                 },
 
         "ja":   {
@@ -1243,7 +1258,8 @@ export const languages =
                     modify_choice: "私の選択を変更する",
                     ad_preferences: "広告の設定",
                     personalized_ad: "パーソナライズ広告",
-                    personalized_ad_text: "広告は、より適した体験のためにパーソナライズされます"
+                    personalized_ad_text: "広告は、より適した体験のためにパーソナライズされます",
+                    premium: "プレミアム"
                 },
 
         
@@ -1318,6 +1334,7 @@ export const languages =
                     ad_preferences: "Reklam Tercihleri",
                     personalized_ad: "Kişiselleştirilmiş reklam",
                     personalized_ad_text: "Reklamlar, daha iyi uyarlanmış bir deneyim için kişiselleştirilecektir",
+                    premium: "Premium"
                 }
     }
 ]

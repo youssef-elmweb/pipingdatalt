@@ -9,19 +9,21 @@ import * as functions from "./../../library/functions.js";
 import { languages } from "../../languages/languages";
 
 import { ModalInfos } from "./ModalInfos.js";
+import { ModalPremium } from "./ModalPremium.js";
 
 const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : null; 
 
 export function ModalUtilities (props) {
 
     const [statusModalInfos, setStatusModalInfos] = useState(false);
+    const [statusModalPremium, setStatusModalPremium] = useState(false);
 
     const {width} = Dimensions.get("window");
     const {height} = Dimensions.get("window"); 
 
 
     const [userConsent, setUserConsent] = useState(null);
-    const [showModalConsent, setshowModalConsent] = useState(false);
+    const [showModalConsent, setShowModalConsent] = useState(false);
 
 
     const DATA = [
@@ -40,6 +42,10 @@ export function ModalUtilities (props) {
         {
             id: 4,
             title: languages[0][props.idLanguage].share
+        },
+        {
+            id: 5,
+            title: <Pressable onPress={ () => setStatusModalPremium(true) }><View style={{ width: Number(width*0.6), flexDirection: "row", alignItems: "center", justifyContent: "flex-start" }}><Text style={ {lineHeight: Number(height*0.025), fontSize: Number(height*0.02), color: "white"} }>{languages[0][props.idLanguage].premium}</Text></View></Pressable>
         },
     ];
 
@@ -105,18 +111,20 @@ export function ModalUtilities (props) {
         setStatusModalInfos(false); 
     }
 
+    const makeStatusModalPremium = () => {
+        setStatusModalPremium(false); 
+    }
+
 
     useEffect(() => {
         loadConsent();
     }, [userConsent]);
 
 
-
-
-
     return  (
                 <View>
                     <ModalInfos idLanguage={props.idLanguage} statusModalInfos={statusModalInfos} makeStatusModalInfos={makeStatusModalInfos} />
+                    <ModalPremium idLanguage={props.idLanguage} statusModalPremium={statusModalPremium} makeStatusModalPremium={makeStatusModalPremium} />
             
                     <Modal style={[ {justifyContent: "center", alignItems: "center", backgroundColor: "transparent"} ]} animationType={"slide"} transparent={true} visible={props.statusModalUtilities}>
                         <Pressable style={[ {width: width, backgroundColor: "transparent"} ]} onPress={ props.makeStatusModalUtilities } >
@@ -138,9 +146,9 @@ export function ModalUtilities (props) {
                                 </View>
                                 
 
-                                <SafeAreaView style={[ {marginTop: Number(height*0.05)} ]}>
-                                    <Text style={[ styles.titleUtility, {width: width*0.6, textAlign: "center", fontSize: Number(height*0.035)} ]}>{"PipingData"}</Text>
-                                    <FlatList key={"listUtilities"} data={DATA} renderItem={ ({item}) => <Pressable style={[ {marginTop: Number(height*0.005), marginBottom: Number(height*0.005)} ]} key={item.title} onPress={ () => { if (item.id == 1) { props.makeStatusModalUtilities(false); props.makeStatusModalPrinters(true); } else if (item.id == 2) { null } else if (item.id == 3) { setshowModalConsent(!showModalConsent) } else if (item.id == 4) { functions.onShare(); } else if (item.id == 5) { setshowModalConsent(!showModalConsent) } }}><Item key={item.title} title={item.title} /></Pressable>} />
+                                <SafeAreaView style={[ {marginTop: Number(height*0.02)} ]}>
+                                    <Text style={[ styles.titleUtility, {width: width*0.6, textAlign: "center", fontSize: Number(height*0.03)} ]}>{"PipingData"}</Text>
+                                    <FlatList key={"listUtilities"} data={DATA} renderItem={ ({item}) => <Pressable style={[ {marginTop: Number(height*0.005), marginBottom: Number(height*0.005)} ]} key={item.title} onPress={ () => { if (item.id == 1) { props.makeStatusModalUtilities(false); props.makeStatusModalPrinters(true); } else if (item.id == 3) { setShowModalConsent(!showModalConsent) } else if (item.id == 4) { functions.onShare(); } }}><Item key={item.title} title={item.title} /></Pressable>} />
                                 </SafeAreaView>
                             </Pressable>
                         </Pressable> 

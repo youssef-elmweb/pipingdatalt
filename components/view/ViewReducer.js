@@ -21,22 +21,20 @@ export function ViewReducer (props) {
     const { width, height } = Dimensions.get("window");
     
     const absolutePositionHeight = useSharedValue(Number.parseFloat(props.absolutePositionHeight._value).toFixed(0));
-    const diameterReductionDiffInverse = useSharedValue(props.diameterReductionDiffInverse._value);
 
 
     const getDiameterReducerAndHeightForDatas = (localHeight) => { // FOR DATAS
+        let heightReducerPath = DATAS_REDUCER.heightRemainder - localHeight;
+
         let diameterSuperior = (props.diameterSuperiorReducer._value == 0 ? DATAS_PIPES[1][props.norme._value] : DATAS_PIPES[props.diameterSuperiorReducer._value][props.norme._value]);
         let diameterInferior = DATAS_PIPES[props.diameterInferiorReducer._value][props.norme._value]; 
 
-        let heightReducerPath = DATAS_REDUCER.heightRemainder - localHeight;
-
         let heightReducer = (diameterSuperior - diameterInferior) * 3;
+        let diameterReductionDiff = ((diameterSuperior - diameterInferior) * 0.5);
+        let angle = Math.asin(heightReducer / Math.hypot(heightReducer, diameterReductionDiff)) * DATAS_TRIGONOMETRICS.oneRad;
 
         let heightReducerTop = Number.parseFloat((heightReducer) - ((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath).toFixed(1));
         let heightReducerBottom = Number.parseFloat(((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath).toFixed(1));
-
-        let diameterReductionDiff = ((diameterSuperior - diameterInferior) * 0.5);
-        let angle = Math.asin(heightReducer / Math.hypot(heightReducer, diameterReductionDiff)) * DATAS_TRIGONOMETRICS.oneRad;
         
         let curveReducerTop = heightReducerTop / Math.sin(angle * DATAS_TRIGONOMETRICS.oneDegreRad); 
         let curveReducerBottom = heightReducerBottom / Math.sin(angle * DATAS_TRIGONOMETRICS.oneDegreRad);
@@ -44,16 +42,15 @@ export function ViewReducer (props) {
         let currentDiameterReductionDiff = Math.cos(angle * DATAS_TRIGONOMETRICS.oneDegreRad) * curveReducerBottom;
 
         let currentDiameterRedConc = DATAS_PIPES[props.diameterInferiorReducer._value][props.norme._value] + ((diameterReductionDiff - currentDiameterReductionDiff) * 2);
-        let currentDiameterRedExc = DATAS_PIPES[props.diameterInferiorReducer._value][props.norme._value] + ((diameterReductionDiff - currentDiameterReductionDiff));
+        let currentDiameterRedExc = DATAS_PIPES[props.diameterInferiorReducer._value][props.norme._value] + ((diameterReductionDiff - currentDiameterReductionDiff) * 2);
 
-        
         DATAS_REDUCER.absolutePositionHeight = Number.parseFloat(localHeight.toFixed(1));
-        DATAS_REDUCER.currentDiameterRedConc = Number.parseFloat(currentDiameterRedConc.toFixed(1));
-        DATAS_REDUCER.currentDiameterRedExc = Number.parseFloat(currentDiameterRedExc.toFixed(1));
         DATAS_REDUCER.heightReducerTop = Math.round(heightReducerTop);
         DATAS_REDUCER.heightReducerBottom = Math.round(heightReducerBottom);
         DATAS_REDUCER.curveReducerTop = Math.round(curveReducerTop);
         DATAS_REDUCER.curveReducerBottom = Math.round(curveReducerBottom);
+        DATAS_REDUCER.currentDiameterRedConc = Number.parseFloat(currentDiameterRedConc.toFixed(1));
+        DATAS_REDUCER.currentDiameterRedExc = Number.parseFloat(currentDiameterRedExc.toFixed(1));
     
         props.shareDiameterAndHeight(DATAS_REDUCER);
     }            
@@ -62,7 +59,6 @@ export function ViewReducer (props) {
         "worklet";
 
         absolutePositionHeight.value = localHeight;
-        diameterReductionDiffInverse.value = localHeight;
     }
 
     const getDatasForReducer = (localHeight, renderDiameterReducerAndHeightForDatas, renderDiameterReducerDiffForPath) => { 
@@ -90,14 +86,14 @@ export function ViewReducer (props) {
 
                 getDatasForReducer(Math.round(localHeight), getDiameterReducerAndHeightForDatas, getDiameterReducerDiffForPath);
 
-                return false;
+                return;
             }
             if (event.absoluteY < Math.round((height*0.36))) {
                 localHeight = height*0.36;
 
                 getDatasForReducer(Math.round(localHeight), getDiameterReducerAndHeightForDatas, getDiameterReducerDiffForPath);
 
-                return false;
+                return;
             } else {
                 localHeight = event.absoluteY;
 
