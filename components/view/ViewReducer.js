@@ -1,7 +1,7 @@
 import { React, useMemo } from "react";
 import { StyleSheet, Dimensions } from "react-native";
 
-import Animated, { runOnJS, useSharedValue } from 'react-native-reanimated';
+import Animated, { runOnJS, withTiming, Easing, useSharedValue } from 'react-native-reanimated';
 import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Svg } from 'react-native-svg';
 
@@ -21,6 +21,8 @@ export function ViewReducer (props) {
     const { width, height } = Dimensions.get("window");
     
     const absolutePositionHeight = useSharedValue(Number.parseFloat(props.absolutePositionHeight._value).toFixed(0));
+    const angleBegin = useSharedValue(false);
+    const scaleBegin = useSharedValue(1);
 
 
     const getDiameterReducerAndHeightForDatas = (localHeight) => { // FOR DATAS
@@ -55,53 +57,63 @@ export function ViewReducer (props) {
         props.shareDiameterAndHeight(DATAS_REDUCER);
     }            
 
-    const getDiameterReducerDiffForPath = (localHeight) => { // FOR PATH SVG
+    const getDiameterReducerDiffForPath = (localHeight, beginAction) => { // FOR PATH SVG
         "worklet";
 
         absolutePositionHeight.value = localHeight;
+        angleBegin.value = beginAction;
     }
 
-    const getDatasForReducer = (localHeight, renderDiameterReducerAndHeightForDatas, renderDiameterReducerDiffForPath) => { 
+    const getDatasForReducer = (localHeight, renderDiameterReducerAndHeightForDatas, renderDiameterReducerDiffForPath, beginAction) => { 
         "worklet";
 
         runOnJS(renderDiameterReducerAndHeightForDatas)(localHeight);
-        renderDiameterReducerDiffForPath(parseFloat(localHeight).toFixed(2));
+        renderDiameterReducerDiffForPath(parseFloat(localHeight).toFixed(2), beginAction);
     }
 
     const REDUCER_CONC_MEMOIZED = useMemo(() => {
-        return <ConcentricReducer absolutePositionHeight={absolutePositionHeight} currentDiameterRedConc={props.currentDiameterRedConc} sizeText={props.sizeText} idSettingsMeasure={props.idSettingsMeasure} idSettingsDatas={props.idSettingsDatas} checkboxDatasInterfaceState={props.checkboxDatasInterfaceState} />
+        return <ConcentricReducer scaleBegin={scaleBegin} angleBegin={angleBegin} absolutePositionHeight={absolutePositionHeight} currentDiameterRedConc={props.currentDiameterRedConc} sizeText={props.sizeText} idSettingsMeasure={props.idSettingsMeasure} idSettingsDatas={props.idSettingsDatas} checkboxDatasInterfaceState={props.checkboxDatasInterfaceState} />
     }, [])
 
     const REDUCER_EXC_MEMOIZED = useMemo(() => {
-        return <ExcentricReducer absolutePositionHeight={absolutePositionHeight} currentDiameterRedExc={props.currentDiameterRedExc} sizeText={props.sizeText} idSettingsMeasure={props.idSettingsMeasure} idSettingsDatas={props.idSettingsDatas} checkboxDatasInterfaceState={props.checkboxDatasInterfaceState} />
+        return <ExcentricReducer scaleBegin={scaleBegin} angleBegin={angleBegin} absolutePositionHeight={absolutePositionHeight} currentDiameterRedExc={props.currentDiameterRedExc} sizeText={props.sizeText} idSettingsMeasure={props.idSettingsMeasure} idSettingsDatas={props.idSettingsDatas} checkboxDatasInterfaceState={props.checkboxDatasInterfaceState} />
     }, [])
 
 
     const panGesture = Gesture.Pan()
+        .onBegin((event) => {
+            let localHeight = event.absoluteY;
+
+            getDatasForReducer(Math.round(localHeight), getDiameterReducerAndHeightForDatas, getDiameterReducerDiffForPath, true);
+        })
         .onChange((event) => {
             let localHeight;
 
             if (event.absoluteY > Math.round(height*0.775)) { 
                 localHeight = height*0.775;
 
-                getDatasForReducer(Math.round(localHeight), getDiameterReducerAndHeightForDatas, getDiameterReducerDiffForPath);
+                getDatasForReducer(Math.round(localHeight), getDiameterReducerAndHeightForDatas, getDiameterReducerDiffForPath, false);
 
                 return;
             }
             if (event.absoluteY < Math.round((height*0.36))) {
                 localHeight = height*0.36;
 
-                getDatasForReducer(Math.round(localHeight), getDiameterReducerAndHeightForDatas, getDiameterReducerDiffForPath);
+                getDatasForReducer(Math.round(localHeight), getDiameterReducerAndHeightForDatas, getDiameterReducerDiffForPath, false);
 
                 return;
             } else {
                 localHeight = event.absoluteY;
 
-                getDatasForReducer(Math.round(localHeight), getDiameterReducerAndHeightForDatas, getDiameterReducerDiffForPath);
+                getDatasForReducer(Math.round(localHeight), getDiameterReducerAndHeightForDatas, getDiameterReducerDiffForPath, false);
             }
         })
-        .onEnd(() => {
-    });
+        .onTouchesUp(() => {
+            angleBegin.value = withTiming(0, {
+                duration: 900,
+                easing: Easing.out(Easing.exp)
+            });
+        })
 
 
     return  (

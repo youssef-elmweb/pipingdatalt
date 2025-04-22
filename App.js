@@ -465,7 +465,7 @@ export default function App() {
             {/*/////////////////////////////////////////   INTERFACE VIEW   //////////////////////////////////////////////*/}
             {/*///////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
             {(elbowLayer == "elbow" ?
-                <ViewElbow radius={RADIUS} baseAngle={BASEANGLE} shareAngleElbow={makeDatasElbowByAngle} curvesMeasure={ {angle: ANGLE, intra: INTRA, extra: EXTRA} } diameter={currentDiameter} format={formatElbow} currentDiameter={currentDiameter} norme={NORME._value} formatElbow={formatElbow} measureUnit={MEASUREUNIT} idSettingsMeasure={idSettingsMeasure} idSettingsAngle={idSettingsAngle} idSettingsDatas={idSettingsDatas} checkboxDatasInterfaceState={checkboxDatasInterfaceState} />                                                        
+                <ViewElbow elbowLayer={elbowLayer} baseAngle={BASEANGLE} shareAngleElbow={makeDatasElbowByAngle} curvesMeasure={ {angle: ANGLE, intra: INTRA, extra: EXTRA} } diameter={currentDiameter} format={formatElbow} currentDiameter={currentDiameter} norme={NORME._value} formatElbow={formatElbow} measureUnit={MEASUREUNIT} idSettingsMeasure={idSettingsMeasure} idSettingsAngle={idSettingsAngle} idSettingsDatas={idSettingsDatas} checkboxDatasInterfaceState={checkboxDatasInterfaceState} />                                                        
             : false)}
 
             {(elbowLayer == "reducer" ?

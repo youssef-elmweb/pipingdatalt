@@ -73,7 +73,10 @@ export const languages =
                     ad_preferences: "préférences publicités",
                     personalized_ad: "Publicité personnalisée",
                     personalized_ad_text: "Les publicités seront personnalisées pour une expérience mieux adaptée",
-                    premium: "premium"
+                    premium: "premium",
+                    premium_text_title: "Passez au niveau supérieur",
+                    premium_text: "Travaillez vite. Apprenez plus.\nDes outils puissants et des mémotech pour rester maître du geste.\nFluidité. Modernité. Efficacité.",
+                    later: "plus tard"
                 }, 
 
         "en":   {
@@ -147,7 +150,10 @@ export const languages =
                     ad_preferences: "ad preferences",
                     personalized_ad: "Personalized ads",
                     personalized_ad_text: "Ads will be personalized for a better-suited experience",
-                    premium: "premium"
+                    premium: "premium",
+                    premium_text_title: "Take it to the next level",
+                    premium_text: "Work faster. Learn more.\nPowerful tools and memory aids to stay in control.\nFluidity. Modernity. Efficiency.",
+                    later: "later"
                 }, 
 
         "de":   {
@@ -221,7 +227,10 @@ export const languages =
                     ad_preferences: "werbepräferenzen",
                     personalized_ad: "Personalisierte Werbung",
                     personalized_ad_text: "Die Werbung wird personalisiert, um eine besser angepasste Erfahrung zu bieten",
-                    premium: "Premium"
+                    premium: "Premium",
+                    premium_text_title: "Steigen Sie auf das nächste Level",
+                    premium_text: "Arbeite schnell. Lerne mehr.\nLeistungsstarke Werkzeuge und Merkhilfen für maximale Kontrolle.\nFlüssigkeit. Modernität. Effizienz.",
+                    later: "später"
                 }, 
 
         "ne":   {
@@ -295,7 +304,10 @@ export const languages =
                     ad_preferences: "Advertentievoorkeuren",
                     personalized_ad: "Gepersonaliseerde advertentie",
                     personalized_ad_text: "Advertenties worden gepersonaliseerd voor een beter afgestemde ervaring",
-                    premium: "Premium"
+                    premium: "Premium",
+                    premium_text_title: "Ga naar het volgende niveau",
+                    premium_text: "Werk snel. Leer meer.\nKrachtige tools en geheugensteuntjes om de controle te behouden.\nVloeiendheid. Moderniteit. Efficiëntie.",
+                    later: "later"
                 },
 
         "es":   {
@@ -370,7 +382,10 @@ export const languages =
                     ad_preferences: "Preferencias de anuncios",
                     personalized_ad: "Publicidad personalizada",
                     personalized_ad_text: "Los anuncios se personalizarán para una experiencia mejor adaptada",
-                    premium: "Premium"
+                    premium: "Premium",
+                    premium_text_title: "Lleva tu trabajo al siguiente nivel",
+                    premium_text: "Trabaja rápido. Aprende más.\nHerramientas potentes y memotécnicas para mantener el control.\nFluidez. Modernidad. Eficacia.",
+                    later: "más tarde"
                 },
 
         "po":   {
@@ -444,7 +459,10 @@ export const languages =
                     ad_preferences: "Preferências de anúncios",
                     personalized_ad: "Anúncio personalizado",
                     personalized_ad_text: "Os anúncios serão personalizados para uma experiência mais adequada",
-                    premium: "Premium"
+                    premium: "Premium",
+                    premium_text_title: "Eleve-se para o próximo nível",
+                    premium_text: "Trabalhe rápido. Aprenda mais.\nFerramentas poderosas e memotécnicas para manter o controle.\nFluidez. Modernidade. Eficiência.",
+                    later: "mais tarde"
                 },
 
         "ro":   {
@@ -518,7 +536,10 @@ export const languages =
                     ad_preferences: "Preferințe pentru reclame",
                     personalized_ad: "Publicitate personalizată",
                     personalized_ad_text: "Reclamele vor fi personalizate pentru o experiență mai adaptată",
-                    premium: "Premium"
+                    premium: "Premium",
+                    premium_text_title: "Treceți la nivelul următor",
+                    premium_text: "Lucrați rapid. Învățați mai mult.\nInstrumente puternice și tehnici mnemotehnice pentru a rămâne stăpân pe gest.\nFluență. Modernitate. Eficiență.",
+                    later: "mai târziu"
                 },
 
         "it":   {
@@ -592,7 +613,10 @@ export const languages =
                     ad_preferences: "Preferenze pubblicitarie",
                     personalized_ad: "Pubblicità personalizzata",
                     personalized_ad_text: "Gli annunci saranno personalizzati per un'esperienza più adatta",
-                    premium: "Premium"         
+                    premium: "Premium",
+                    premium_text_title: "Passa al livello successivo",
+                    premium_text: "Lavora veloce. Impara di più.\nStrumenti potenti e memotecniche per restare padrone del gesto.\nFluidità. Modernità. Efficacia.",
+                    later: "più tardi"         
                 },
 
         "cs":   {
@@ -666,7 +690,10 @@ export const languages =
                     ad_preferences: "Reklamní preference",
                     personalized_ad: "Personalizovaná reklama",
                     personalized_ad_text: "Reklamy budou personalizovány pro lépe přizpůsobený zážitek",
-                    premium: "Premium"         
+                    premium: "Premium",
+                    premium_text_title: "Přejděte na vyšší úroveň",
+                    premium_text: "Pracujte rychle. Učte se víc.\nVýkonné nástroje a mnemotechniky pro zachování kontroly.\nPlynulost. Modernost. Efektivita.",
+                    later: "později"         
                 },
 
         "ar":   {
@@ -740,7 +767,10 @@ export const languages =
                     ad_preferences: "تفضيلات الإعلانات",
                     personalized_ad: "إعلان مخصص",
                     personalized_ad_text: "سيتم تخصيص الإعلانات لتجربة أكثر توافقًا",
-                    premium: "بريميوم"
+                    premium: "بريميوم",
+                    premium_text_title: "ارتقِ إلى المستوى التالي",
+                    premium_text: "اعمل بسرعة. تعلم أكثر.\nأدوات قوية وتقنيات ذهنية لتظل متحكمًا في كل حركة.\nالسلاسة. الحداثة. الكفاءة.",
+                    later: "لاحقًا"
                 },
                 
         "co":   {
@@ -814,7 +844,10 @@ export const languages =
                     ad_preferences: "광고 기본 설정",
                     personalized_ad: "맞춤 광고",
                     personalized_ad_text: "광고가 더 맞춤화된 경험을 위해 개인화됩니다",
-                    premium: "프리미엄"
+                    premium: "프리미엄",
+                    premium_text_title: "다음 단계로 도약하세요",
+                    premium_text: "빠르게 작업하세요. 더 많이 배우세요.\n강력한 도구와 기억 보조 기능으로 정확한 제어 유지.\n유연함. 현대성. 효율성.",
+                    later: "나중에"
         },
 
         "ru":   {
@@ -888,7 +921,10 @@ export const languages =
                     ad_preferences: "Настройки рекламы",
                     personalized_ad: "Персонализированная реклама",
                     personalized_ad_text: "Реклама будет персонализирована для более подходящего опыта",
-                    premium: "Премиум"
+                    premium: "Премиум",
+                    premium_text_title: "Поднимитесь на новый уровень",
+                    premium_text: "Работайте быстро. Учитесь больше.\nМощные инструменты и мнемотехники, чтобы оставаться хозяином процесса.\nПлавность. Современность. Эффективность.",
+                    later: "позже"
         },
 
         "hi":   { 
@@ -962,7 +998,10 @@ export const languages =
                     ad_preferences: "विज्ञापन प्राथमिकताएँ",
                     personalized_ad: "व्यक्तिगत विज्ञापन",
                     personalized_ad_text: "विज्ञापन व्यक्तिगत रूप से बेहतर अनुभव के लिए अनुकूलित किए जाएंगे।",
-                    premium: "प्रीमियम"
+                    premium: "प्रीमियम",
+                    premium_text_title: "अगले स्तर पर जाएं",
+                    premium_text: "तेजी से काम करें। ज़्यादा सीखें।\nशक्तिशाली उपकरण और मेमोटेक से नियंत्रण बनाए रखें।\nस्मूदनेस। आधुनिकता। प्रभावशीलता।",
+                    later: "बाद में"
                 },
 
         "ur":   {
@@ -1036,7 +1075,10 @@ export const languages =
                     ad_preferences: "اشتہاری ترجیحات",
                     personalized_ad: "ذاتی اشتہار",
                     personalized_ad_text: "اشتہارات کو بہتر تجربے کے لیے ذاتی نوعیت کا بنایا جائے گا",
-                    premium: "پریمیم"
+                    premium: "پریمیم",
+                    premium_text_title: "اگلی سطح تک جائیں",
+                    premium_text: "تیزی سے کام کریں۔ زیادہ سیکھیں۔\nطاقتور ٹولز اور یادداشت کو بہتر بنانے والے ذرائع سے مہارت برقرار رکھیں۔\nروانی۔ جدت۔ کارکردگی۔",
+                    later: "بعد میں"
                 },
 
         "sw":   {
@@ -1110,7 +1152,10 @@ export const languages =
                     ad_preferences: "Mapendeleo ya Matangazo",
                     personalized_ad: "Tangazo la kibinafsi",
                     personalized_ad_text: "Matangazo yatabinafsishwa kwa uzoefu unaofaa zaidi",
-                    premium: "Premium"
+                    premium: "Premium",
+                    premium_text_title: "Fikia kiwango kinachofuata",
+                    premium_text: "Fanya kazi haraka. Jifunze zaidi.\nZana zenye nguvu na mbinu za kukumbuka ili udhibiti usipotee.\nUfasaha. Kisasa. Ufanisi.",
+                    later: "baadaye"
             
                 },
 
@@ -1185,7 +1230,10 @@ export const languages =
                     ad_preferences: "广告偏好",
                     personalized_ad: "个性化广告",
                     personalized_ad_text: "广告将被个性化，以提供更合适的体验",
-                    premium: "高级"
+                    premium: "高级",
+                    premium_text_title: "迈向更高层次",
+                    premium_text: "快速工作，学得更多。\n强大的工具与记忆技巧，帮助你掌控每一步。\n流畅。现代。高效。",
+                    later: "稍后"
                 },
 
         "ja":   {
@@ -1259,7 +1307,10 @@ export const languages =
                     ad_preferences: "広告の設定",
                     personalized_ad: "パーソナライズ広告",
                     personalized_ad_text: "広告は、より適した体験のためにパーソナライズされます",
-                    premium: "プレミアム"
+                    premium: "プレミアム",
+                    premium_text_title: "次のレベルへ進もう",
+                    premium_text: "素早く作業し、さらに学ぶ。\n強力なツールと記憶術で動きを完全にコントロール。\n滑らかさ。モダンさ。効率性。",
+                    later: "あとで"
                 },
 
         
@@ -1334,7 +1385,10 @@ export const languages =
                     ad_preferences: "Reklam Tercihleri",
                     personalized_ad: "Kişiselleştirilmiş reklam",
                     personalized_ad_text: "Reklamlar, daha iyi uyarlanmış bir deneyim için kişiselleştirilecektir",
-                    premium: "Premium"
+                    premium: "Premium",
+                    premium_text_title: "Bir üst seviyeye geçin",
+                    premium_text: "Hızlı çalış. Daha fazlasını öğren.\nKontrolü elden bırakmamak için güçlü araçlar ve hafıza destekleri.\nAkıcılık. Modernlik. Verimlilik.",
+                    later: "daha sonra"
                 }
     }
 ]

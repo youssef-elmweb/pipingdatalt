@@ -4,7 +4,7 @@ import { StyleSheet, Dimensions } from "react-native";
 import * as functions from "../../library/functions.js";
 
 import { Svg, G } from 'react-native-svg';
-import Animated, { runOnJS, useSharedValue } from 'react-native-reanimated';
+import Animated, { runOnJS, withTiming, Easing, useSharedValue } from 'react-native-reanimated';
 import { Gesture, GestureDetector, GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { Elbow } from  "../../components/Elbow.js";
@@ -21,34 +21,40 @@ export function ViewElbow (props) {
     const { width, height } = Dimensions.get("window");
 
     const angle = useSharedValue(Number.parseFloat(props.curvesMeasure.angle._value).toFixed(props.baseAngle._value));
+    const angleBegin = useSharedValue(false);
+    const scaleBegin = useSharedValue(1);
 
     const renderDatasForDatas = (localValueAngle) => { 
         DATAS_ELBOWS.angle = Number(parseFloat(localValueAngle).toFixed(props.baseAngle._value));
         props.shareAngleElbow(DATAS_ELBOWS);
     }
 
-    const renderAngleForPaths = (localValueAngle) => {
+    const renderAngleForPaths = (localValueAngle, beginAction) => {
         "worklet";
         angle.value = localValueAngle;   
+        angleBegin.value = beginAction;
     }
 
-    const getAngle = (localValueAngle, renderDatasForDatas, renderAngleForPaths) => { 
+    const getAngle = (localValueAngle, renderDatasForDatas, renderAngleForPaths, beginAction) => { 
         "worklet";
 
         runOnJS(renderDatasForDatas)(localValueAngle);
-        renderAngleForPaths(parseFloat(localValueAngle).toFixed(2));
+        renderAngleForPaths(parseFloat(localValueAngle).toFixed(2), beginAction);
     }
 
     const ELBOW_MEMOIZED = useMemo(() => {
-        return <Elbow angle={angle} currentDiameter={props.currentDiameter} diameter={props.diameter} format={props.format} formatElbow={props.formatElbow} checkboxDatasInterfaceState={props.checkboxDatasInterfaceState} curvesMeasure={props.curvesMeasure} fontSizeInterpolate={null} letterSpacingInterpolate={null} norme={props.norme} idSettingsMeasure={props.idSettingsMeasure} idSettingsAngle={props.baseAngle} idSettingsDatas={props.idSettingsDatas} pathIntrado={null} pathExtrado={null} pathRadiusRight={null} pathRadiusLeft={null} circleRadius={null} />;
+        return <Elbow scaleBegin={scaleBegin} angleBegin={angleBegin} angle={angle} currentDiameter={props.currentDiameter} diameter={props.diameter} format={props.format} formatElbow={props.formatElbow} checkboxDatasInterfaceState={props.checkboxDatasInterfaceState} curvesMeasure={props.curvesMeasure} fontSizeInterpolate={null} letterSpacingInterpolate={null} norme={props.norme} idSettingsMeasure={props.idSettingsMeasure} idSettingsAngle={props.baseAngle} idSettingsDatas={props.idSettingsDatas} pathIntrado={null} pathExtrado={null} pathRadiusRight={null} pathRadiusLeft={null} circleRadius={null} />;
     }, [angle, width, height])
   
 
     const panGesture = Gesture.Pan()
+        .onBegin((event) => {
+            let hypotenuse = functions.getHypotenuse((event.absoluteX - (width*0.15)).toFixed(2), (((height*0.5) + (width*0.52)) - event.absoluteY).toFixed(2));  
+            let localAngle = functions.getAngleByAbscissa((event.absoluteX - (width*0.15)).toFixed(2), hypotenuse.toFixed(2));
+            
+            getAngle(localAngle, renderDatasForDatas, renderAngleForPaths, true);
+        })
         .onChange((event) => {
-            let hypotenuse;
-            let localAngle;
-
                 if (event.absoluteY > (((height*0.5) + (width*0.52))) - (Math.sin(DATAS_TRIGONOMETRICS.oneDegreRad) * event.absoluteX)) { 
 
                     getAngle(1, renderDatasForDatas, renderAngleForPaths);
@@ -66,15 +72,18 @@ export function ViewElbow (props) {
                     
                         return;
                     }   else {
-                            hypotenuse = functions.getHypotenuse((event.absoluteX - (width*0.15)).toFixed(2), (((height*0.5) + (width*0.52)) - event.absoluteY).toFixed(2));  
-                            localAngle = functions.getAngleByAbscissa((event.absoluteX - (width*0.15)).toFixed(2), hypotenuse.toFixed(2));
+                            let hypotenuse = functions.getHypotenuse((event.absoluteX - (width*0.15)).toFixed(2), (((height*0.5) + (width*0.52)) - event.absoluteY).toFixed(2));  
+                            let localAngle = functions.getAngleByAbscissa((event.absoluteX - (width*0.15)).toFixed(2), hypotenuse.toFixed(2));
                             
-                            getAngle(localAngle, renderDatasForDatas, renderAngleForPaths);
+                            getAngle(localAngle, renderDatasForDatas, renderAngleForPaths, false);
                         }
         })
-        .onEnd(() => {
-
-    });
+        .onTouchesUp(() => {
+            angleBegin.value = withTiming(0, {
+                duration: 900,
+                easing: Easing.out(Easing.exp)
+            });
+        })
 
 
     return (
