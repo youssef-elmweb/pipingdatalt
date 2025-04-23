@@ -5,6 +5,8 @@ import { ReText } from  "./components/ReText";
 import { ValidatedValue } from "./components/ValidatedValue.js";
 import Slider from '@react-native-community/slider';
 
+import * as functions from "./library/functions.js";
+
 import { languages } from './languages/languages.js';
 
 import { DATAS_PIPES } from './datas/datas_pipes.js';
@@ -50,12 +52,13 @@ export default function App() {
     const DIAMETER_INFERIOR_REDUCER = useRef(new Animated.Value(0)).current; // index of diameters array
     const DIAMETER_SUPERIOR_REDUCER = useRef(new Animated.Value(1)).current; // index of diameters array
     const ABSOLUTE_POSITION_HEIGHT = useRef(new Animated.Value(DATAS_REDUCER.absolutePositionHeight)).current;
-    const CURRENT_DIAMETER_REDUCER_CONC = useRef(new Animated.Value(DATAS_REDUCER.currentDiameterRedConc)).current;
-    const CURRENT_DIAMETER_REDUCER_EXC = useRef(new Animated.Value(DATAS_REDUCER.currentDiameterRedExc)).current;
     const HEIGHT_REDUCER_TOP = useRef(new Animated.Value(DATAS_REDUCER.heightReducerTop)).current;
     const HEIGHT_REDUCER_BOTTOM = useRef(new Animated.Value(DATAS_REDUCER.heightReducerBottom)).current;
     const CURVE_REDUCER_TOP = useRef(new Animated.Value(DATAS_REDUCER.curveReducerTop)).current;
     const CURVE_REDUCER_BOTTOM = useRef(new Animated.Value(DATAS_REDUCER.curveReducerBottom)).current;
+    const CURVE_REDUCER_TOP_EXC = useRef(new Animated.Value(DATAS_REDUCER.curveReducerTopExc)).current;
+    const CURVE_REDUCER_BOTTOM_EXC = useRef(new Animated.Value(DATAS_REDUCER.curveReducerBottomExc)).current;
+    const CURRENT_DIAMETER_REDUCER_CONC_EXC = useRef(new Animated.Value(DATAS_REDUCER.currentDiameterRedConcExc)).current;
 
     const FORMAT = useRef(new Animated.Value(3)).current;
     const DIAMETER = useRef(new Animated.Value(0)).current; // index of diameters array
@@ -98,6 +101,8 @@ export default function App() {
     const [tempElbowDiameterInferior, setTempElbowDiameterInferior] = useState(0);
     const [tempReducerDiameterInferior, setTempReducerDiameterInferior] = useState(1);
     const [tempReducerDiameterSuperior, setTempReducerDiameterSuperior] = useState(1); 
+
+    const [statusModalPremiumOnApp, setStatusModalPremiumOnApp] = useState(false);
     
 
     useEffect(() => {
@@ -154,8 +159,9 @@ export default function App() {
         HEIGHT_REDUCER_BOTTOM.setValue(datas.heightReducerBottom);
         CURVE_REDUCER_TOP.setValue(datas.curveReducerTop);
         CURVE_REDUCER_BOTTOM.setValue(datas.curveReducerBottom);
-        CURRENT_DIAMETER_REDUCER_CONC.setValue(datas.currentDiameterRedConc);
-        CURRENT_DIAMETER_REDUCER_EXC.setValue(datas.currentDiameterRedExc);
+        CURVE_REDUCER_TOP_EXC.setValue(datas.curveReducerTopExc);
+        CURVE_REDUCER_BOTTOM_EXC.setValue(datas.curveReducerBottomExc);
+        CURRENT_DIAMETER_REDUCER_CONC_EXC.setValue(datas.currentDiameterRedConcExc);
     }
 
     const makeHeightsReducerByDiam = (diameterSup, diameterInf) => {
@@ -163,7 +169,9 @@ export default function App() {
 
         let heightReducer = (diameterSup - diameterInf) * 3;
         let diameterReductionDiff = ((diameterSup - diameterInf) * 0.5);
+        let diameterReductionDiffExc = (diameterSup - diameterInf);
         let angle = Math.asin(heightReducer / Math.hypot(heightReducer, diameterReductionDiff)) * DATAS_TRIGONOMETRICS.oneRad;
+        let angleExc = Math.asin(heightReducer / Math.hypot(heightReducer, diameterReductionDiffExc)) * DATAS_TRIGONOMETRICS.oneRad;
 
         let heightReducerTop = Number.parseFloat(((heightReducer) - ((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath)).toFixed(1));
         let heightReducerBottom = Number.parseFloat(((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath).toFixed(1));
@@ -171,17 +179,20 @@ export default function App() {
         let curveReducerTop = heightReducerTop / Math.sin(angle * DATAS_TRIGONOMETRICS.oneDegreRad); 
         let curveReducerBottom = heightReducerBottom / Math.sin(angle * DATAS_TRIGONOMETRICS.oneDegreRad);
 
+        let curveReducerTopExc = heightReducerTop / Math.sin(angleExc * DATAS_TRIGONOMETRICS.oneDegreRad); 
+        let curveReducerBottomExc = heightReducerBottom / Math.sin(angleExc * DATAS_TRIGONOMETRICS.oneDegreRad);
+
         let currentDiameterReductionDiff = Math.cos(angle * DATAS_TRIGONOMETRICS.oneDegreRad) * curveReducerBottom;
         
-        let currentDiameterRedConc = DATAS_PIPES[DIAMETER_INFERIOR_REDUCER._value][NORME._value] + ((diameterReductionDiff - currentDiameterReductionDiff) * 2);
-        let currentDiameterRedExc = DATAS_PIPES[DIAMETER_INFERIOR_REDUCER._value][NORME._value] + ((diameterReductionDiff - currentDiameterReductionDiff) * 2);
+        let currentDiameterRedConcExc = DATAS_PIPES[DIAMETER_INFERIOR_REDUCER._value][NORME._value] + ((diameterReductionDiff - currentDiameterReductionDiff) * 2);
 
         HEIGHT_REDUCER_TOP.setValue(Math.round(heightReducerTop));
         HEIGHT_REDUCER_BOTTOM.setValue(Math.round(heightReducerBottom));
         CURVE_REDUCER_TOP.setValue(Math.round(curveReducerTop));
         CURVE_REDUCER_BOTTOM.setValue(Math.round(curveReducerBottom));
-        CURRENT_DIAMETER_REDUCER_CONC.setValue(Number.parseFloat(currentDiameterRedConc.toFixed(1)));
-        CURRENT_DIAMETER_REDUCER_EXC.setValue(Number.parseFloat(currentDiameterRedExc.toFixed(1)));
+        CURVE_REDUCER_TOP_EXC.setValue(Math.round(curveReducerTopExc));
+        CURVE_REDUCER_BOTTOM_EXC.setValue(Math.round(curveReducerBottomExc));
+        CURRENT_DIAMETER_REDUCER_CONC_EXC.setValue(Number.parseFloat(currentDiameterRedConcExc.toFixed(1)));
     }
 
     const getHeightsReducerByDiamSuperior = (value) => { 
@@ -199,54 +210,59 @@ export default function App() {
     }
 
     const makeFormat = () => {
-      makeDatasElbowByAngle(getDatasElbows);
-      FORMAT.setValue(formatElbow);
-      return FORMAT._value;
+        makeDatasElbowByAngle(getDatasElbows);
+        FORMAT.setValue(formatElbow);
+        return FORMAT._value;
     }
 
     const toggleTheBox = () => { // This function will be triggered when the Switch changes
-      setIsShown((previousState) => !previousState);
-      setLabelNorme((value) => (value === "iso" ? "ansi" : "iso"));
-      (labelNorme === "iso" ? NORME.setValue(6) : NORME.setValue(2));
-      makeDatasElbowByAngle(DATAS_ELBOWS);
+        setIsShown((previousState) => !previousState);
+        setLabelNorme((value) => (value === "iso" ? "ansi" : "iso"));
+        (labelNorme === "iso" ? NORME.setValue(6) : NORME.setValue(2));
+        makeDatasElbowByAngle(DATAS_ELBOWS);
     };
 
     function decreaseText() {
-      if (sizeText > width*0.03) { // 11 or sizeText is current initial state of size values
-          setSizeText(sizeText-0.35); 
-      }
+        if (sizeText > width*0.03) { // 11 or sizeText is current initial state of size values
+            setSizeText(sizeText-0.35); 
+        }
     }
 
     function increaseText() {
-      if (sizeText < width*0.04) { 
-          setSizeText(sizeText+0.5); 
-      }
+        if (sizeText < width*0.04) { 
+                setSizeText(sizeText+0.5); 
+        }
     }
 
     const setCurrentInterface = (currentInterface) => {
-      setElbowLayer(currentInterface);
+        setElbowLayer(currentInterface);
     }
 
     const makeStatusModalSettings = () => {
-      setStatusModalSettings(false);
+        setStatusModalSettings(false);
     }
 
     const makeCheckboxDatasInterfaceState = () => {
-      setCheckboxDatasInterfaceState(!checkboxDatasInterfaceState);
+        setCheckboxDatasInterfaceState(!checkboxDatasInterfaceState);
     }
 
     const makeStatusModalLanguages = () => {
-      setStatusModalLanguages(false);
+        setStatusModalLanguages(false);
     }
 
     const makeStatusModalUtilities = () => {
-      setStatusModalUtilities(false); 
+        setStatusModalUtilities(false); 
     }
 
     const makeStatusModalPrinters = () => {
-      setStatusModalUtilities(() => !statusModalUtilities); 
-      setStatusModalPrinters(() => !statusModalPrinters); 
+        setStatusModalUtilities(() => !statusModalUtilities); 
+        setStatusModalPrinters(() => !statusModalPrinters); 
     }
+
+    const makeStatusModalPremiumOnApp = () => {
+        setStatusModalPremiumOnApp(false);
+        console.log(statusModalPremiumOnApp);
+    } 
     ///////////////// FUNCTIONS ////////////////////////////////////////
 
 
@@ -257,9 +273,9 @@ export default function App() {
             
             <StatusBar style={"auto"} />
 
-            <ModalUtilities idLanguage={idLanguage} statusModalUtilities={statusModalUtilities} makeStatusModalUtilities={makeStatusModalUtilities} makeStatusModalPrinters={makeStatusModalPrinters} />
+            <ModalUtilities makeStatusModalPremiumOnApp={makeStatusModalPremiumOnApp} statusModalPremiumOnApp={statusModalPremiumOnApp} idLanguage={idLanguage} statusModalUtilities={statusModalUtilities} makeStatusModalUtilities={ makeStatusModalUtilities } makeStatusModalPrinters={ makeStatusModalPrinters } />
 
-            <ModalPrinters idLanguage={idLanguage} statusModalPrinters={statusModalPrinters} makeStatusModalPrinters={makeStatusModalPrinters} />
+            <ModalPrinters idLanguage={idLanguage} statusModalPrinters={statusModalPrinters} makeStatusModalPrinters={ makeStatusModalPrinters } />
 
             <ModalSettings style={{ flex: 1, marginLeft: 200, textAlign: "center", alignSelf: "center" }} idLanguage={idLanguage} statusModalSettings={statusModalSettings} checkboxDatasInterfaceState={checkboxDatasInterfaceState} idSettingsMeasure={idSettingsMeasure} idSettingsDiameter={idSettingsDiameter} idSettingsAngle={idSettingsAngle} idSettingsDatas={idSettingsDatas} setIdSettingsMeasure={ setIdSettingsMeasure } setIdSettingsDiameter={ setIdSettingsDiameter } setIdSettingsAngle={ setIdSettingsAngle } setIdSettingsDatas={ setIdSettingsDatas } makeCheckboxDatasInterfaceState={ makeCheckboxDatasInterfaceState } makeStatusModalSettings={ makeStatusModalSettings } />
 
@@ -305,20 +321,12 @@ export default function App() {
                             <Image alt={"elbow"} style={[ { width: width*0.08, height: width*0.08 } ]} source={require('./assets/images/elbow.png')} />
                         </Pressable>
 
-                        <Pressable style={[ styles.menuBox ]} backgroundColor={(elbowLayer === 'elbow-double' ? "forestgreen" : "tomato")} onPressOut={ () => { return false; } }>
-                            <Image alt={"elbow-double"} style={[ { width: width*0.08, height: width*0.08 } ]} source={require('./assets/images/elbow_double.png')} />
-                        </Pressable>
-
-                        <Pressable style={[ styles.menuBox ]} backgroundColor={(elbowLayer === 'elbow-double-oriented' ? "forestgreen" : "tomato")} onPressOut={ () => { return false; } }>
-                            <Image alt={"elbow-double-oriented"} style={[ { width: width*0.08, height: width*0.08 } ]} source={require('./assets/images/elbow_double_oriented.png')} />
-                        </Pressable>
-
-                        <Pressable style={[ styles.menuBox ]} backgroundColor={(elbowLayer === 'elbow-slices' ? "forestgreen" : "tomato")} onPressOut={ () => { return false; } }>
-                            <Image alt={"elbow-slices"} style={[ { width: width*0.08, height: width*0.08 } ]} source={require('./assets/images/elbow_slice.png')} />
-                        </Pressable>
-
                         <Pressable style={[ styles.menuBox ]} backgroundColor={(elbowLayer === 'reducer' ? "forestgreen" : "tomato")} onPress={ () => { setCurrentInterface("reducer"); setTempReducerDiameterInferior(currentDiameterInferiorReducer); setTempReducerDiameterSuperior(currentDiameterSuperiorReducer); } }>
                             <Image alt={"reducer"} style={[ { width: width*0.08, height: width*0.08 } ]} source={require('./assets/images/reducer_conc.png')} />
+                        </Pressable>
+
+                        <Pressable style={[ {flexDirection: "row", justifyContent: "center", alignItems: "center"} ]} onPress={ () => { setStatusModalPremiumOnApp(() => true) } }>
+                            <Text key={"pro"} style={[ styles.labelTopBar, { width: width*0.25, height: width*0.07, lineHeight: width*0.07, fontSize: width*0.045, fontWeight: "bold", letterSpacing: 1 } ]}>{functions.firstLetterToUpperCase(languages[0][idLanguage].pro)}</Text>                        
                         </Pressable>
                     </View>
                 </View>
@@ -368,10 +376,19 @@ export default function App() {
                                             <Text style={[ styles.labelTopBar, {width: width*0.15, lineHeight: height*0.0225, fontSize: width*0.03} ]}>{"/"}</Text>
                                         </View>
 
-                                        <View style={[ {paddingLeft: width*0.007, justifyContent: "space-between", alignItems: "flex-start", backgroundColor: "transparent"} ]}>
-                                            <ValidatedValueAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color="white" valueForCheck={CURVE_REDUCER_TOP} />
-                                            <ValidatedValueAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color="yellow" valueForCheck={CURVE_REDUCER_BOTTOM} />
-                                        </View>
+                                        {(currentReducer == "reducer-conc" ?
+                                            <View style={[ {paddingLeft: width*0.007, justifyContent: "space-between", alignItems: "flex-start", backgroundColor: "transparent"} ]}>
+                                                <ValidatedValueAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color="silver" valueForCheck={CURVE_REDUCER_TOP} />
+                                                <ValidatedValueAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color="white" valueForCheck={CURVE_REDUCER_BOTTOM} />
+                                            </View>
+                                        : false)}
+
+                                        {(currentReducer == "reducer-exc" ?
+                                            <View style={[ {paddingLeft: width*0.007, justifyContent: "space-between", alignItems: "flex-start", backgroundColor: "transparent"} ]}>
+                                                <ValidatedValueAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color="silver" valueForCheck={CURVE_REDUCER_TOP_EXC} />
+                                                <ValidatedValueAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color="white" valueForCheck={CURVE_REDUCER_BOTTOM_EXC} />
+                                            </View>
+                                        : false)}
                                     </View>
 
                                     <View style={[ { width: width*0.25, flexDirection: "column", justifyContent: "space-between", backgroundColor: "transparent" } ]}>
@@ -380,8 +397,8 @@ export default function App() {
                                         </View>
 
                                         <View style={[ {paddingLeft: width*0.007, justifyContent: "space-between", alignItems: "flex-start", backgroundColor: "transparent"} ]}>
-                                            <ValidatedValueAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color="lime" valueForCheck={ HEIGHT_REDUCER_TOP } />
-                                            <ValidatedValueAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color="deepskyblue" valueForCheck={ HEIGHT_REDUCER_BOTTOM } />
+                                            <ValidatedValueAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color="silver" valueForCheck={ HEIGHT_REDUCER_TOP } />
+                                            <ValidatedValueAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color="white" valueForCheck={ HEIGHT_REDUCER_BOTTOM } />
                                         </View>
                                     </View>
                                 </View>
@@ -393,13 +410,7 @@ export default function App() {
                                         </View>
 
                                         <View style={[ { width: width*0.3, backgroundColor: "transparent"} ]}>
-                                            {(currentReducer == "reducer-conc" ? 
-                                                <ValidatedValueAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color="white" valueForCheck={ CURRENT_DIAMETER_REDUCER_CONC } />
-                                            : false)}
-
-                                            {(currentReducer == "reducer-exc" ? 
-                                                <ValidatedValueAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color="white" valueForCheck={ CURRENT_DIAMETER_REDUCER_EXC } />
-                                            : false)}
+                                            <ValidatedValueAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color="white" valueForCheck={ CURRENT_DIAMETER_REDUCER_CONC_EXC } />
                                         </View>
                                     </View>
 
@@ -469,7 +480,7 @@ export default function App() {
             : false)}
 
             {(elbowLayer == "reducer" ?
-                <ViewReducer idLanguage={idLanguage} sizeText={sizeText} currentDiameterInferiorReducer={currentDiameterInferiorReducer} currentDiameterSuperiorReducer={currentDiameterSuperiorReducer} diameterSuperiorReducer={DIAMETER_SUPERIOR_REDUCER} diameterInferiorReducer={DIAMETER_INFERIOR_REDUCER} absolutePositionHeight={ABSOLUTE_POSITION_HEIGHT} currentReducer={currentReducer} currentDiameterRedConc={CURRENT_DIAMETER_REDUCER_CONC} currentDiameterRedExc={CURRENT_DIAMETER_REDUCER_EXC} norme={NORME} idSettingsMeasure={idSettingsMeasure} idSettingsDatas={idSettingsDatas} checkboxDatasInterfaceState={checkboxDatasInterfaceState} shareDiameterAndHeight={getDatasReducer} /> 
+                <ViewReducer idLanguage={idLanguage} sizeText={sizeText} currentDiameterInferiorReducer={currentDiameterInferiorReducer} currentDiameterSuperiorReducer={currentDiameterSuperiorReducer} diameterSuperiorReducer={DIAMETER_SUPERIOR_REDUCER} diameterInferiorReducer={DIAMETER_INFERIOR_REDUCER} absolutePositionHeight={ABSOLUTE_POSITION_HEIGHT} currentReducer={currentReducer} currentDiameterRedConcExc={CURRENT_DIAMETER_REDUCER_CONC_EXC} norme={NORME} idSettingsMeasure={idSettingsMeasure} idSettingsDatas={idSettingsDatas} checkboxDatasInterfaceState={checkboxDatasInterfaceState} shareDiameterAndHeight={getDatasReducer} /> 
             : 
             false)}
             {/*///////////////////////////////////////////////////////////////////////////////////////////////////////////*/}

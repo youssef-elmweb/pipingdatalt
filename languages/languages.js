@@ -80,7 +80,8 @@ export const languages =
                     premium_elbow_double: "toutes les valeurs liées au double coudes (angles, entraxes, rayons, bout à bout) et bien plus...",
                     premium_elbow_double_oriented: "toutes les valeurs liées au double coudes orientés (angles, entraxes, rayons, bout à bout) et bien plus...",
                     premium_elbow_slices: "toutes les valeurs du coude en tranches 3 sections (2 + 2×½), de 4 à 32 génératrices et rayons.",
-                    later: "plus tard"
+                    later: "plus tard",
+                    pro: "pro"
                 }, 
 
         "en":   {
@@ -161,7 +162,8 @@ export const languages =
                     premium_elbow_double: "all values related to double elbows (angles, center distances, radii, end-to-end) and more...",
                     premium_elbow_double_oriented: "all values related to oriented double elbows (angles, center distances, radii, end-to-end) and more...",
                     premium_elbow_slices: "all values of the sliced elbow in 3 sections (2 + 2×½), from 4 to 32 generatrices and radii.",
-                    later: "later"
+                    later: "later",
+                    pro: "pro"
                 }, 
 
         "de":   {
@@ -242,7 +244,8 @@ export const languages =
                     premium_elbow_double: "alle werte für doppelte bögen (winkel, abstände, radien, end-zu-end) und mehr...",
                     premium_elbow_double_oriented: "alle werte für ausgerichtete doppelte bögen (winkel, abstände, radien, end-zu-end) und mehr...",
                     premium_elbow_slices: "alle werte des geschnittenen bogens in 3 abschnitten (2 + 2×½), von 4 bis 32 generatoren und radien.",
-                    later: "später"
+                    later: "später",
+                    pro: ""
                 }, 
 
         "ne":   {
@@ -323,7 +326,8 @@ export const languages =
                     premium_elbow_double: "alle waarden met betrekking tot dubbele bochten (hoeken, hart-op-hart, stralen, eind-tot-eind) en meer...",
                     premium_elbow_double_oriented: "alle waarden met betrekking tot gerichte dubbele bochten (hoeken, hart-op-hart, stralen, eind-tot-eind) en meer...",
                     premium_elbow_slices: "alle waarden van de gesneden bocht in 3 secties (2 + 2×½), van 4 tot 32 generatrices en stralen.",
-                    later: "later"
+                    later: "later",
+                    pro: ""
                 },
 
         "es":   {
@@ -405,7 +409,8 @@ export const languages =
                     premium_elbow_double: "todos los valores relacionados con codos dobles (ángulos, ejes, radios, extremo a extremo) y mucho más...",
                     premium_elbow_double_oriented: "todos los valores relacionados con codos dobles orientados (ángulos, ejes, radios, extremo a extremo) y mucho más...",
                     premium_elbow_slices: "todos los valores del codo en secciones (2 + 2×½), de 4 a 32 generatrices y radios.",
-                    later: "más tarde"
+                    later: "más tarde",
+                    pro: ""
                 },
 
         "po":   {
@@ -486,7 +491,8 @@ export const languages =
                     premium_elbow_double: "todos os valores relacionados aos cotovelos duplos (ângulos, distâncias entre centros, raios, ponta a ponta) e muito mais...",
                     premium_elbow_double_oriented: "todos os valores relacionados aos cotovelos duplos orientados (ângulos, distâncias entre centros, raios, ponta a ponta) e muito mais...",
                     premium_elbow_slices: "todos os valores do cotovelo em fatias de 3 seções (2 + 2×½), de 4 a 32 geratrizes e raios.",
-                    later: "mais tarde"
+                    later: "mais tarde",
+                    pro: ""
                 },
 
         "ro":   {
@@ -567,7 +573,8 @@ export const languages =
                     premium_elbow_double: "toate valorile legate de coturi duble (unghiuri, distanțe între axe, raze, cap la cap) și multe altele...",
                     premium_elbow_double_oriented: "toate valorile legate de coturi duble orientate (unghiuri, distanțe între axe, raze, cap la cap) și multe altele...",
                     premium_elbow_slices: "toate valorile pentru cotul în secțiuni (2 + 2×½), între 4 și 32 generatoare și raze.",
-                    later: "mai târziu"
+                    later: "mai târziu",
+                    pro: ""
                 },
 
         "it":   {
@@ -648,7 +655,8 @@ export const languages =
                     premium_elbow_double: "tutti i valori relativi ai doppi gomiti (angoli, interassi, raggi, testa a testa) e molto altro...",
                     premium_elbow_double_oriented: "tutti i valori relativi ai doppi gomiti orientati (angoli, interassi, raggi, testa a testa) e molto altro...",
                     premium_elbow_slices: "tutti i valori del gomito in sezioni (2 + 2×½), da 4 a 32 generatrici e raggi.",
-                    later: "più tardi"         
+                    later: "più tardi",
+                    pro: ""         
                 },
 
         "cs":   {
@@ -729,7 +737,8 @@ export const languages =
                     premium_elbow_double: "všechny hodnoty týkající se dvojitých kolen (úhly, rozteče, poloměry, čelo k čelu) a mnohem více...",
                     premium_elbow_double_oriented: "všechny hodnoty týkající se orientovaných dvojitých kolen (úhly, rozteče, poloměry, čelo k čelu) a mnohem více...",
                     premium_elbow_slices: "všechny hodnoty kolena rozděleného do 3 částí (2 + 2×½), od 4 do 32 tvořících a poloměrů.",
-                    later: "později"         
+                    later: "později",
+                    pro: ""        
                 },
 
         "ar":   {
@@ -810,7 +819,8 @@ export const languages =
                     premium_elbow_double: "جميع القيم المتعلقة بالأكواع المزدوجة (الزوايا، المسافات بين المحاور، الأنصاف القطرية، من طرف إلى طرف) وأكثر...",
                     premium_elbow_double_oriented: "جميع القيم المتعلقة بالأكواع المزدوجة الموجهة (الزوايا، المسافات بين المحاور، الأنصاف القطرية، من طرف إلى طرف) وأكثر...",
                     premium_elbow_slices: "جميع قيم الكوع المقطّع إلى 3 أقسام (2 + 2×½)، من 4 إلى 32 مولدًا ونصف قطر.",
-                    later: "لاحقًا"
+                    later: "لاحقًا",
+                    pro: ""
                 },
                 
         "co":   {
@@ -891,7 +901,8 @@ export const languages =
                     premium_elbow_double: "더블 엘보와 관련된 모든 값 (각도, 중심 거리, 반경, 끝과 끝) 그리고 그 이상...",
                     premium_elbow_double_oriented: "방향이 지정된 더블 엘보와 관련된 모든 값 (각도, 중심 거리, 반경, 끝과 끝) 그리고 그 이상...",
                     premium_elbow_slices: "3단 분할된 엘보의 모든 값 (2 + 2×½), 4~32개의 생성선 및 반경 포함.",
-                    later: "나중에"
+                    later: "나중에",
+                    pro: ""
         },
 
         "ru":   {
@@ -972,7 +983,8 @@ export const languages =
                     premium_elbow_double: "все значения, связанные с двойными отводами (углы, межцентровые расстояния, радиусы, от края до края) и многое другое...",
                     premium_elbow_double_oriented: "все значения, связанные с ориентированными двойными отводами (углы, межцентровые расстояния, радиусы, от края до края) и многое другое...",
                     premium_elbow_slices: "все значения колена, разделённого на 3 секции (2 + 2×½), от 4 до 32 образующих и радиусов.",
-                    later: "позже"
+                    later: "позже",
+                    pro: ""
         },
 
         "hi":   { 
@@ -1053,7 +1065,8 @@ export const languages =
                     premium_elbow_double: "डबल एल्बो से संबंधित सभी मान (कोण, केंद्र दूरी, त्रिज्या, सिरा से सिरा) और भी बहुत कुछ...",
                     premium_elbow_double_oriented: "दिशानिर्देशित डबल एल्बो से संबंधित सभी मान (कोण, केंद्र दूरी, त्रिज्या, सिरा से सिरा) और भी बहुत कुछ...",
                     premium_elbow_slices: "3 खंडों में विभाजित कोहनी के सभी मान (2 + 2×½), 4 से 32 जनरेटर और त्रिज्या तक।",
-                    later: "बाद में"
+                    later: "बाद में",
+                    pro: ""
                 },
 
         "ur":   {
@@ -1134,7 +1147,8 @@ export const languages =
                     premium_elbow_double: "ڈبل ایلبو سے متعلق تمام قدریں (زاویے، سینٹر فاصلہ، رداس، کنارے سے کنارہ) اور بھی بہت کچھ...",
                     premium_elbow_double_oriented: "رُخ متعین ڈبل ایلبو سے متعلق تمام قدریں (زاویے، سینٹر فاصلہ، رداس، کنارے سے کنارہ) اور بھی بہت کچھ...",
                     premium_elbow_slices: "3 حصوں میں تقسیم شدہ ایلبو کی تمام قدریں (2 + 2×½)، 4 سے 32 جنریٹرز اور ریڈیئس تک۔",
-                    later: "بعد میں"
+                    later: "بعد میں",
+                    pro: ""
                 },
 
         "sw":   {
@@ -1215,8 +1229,8 @@ export const languages =
                     premium_elbow_double: "thamani zote zinazohusiana na viwiko viwili (pembe, umbali wa kati, miale, mwisho hadi mwisho) na zaidi...",
                     premium_elbow_double_oriented: "thamani zote zinazohusiana na viwiko viwili vilivyoelekezwa (pembe, umbali wa kati, miale, mwisho hadi mwisho) na zaidi...",
                     premium_elbow_slices: "thamani zote za kiwiko kilichogawanywa sehemu 3 (2 + 2×½), kutoka 4 hadi 32 jenereta na radii.",
-                    later: "baadaye"
-            
+                    later: "baadaye",
+                    pro: ""
                 },
 
         "ma":   {
@@ -1297,7 +1311,8 @@ export const languages =
                     premium_elbow_double: "与双弯头相关的所有数值（角度、中心距、半径、端对端）以及更多内容...",
                     premium_elbow_double_oriented: "与定向双弯头相关的所有数值（角度、中心距、半径、端对端）以及更多内容...",
                     premium_elbow_slices: "三段式分割弯头的所有数值（2 + 2×½），从 4 到 32 条母线及半径。",
-                    later: "稍后"
+                    later: "稍后",
+                    pro: ""
                 },
 
         "ja":   {
@@ -1378,7 +1393,8 @@ export const languages =
                     premium_elbow_double: "ダブルエルボーに関するすべての値（角度、芯間距離、半径、端から端まで）とさらに多く...",
                     premium_elbow_double_oriented: "向きを指定したダブルエルボーに関するすべての値（角度、芯間距離、半径、端から端まで）とさらに多く...",
                     premium_elbow_slices: "3セクションに分割されたエルボーのすべての値（2 + 2×½）、4〜32の母線と半径。",
-                    later: "あとで"
+                    later: "あとで",
+                    pro: ""
                 },
 
         
@@ -1460,7 +1476,8 @@ export const languages =
                     premium_elbow_double: "çift dirsek ile ilgili tüm değerler (açı, eksen mesafesi, yarıçap, uçtan uca) ve daha fazlası...",
                     premium_elbow_double_oriented: "yönlendirilmiş çift dirsek ile ilgili tüm değerler (açı, eksen mesafesi, yarıçap, uçtan uca) ve daha fazlası...",
                     premium_elbow_slices: "3 bölümlü dilimlenmiş dirseğin tüm değerleri (2 + 2×½), 4 ila 32 jeneratris ve yarıçap.",
-                    later: "daha sonra"
+                    later: "daha sonra",
+                    pro: ""
                 }
     }
 ]

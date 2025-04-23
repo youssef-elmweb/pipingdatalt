@@ -12,9 +12,9 @@ export function ModalPremium (props) {
 
     return  (
         <View style={[ {justifyContent: "center", alignItems: "center"} ]}>
-            <Modal style={[ {justifyContent: "center", alignItems: "center"} ]} animationType={"slide"} transparent={true} visible={props.statusModalPremium}>
+            <Modal style={[ {justifyContent: "center", alignItems: "center"} ]} animationType={"slide"} transparent={true} visible={props.statusModalPremium || props.statusModalPremiumOnApp}>
                 <Pressable style={[ {width: width, backgroundColor: "transparent"} ]} onPress={ props.makeStatusModalPremium }>
-                    <Pressable style={[ {width: width, marginTop: (height*0.1), justifyContent: 'space-between', alignSelf: "center", alignItems: 'flex-end', opacity: 0.975, backgroundColor : "#151515"} ]} onTouchEnd={ (e) => { e.stopPropagation() } }>
+                    <Pressable style={[ {width: width, marginTop: (height*0.085), justifyContent: 'space-between', alignSelf: "center", alignItems: 'flex-end', opacity: 0.975, backgroundColor : "#151515"} ]} onTouchEnd={ (e) => { e.stopPropagation() } }>
                         <View style={[ {position: "relative", width: width, paddingVertical: Number(7.5), flexDirection: "row", justifyContent: "center", alignItems: "center", borderTopRightRadius: 5, borderBottomWidth: 1, borderTopLeftRadius: 5, borderColor: "white", backgroundColor: "rgba(106, 13, 173, 0.4)"} ]}>
                             <Text style={[ {fontSize: Number(width*0.045), fontWeight: "bold", textAlign: "center", letterSpacing: 0.5, color: "white"} ]}>{firstLetterToUpperCase(languages[0][props.idLanguage].premium)}</Text> 
 
@@ -27,13 +27,13 @@ export function ModalPremium (props) {
                             </Pressable>
                         </View>
 
-                        <View style={[ {width: width, height: Number(height*0.9), flexDirection: "column", justifyContent: "flex-start", alignItems: "center", backgroundColor: "transparent"} ]}>
+                        <View style={[ {width: width, height: Number(height*0.915), flexDirection: "column", justifyContent: "flex-start", alignItems: "center", backgroundColor: "transparent"} ]}>
                             <View style={[ {width: Number(width*0.9), height: Number(height*0.25), flexDirection: "column", justifyContent: "center", alignItems: "center"} ]}> 
                                 <Text style={[ {marginTop: height*0.02, fontSize: Number(width*0.035), textAlign: "center", color: "gold"} ]}>{firstLetterToUpperCase(languages[0][props.idLanguage].premium_text_title)}</Text>
 
                                 <View style={[ {width: width, padding: width*0.02, flexDirection: "row", justifyContent: "space-around", alignItems: "center", backgroundColor: "#313131"} ]}>
                                     <View style={[ {width: width*0.9, paddingHorizontal: Number(width*0.06), paddingVertical: Number(width*0.025), flexDirection: "row", justifyContent: "center", alignItems: "center", borderRadius: 7.5, backgroundColor: "#252525"} ]}>
-                                        <Text style={[ {lineHeight: Number(width*0.05), fontSize: (height > 1200 ? Number(width*0.0277) : Number(width*0.035)), textAlign: "center", color: "lime"} ]}>{firstLetterToUpperCase(languages[0][props.idLanguage].premium_infos)}</Text>
+                                        <Text style={[ {lineHeight: Number(width*0.05), fontSize: (height > 1200 ? Number(width*0.0277) : Number(width*0.04)), textAlign: "center", color: "lime"} ]}>{firstLetterToUpperCase(languages[0][props.idLanguage].premium_infos)}</Text>
                                     </View>
                                 </View>
 
@@ -78,7 +78,7 @@ export function ModalPremium (props) {
 
                             <View style={[ { height: height*0.225, flexDirection: "column", justifyContent: "space-between", alignItems: "center", backgroundColor: "transparent"} ]}>                                 
                                 <Pressable style={[ { width: width*0.85, justifyContent: "center", alignSelf: "center", alignItems: "center",  borderWidth: 2.5, borderColor: "gold", borderRadius: 25, backgroundColor: 'rgba(106, 13, 173, 0.4)' } ]} onPress={() => Linking.openURL('https://play.google.com/store/apps/details?id=com.production.pipingdata&hl=fr')}>
-                                    <Text style={[ { width: width*0.85, height: width*0.075, marginVertical: height*0.0125, lineHeight: width*0.075, fontSize: Number(width*0.05), fontWeight: "bold", textAlign: "center", letterSpacing: 1.5, color: "gold" } ]}>{`${firstLetterToUpperCase(languages[0][props.idLanguage].premium)} `}&#11088;</Text>
+                                    <Text style={[ { width: width*0.85, height: width*0.075, marginVertical: height*0.0125, lineHeight: width*0.075, fontSize: Number(width*0.05), fontWeight: "bold", textAlign: "center", letterSpacing: 1.5, color: "gold" } ]}>{`PRO `}&#11088;</Text>
                                 </Pressable>
 
                                 <Pressable style={[ { marginBottom: Number(width*0.1), justifyContent: "center", alignSelf: "center", alignItems: "center" } ]} onPress={ props.makeStatusModalPremium }>

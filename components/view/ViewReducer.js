@@ -33,7 +33,9 @@ export function ViewReducer (props) {
 
         let heightReducer = (diameterSuperior - diameterInferior) * 3;
         let diameterReductionDiff = ((diameterSuperior - diameterInferior) * 0.5);
+        let diameterReductionDiffExc = (diameterSuperior - diameterInferior);
         let angle = Math.asin(heightReducer / Math.hypot(heightReducer, diameterReductionDiff)) * DATAS_TRIGONOMETRICS.oneRad;
+        let angleExc = Math.asin(heightReducer / Math.hypot(heightReducer, diameterReductionDiffExc)) * DATAS_TRIGONOMETRICS.oneRad;
 
         let heightReducerTop = Number.parseFloat((heightReducer) - ((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath).toFixed(1));
         let heightReducerBottom = Number.parseFloat(((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath).toFixed(1));
@@ -41,18 +43,21 @@ export function ViewReducer (props) {
         let curveReducerTop = heightReducerTop / Math.sin(angle * DATAS_TRIGONOMETRICS.oneDegreRad); 
         let curveReducerBottom = heightReducerBottom / Math.sin(angle * DATAS_TRIGONOMETRICS.oneDegreRad);
 
+        let curveReducerTopExc = heightReducerTop / Math.sin(angleExc * DATAS_TRIGONOMETRICS.oneDegreRad); 
+        let curveReducerBottomExc = heightReducerBottom / Math.sin(angleExc * DATAS_TRIGONOMETRICS.oneDegreRad);
+
         let currentDiameterReductionDiff = Math.cos(angle * DATAS_TRIGONOMETRICS.oneDegreRad) * curveReducerBottom;
 
-        let currentDiameterRedConc = DATAS_PIPES[props.diameterInferiorReducer._value][props.norme._value] + ((diameterReductionDiff - currentDiameterReductionDiff) * 2);
-        let currentDiameterRedExc = DATAS_PIPES[props.diameterInferiorReducer._value][props.norme._value] + ((diameterReductionDiff - currentDiameterReductionDiff) * 2);
+        let currentDiameterRedConcExc = DATAS_PIPES[props.diameterInferiorReducer._value][props.norme._value] + ((diameterReductionDiff - currentDiameterReductionDiff) * 2);
 
         DATAS_REDUCER.absolutePositionHeight = Number.parseFloat(localHeight.toFixed(1));
         DATAS_REDUCER.heightReducerTop = Math.round(heightReducerTop);
         DATAS_REDUCER.heightReducerBottom = Math.round(heightReducerBottom);
         DATAS_REDUCER.curveReducerTop = Math.round(curveReducerTop);
         DATAS_REDUCER.curveReducerBottom = Math.round(curveReducerBottom);
-        DATAS_REDUCER.currentDiameterRedConc = Number.parseFloat(currentDiameterRedConc.toFixed(1));
-        DATAS_REDUCER.currentDiameterRedExc = Number.parseFloat(currentDiameterRedExc.toFixed(1));
+        DATAS_REDUCER.curveReducerTopExc = Math.round(curveReducerTopExc);
+        DATAS_REDUCER.curveReducerBottomExc = Math.round(curveReducerBottomExc);
+        DATAS_REDUCER.currentDiameterRedConcExc = Number.parseFloat(currentDiameterRedConcExc.toFixed(1));
     
         props.shareDiameterAndHeight(DATAS_REDUCER);
     }            
@@ -72,11 +77,11 @@ export function ViewReducer (props) {
     }
 
     const REDUCER_CONC_MEMOIZED = useMemo(() => {
-        return <ConcentricReducer scaleBegin={scaleBegin} angleBegin={angleBegin} absolutePositionHeight={absolutePositionHeight} currentDiameterRedConc={props.currentDiameterRedConc} sizeText={props.sizeText} idSettingsMeasure={props.idSettingsMeasure} idSettingsDatas={props.idSettingsDatas} checkboxDatasInterfaceState={props.checkboxDatasInterfaceState} />
+        return <ConcentricReducer scaleBegin={scaleBegin} angleBegin={angleBegin} absolutePositionHeight={absolutePositionHeight} sizeText={props.sizeText} idSettingsMeasure={props.idSettingsMeasure} idSettingsDatas={props.idSettingsDatas} checkboxDatasInterfaceState={props.checkboxDatasInterfaceState} />
     }, [])
 
     const REDUCER_EXC_MEMOIZED = useMemo(() => {
-        return <ExcentricReducer scaleBegin={scaleBegin} angleBegin={angleBegin} absolutePositionHeight={absolutePositionHeight} currentDiameterRedExc={props.currentDiameterRedExc} sizeText={props.sizeText} idSettingsMeasure={props.idSettingsMeasure} idSettingsDatas={props.idSettingsDatas} checkboxDatasInterfaceState={props.checkboxDatasInterfaceState} />
+        return <ExcentricReducer scaleBegin={scaleBegin} angleBegin={angleBegin} absolutePositionHeight={absolutePositionHeight} sizeText={props.sizeText} idSettingsMeasure={props.idSettingsMeasure} idSettingsDatas={props.idSettingsDatas} checkboxDatasInterfaceState={props.checkboxDatasInterfaceState} />
     }, [])
 
 

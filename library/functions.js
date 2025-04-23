@@ -84,3 +84,5 @@ import { DATAS_TRIGONOMETRICS } from "../datas/datas_trigonometrics";
 
         return setScale(scaleValue);
     };
+
+    export const firstLetterToUpperCase = (word) => word.charAt(0).toUpperCase() + word.slice(1);
