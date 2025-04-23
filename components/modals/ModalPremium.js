@@ -1,5 +1,5 @@
 import { React } from "react";
-import { StyleSheet, Dimensions, Pressable, Text, Modal, View, Image } from "react-native";
+import { StyleSheet, Dimensions, Pressable, Text, Modal, View, Image, Linking } from "react-native";
 
 import { languages } from "../../languages/languages";
 
@@ -14,53 +14,77 @@ export function ModalPremium (props) {
         <View style={[ {justifyContent: "center", alignItems: "center"} ]}>
             <Modal style={[ {justifyContent: "center", alignItems: "center"} ]} animationType={"slide"} transparent={true} visible={props.statusModalPremium}>
                 <Pressable style={[ {width: width, backgroundColor: "transparent"} ]} onPress={ props.makeStatusModalPremium }>
-                    <Pressable style={[ {width: width, height: (height > 1200 ? Number(height*0.95) : Number(height*0.81)), marginTop: (height > 1200 ? Number(height*0.05) : Number(height*0.19)), paddingBottom: Number(width*0.05), justifyContent: 'space-between', alignSelf: "center", alignItems: 'center', opacity: 0.95, backgroundColor : "#151515"} ]} onTouchEnd={ (e) => { e.stopPropagation() } }>
-                        <View style={[ {position: "relative", width: width, paddingVertical: Number(7.5), flexDirection: "row", justifyContent: "center", alignItems: "center", borderTopRightRadius: 5, borderBottomWidth: 0.75, borderTopLeftRadius: 5, borderColor: "white", backgroundColor: "rgba(106, 13, 173, 0.4)"} ]}>
+                    <Pressable style={[ {width: width, marginTop: (height*0.1), justifyContent: 'space-between', alignSelf: "center", alignItems: 'flex-end', opacity: 0.975, backgroundColor : "#151515"} ]} onTouchEnd={ (e) => { e.stopPropagation() } }>
+                        <View style={[ {position: "relative", width: width, paddingVertical: Number(7.5), flexDirection: "row", justifyContent: "center", alignItems: "center", borderTopRightRadius: 5, borderBottomWidth: 1, borderTopLeftRadius: 5, borderColor: "white", backgroundColor: "rgba(106, 13, 173, 0.4)"} ]}>
                             <Text style={[ {fontSize: Number(width*0.045), fontWeight: "bold", textAlign: "center", letterSpacing: 0.5, color: "white"} ]}>{firstLetterToUpperCase(languages[0][props.idLanguage].premium)}</Text> 
 
-                            <Pressable style={[ {position: "absolute", right: Number(width*0.025), fontSize: (height > 1200 ? Number(width*0.025) : Number(width*0.033)), fontWeight: "bold", textAlign: "center", letterSpacing: 0.5, color: "black"} ]} onPressOut={ () => { return false; } }>
+                            <Pressable style={[ {position: "absolute", left: Number(width*0.025), fontSize: (height > 1200 ? Number(width*0.025) : Number(width*0.033)), fontWeight: "bold", textAlign: "center", letterSpacing: 0.5, color: "black"} ]} onPress={() => Linking.openURL('https://play.google.com/store/apps/details?id=com.production.pipingdata&hl=fr')}>
+                                <Image alt={"compas"} style={[ { width: width*0.1, height: width*0.1 } ]} source={require('../../assets/images/compas_gold.png')} />
+                            </Pressable>
+
+                            <Pressable style={[ {position: "absolute", right: Number(width*0.025), fontSize: (height > 1200 ? Number(width*0.025) : Number(width*0.033)), fontWeight: "bold", textAlign: "center", letterSpacing: 0.5, color: "black"} ]} onPress={() => Linking.openURL('https://play.google.com/store/apps/details?id=com.production.pipingdata&hl=fr')}>
                                 <Image alt={"equerre"} style={[ { width: width*0.1, height: width*0.1 } ]} source={require('../../assets/images/equerre_gold.png')} />
                             </Pressable>
                         </View>
 
-                        <View style={[ {width: width, height: Number(height*0.75), flexDirection: "column", justifyContent: "space-evenly", alignItems: "center", backgroundColor: "transparent"} ]}>
-                            <View style={[ {width: Number(width*0.9), flexDirection: "column", justifyContent: "center", alignItems: "center"} ]}> 
-                                <Text style={[ {fontSize: Number(width*0.035), textAlign: "center", color: "gold"} ]}>{firstLetterToUpperCase(languages[0][props.idLanguage].premium_text_title)}</Text>
+                        <View style={[ {width: width, height: Number(height*0.9), flexDirection: "column", justifyContent: "flex-start", alignItems: "center", backgroundColor: "transparent"} ]}>
+                            <View style={[ {width: Number(width*0.9), height: Number(height*0.25), flexDirection: "column", justifyContent: "center", alignItems: "center"} ]}> 
+                                <Text style={[ {marginTop: height*0.02, fontSize: Number(width*0.035), textAlign: "center", color: "gold"} ]}>{firstLetterToUpperCase(languages[0][props.idLanguage].premium_text_title)}</Text>
 
                                 <View style={[ {width: width, padding: width*0.02, flexDirection: "row", justifyContent: "space-around", alignItems: "center", backgroundColor: "#313131"} ]}>
-                                    <Pressable style={[ styles.menuBox ]} backgroundColor={(props.elbowLayer === 'elbow-double' ? "forestgreen" : "tomato")} onPressOut={ () => { return false; } }>
-                                        <Image alt={"elbow-double"} style={[ { width: width*0.08, height: width*0.08 } ]} source={require('../../assets/images/elbow_double.png')} />
-                                    </Pressable>
-
-                                    <Pressable style={[ styles.menuBox ]} backgroundColor={(props.elbowLayer === 'elbow-double-oriented' ? "forestgreen" : "tomato")} onPressOut={ () => { return false; } }>
-                                        <Image alt={"elbow-double-oriented"} style={[ { width: width*0.08, height: width*0.08 } ]} source={require('../../assets/images/elbow_double_oriented.png')} />
-                                    </Pressable>
-
-                                    <Pressable style={[ styles.menuBox ]} backgroundColor={(props.elbowLayer === 'elbow-slices' ? "forestgreen" : "tomato")} onPressOut={ () => { return false; } }>
-                                        <Image alt={"elbow-slices"} style={[ { width: width*0.08, height: width*0.08 } ]} source={require('../../assets/images/elbow_slice.png')} />
-                                    </Pressable>
+                                    <View style={[ {width: width*0.9, paddingHorizontal: Number(width*0.06), paddingVertical: Number(width*0.025), flexDirection: "row", justifyContent: "center", alignItems: "center", borderRadius: 7.5, backgroundColor: "#252525"} ]}>
+                                        <Text style={[ {lineHeight: Number(width*0.05), fontSize: (height > 1200 ? Number(width*0.0277) : Number(width*0.035)), textAlign: "center", color: "lime"} ]}>{firstLetterToUpperCase(languages[0][props.idLanguage].premium_infos)}</Text>
+                                    </View>
                                 </View>
 
                                 <View style={[ {width: width, marginBlockStart: 5, paddingHorizontal: Number(width*0.06), paddingVertical: Number(width*0.025), flexDirection: "row", justifyContent: "center", alignItems: "center", borderRadius: 7.5, backgroundColor: "#252525"} ]}>
-                                    <Text style={[ {lineHeight: Number(width*0.06), fontSize: (height > 1200 ? Number(width*0.03) : Number(width*0.039)), textAlign: "center", color: "white"} ]}>{firstLetterToUpperCase(languages[0][props.idLanguage].premium_text)}</Text>
+                                    <Text style={[ {lineHeight: Number(width*0.06), fontSize: (height > 1200 ? Number(width*0.0277) : Number(width*0.035)), textAlign: "center", color: "white"} ]}>{firstLetterToUpperCase(languages[0][props.idLanguage].premium_text)}</Text>
                                 </View>
                             </View>
 
-                            <View style={[ {width: Number(width*0.9), marginVertical: (height > 1200 ? Number(width*0.075) : 0), flexDirection: "column", justifyContent: "center", alignItems: "center"} ]}> 
-                                <Text style={[ {fontSize: Number(width*0.035), textAlign: "center", color: "gold"} ]}>{firstLetterToUpperCase(languages[0][props.idLanguage].for_me_label)}</Text>
+                            <View style={[ { height: height*0.325, flexDirection: "column", marginTop: height*0.025, justifyContent: "flex-start", alignItems: "center", backgroundColor: "transparent"} ]}>                                 
+                                <View style={[ {flexDirection: "row", backgroundColor: "transparent"} ]}> 
+                                    <View style={[ {width: width/2.95, flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "transparent"} ]}> 
+                                        <Pressable style={[ styles.menuBox ]} backgroundColor={"forestgreen"} onPressOut={ () => { return false; } }>
+                                            <Image alt={"elbow-double"} style={[ { width: width*0.08, height: width*0.08 } ]} source={require('../../assets/images/elbow_double.png')} />
+                                        </Pressable>
 
-                                <View style={[ {width: width, marginBlockStart: 5, paddingHorizontal: Number(width*0.06), paddingVertical: Number(width*0.025), flexDirection: "row", justifyContent: "flex-start", alignItems: "center", borderRadius: 7.5, backgroundColor: "#252525"} ]}>
-                                    <Text style={[ {lineHeight: Number(width*0.06), fontSize: (height > 1200 ? Number(width*0.03) : Number(width*0.039)), color: "white"} ]}>{firstLetterToUpperCase(languages[0][props.idLanguage].for_me)}</Text>
+                                        <View style={[ {width: width/3, minHeight: height*0.225, paddingTop: Number(width*0.015), paddingHorizontal: Number(width*0.05), flexDirection: "row", justifyContent: "flex-start", alignItems: "flex-start", borderRadius: 7.5, backgroundColor: "#252525"} ]}>
+                                            <Text style={[ {lineHeight: Number(width*0.06), fontSize: Number(width*0.03), color: "white"} ]}>{firstLetterToUpperCase(languages[0][props.idLanguage].premium_elbow_double)}</Text>
+                                        </View>
+                                    </View>
+
+                                    <View style={[ {width: width/2.95, flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "transparent"} ]}> 
+                                        <Pressable style={[ styles.menuBox ]} backgroundColor={"forestgreen"} onPressOut={ () => { return false; } }>
+                                            <Image alt={"elbow-double-oriented"} style={[ { width: width*0.08, height: width*0.08 } ]} source={require('../../assets/images/elbow_double_oriented.png')} />
+                                        </Pressable>
+
+                                        <View style={[ {width: width/3, minHeight: height*0.225, paddingTop: Number(width*0.015), paddingHorizontal: Number(width*0.05), flexDirection: "row", justifyContent: "flex-start", alignItems: "flex-start", borderRadius: 7.5, backgroundColor: "#252525"} ]}>
+                                            <Text style={[ {lineHeight: Number(width*0.06), fontSize: Number(width*0.03), color: "white"} ]}>{firstLetterToUpperCase(languages[0][props.idLanguage].premium_elbow_double_oriented)}</Text>
+                                        </View>
+                                    </View>
+
+                                    <View style={[ {width: width/2.95, flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "transparent"} ]}> 
+                                        <Pressable style={[ styles.menuBox ]} backgroundColor={"forestgreen"} onPressOut={ () => { return false; } }>
+                                            <Image alt={"elbow-slices"} style={[ { width: width*0.08, height: width*0.08 } ]} source={require('../../assets/images/elbow_slice.png')} />
+                                        </Pressable>
+
+                                        <View style={[ {width: width/3, minHeight: height*0.225, paddingTop: Number(width*0.015), paddingHorizontal: Number(width*0.05), flexDirection: "row", justifyContent: "flex-start", alignItems: "flex-start", borderRadius: 7.5, backgroundColor: "#252525"} ]}>
+                                            <Text style={[ {lineHeight: Number(width*0.06), fontSize: Number(width*0.03), color: "white"} ]}>{firstLetterToUpperCase(languages[0][props.idLanguage].premium_elbow_slices)}</Text>
+                                        </View>
+                                    </View>
                                 </View>
                             </View>
 
-                            <Pressable style={[ { width: width*0.85, marginBottom: Number(width*0.05), justifyContent: "center", alignSelf: "center", alignItems: "center", borderRadius: 25, backgroundColor: 'rgba(106, 13, 173, 0.4)' } ]} onPress={ false }>
-                                <Text style={[ { width: width*0.85, height: Number(width*0.125), lineHeight: width*0.125, fontSize: Number(height*0.03), fontWeight: "bold", textAlign: "center", letterSpacing: 1, color: "white" } ]}>{firstLetterToUpperCase(languages[0][props.idLanguage].premium)}</Text>
-                            </Pressable>
+                            <View style={[ { height: height*0.225, flexDirection: "column", justifyContent: "space-between", alignItems: "center", backgroundColor: "transparent"} ]}>                                 
+                                <Pressable style={[ { width: width*0.85, justifyContent: "center", alignSelf: "center", alignItems: "center",  borderWidth: 2.5, borderColor: "gold", borderRadius: 25, backgroundColor: 'rgba(106, 13, 173, 0.4)' } ]} onPress={() => Linking.openURL('https://play.google.com/store/apps/details?id=com.production.pipingdata&hl=fr')}>
+                                    <Text style={[ { width: width*0.85, height: width*0.075, marginVertical: height*0.0125, lineHeight: width*0.075, fontSize: Number(width*0.05), fontWeight: "bold", textAlign: "center", letterSpacing: 1.5, color: "gold" } ]}>{`${firstLetterToUpperCase(languages[0][props.idLanguage].premium)} `}&#11088;</Text>
+                                </Pressable>
 
-                            <Pressable style={[ { height: Number(width*0.035), marginBottom: (height > 1200 ? Number(width*0.025) : Number(width*0.075)), justifyContent: "center", alignSelf: "center", alignItems: "center" } ]} onPress={ props.makeStatusModalPremium }>
-                                <Text style={[ { width: Number(width*0.35), height: Number(height*0.035), lineHeight: Number(height*0.035), fontSize: Number(height*0.02), textAlign: "center", letterSpacing: 0.5, color: "white", borderRadius: 25, backgroundColor: '#3498db' } ]}>{languages[0][props.idLanguage].later}</Text>
-                            </Pressable>
+                                <Pressable style={[ { marginBottom: Number(width*0.1), justifyContent: "center", alignSelf: "center", alignItems: "center" } ]} onPress={ props.makeStatusModalPremium }>
+                                    <Text style={[ { width: Number(width*0.45), height: Number(height*0.045), lineHeight: Number(height*0.045), fontSize: Number(height*0.02), textAlign: "center", letterSpacing: 0.5, color: "white", borderRadius: 25, backgroundColor: '#3498db' } ]}>{languages[0][props.idLanguage].later}</Text>
+                                </Pressable>
+                            </View>
                         </View>
                     </Pressable> 
                 </Pressable>

@@ -75,7 +75,11 @@ export const languages =
                     personalized_ad_text: "Les publicités seront personnalisées pour une expérience mieux adaptée",
                     premium: "premium",
                     premium_text_title: "Passez au niveau supérieur",
+                    premium_infos: "toutes les fonctionnalités sans publicités",
                     premium_text: "Travaillez vite. Apprenez plus.\nDes outils puissants et des mémotech pour rester maître du geste.\nFluidité. Modernité. Efficacité.",
+                    premium_elbow_double: "toutes les valeurs liées au double coudes (angles, entraxes, rayons, bout à bout) et bien plus...",
+                    premium_elbow_double_oriented: "toutes les valeurs liées au double coudes orientés (angles, entraxes, rayons, bout à bout) et bien plus...",
+                    premium_elbow_slices: "toutes les valeurs du coude en tranches 3 sections (2 + 2×½), de 4 à 32 génératrices et rayons.",
                     later: "plus tard"
                 }, 
 
@@ -152,7 +156,11 @@ export const languages =
                     personalized_ad_text: "Ads will be personalized for a better-suited experience",
                     premium: "premium",
                     premium_text_title: "Take it to the next level",
-                    premium_text: "Work faster. Learn more.\nPowerful tools and memory aids to stay in control.\nFluidity. Modernity. Efficiency.",
+                    premium_infos: "all features without ads",
+                    premium_text: "Work faster. Learn more.\nPowerful tools, memory aids to stay in control.\nFluidity. Modernity. Efficiency.",
+                    premium_elbow_double: "all values related to double elbows (angles, center distances, radii, end-to-end) and more...",
+                    premium_elbow_double_oriented: "all values related to oriented double elbows (angles, center distances, radii, end-to-end) and more...",
+                    premium_elbow_slices: "all values of the sliced elbow in 3 sections (2 + 2×½), from 4 to 32 generatrices and radii.",
                     later: "later"
                 }, 
 
@@ -229,7 +237,11 @@ export const languages =
                     personalized_ad_text: "Die Werbung wird personalisiert, um eine besser angepasste Erfahrung zu bieten",
                     premium: "Premium",
                     premium_text_title: "Steigen Sie auf das nächste Level",
+                    premium_infos: "alle funktionen ohne werbung",
                     premium_text: "Arbeite schnell. Lerne mehr.\nLeistungsstarke Werkzeuge und Merkhilfen für maximale Kontrolle.\nFlüssigkeit. Modernität. Effizienz.",
+                    premium_elbow_double: "alle werte für doppelte bögen (winkel, abstände, radien, end-zu-end) und mehr...",
+                    premium_elbow_double_oriented: "alle werte für ausgerichtete doppelte bögen (winkel, abstände, radien, end-zu-end) und mehr...",
+                    premium_elbow_slices: "alle werte des geschnittenen bogens in 3 abschnitten (2 + 2×½), von 4 bis 32 generatoren und radien.",
                     later: "später"
                 }, 
 
@@ -306,7 +318,11 @@ export const languages =
                     personalized_ad_text: "Advertenties worden gepersonaliseerd voor een beter afgestemde ervaring",
                     premium: "Premium",
                     premium_text_title: "Ga naar het volgende niveau",
+                    premium_infos: "alle functies zonder advertenties",
                     premium_text: "Werk snel. Leer meer.\nKrachtige tools en geheugensteuntjes om de controle te behouden.\nVloeiendheid. Moderniteit. Efficiëntie.",
+                    premium_elbow_double: "alle waarden met betrekking tot dubbele bochten (hoeken, hart-op-hart, stralen, eind-tot-eind) en meer...",
+                    premium_elbow_double_oriented: "alle waarden met betrekking tot gerichte dubbele bochten (hoeken, hart-op-hart, stralen, eind-tot-eind) en meer...",
+                    premium_elbow_slices: "alle waarden van de gesneden bocht in 3 secties (2 + 2×½), van 4 tot 32 generatrices en stralen.",
                     later: "later"
                 },
 
@@ -384,7 +400,11 @@ export const languages =
                     personalized_ad_text: "Los anuncios se personalizarán para una experiencia mejor adaptada",
                     premium: "Premium",
                     premium_text_title: "Lleva tu trabajo al siguiente nivel",
+                    premium_infos: "todas las funciones sin anuncios",
                     premium_text: "Trabaja rápido. Aprende más.\nHerramientas potentes y memotécnicas para mantener el control.\nFluidez. Modernidad. Eficacia.",
+                    premium_elbow_double: "todos los valores relacionados con codos dobles (ángulos, ejes, radios, extremo a extremo) y mucho más...",
+                    premium_elbow_double_oriented: "todos los valores relacionados con codos dobles orientados (ángulos, ejes, radios, extremo a extremo) y mucho más...",
+                    premium_elbow_slices: "todos los valores del codo en secciones (2 + 2×½), de 4 a 32 generatrices y radios.",
                     later: "más tarde"
                 },
 
@@ -461,7 +481,11 @@ export const languages =
                     personalized_ad_text: "Os anúncios serão personalizados para uma experiência mais adequada",
                     premium: "Premium",
                     premium_text_title: "Eleve-se para o próximo nível",
+                    premium_infos: "todos os recursos sem anúncios",
                     premium_text: "Trabalhe rápido. Aprenda mais.\nFerramentas poderosas e memotécnicas para manter o controle.\nFluidez. Modernidade. Eficiência.",
+                    premium_elbow_double: "todos os valores relacionados aos cotovelos duplos (ângulos, distâncias entre centros, raios, ponta a ponta) e muito mais...",
+                    premium_elbow_double_oriented: "todos os valores relacionados aos cotovelos duplos orientados (ângulos, distâncias entre centros, raios, ponta a ponta) e muito mais...",
+                    premium_elbow_slices: "todos os valores do cotovelo em fatias de 3 seções (2 + 2×½), de 4 a 32 geratrizes e raios.",
                     later: "mais tarde"
                 },
 
@@ -538,7 +562,11 @@ export const languages =
                     personalized_ad_text: "Reclamele vor fi personalizate pentru o experiență mai adaptată",
                     premium: "Premium",
                     premium_text_title: "Treceți la nivelul următor",
+                    premium_infos: "toate funcționalitățile fără reclame",
                     premium_text: "Lucrați rapid. Învățați mai mult.\nInstrumente puternice și tehnici mnemotehnice pentru a rămâne stăpân pe gest.\nFluență. Modernitate. Eficiență.",
+                    premium_elbow_double: "toate valorile legate de coturi duble (unghiuri, distanțe între axe, raze, cap la cap) și multe altele...",
+                    premium_elbow_double_oriented: "toate valorile legate de coturi duble orientate (unghiuri, distanțe între axe, raze, cap la cap) și multe altele...",
+                    premium_elbow_slices: "toate valorile pentru cotul în secțiuni (2 + 2×½), între 4 și 32 generatoare și raze.",
                     later: "mai târziu"
                 },
 
@@ -615,7 +643,11 @@ export const languages =
                     personalized_ad_text: "Gli annunci saranno personalizzati per un'esperienza più adatta",
                     premium: "Premium",
                     premium_text_title: "Passa al livello successivo",
+                    premium_infos: "tutte le funzionalità senza pubblicità",
                     premium_text: "Lavora veloce. Impara di più.\nStrumenti potenti e memotecniche per restare padrone del gesto.\nFluidità. Modernità. Efficacia.",
+                    premium_elbow_double: "tutti i valori relativi ai doppi gomiti (angoli, interassi, raggi, testa a testa) e molto altro...",
+                    premium_elbow_double_oriented: "tutti i valori relativi ai doppi gomiti orientati (angoli, interassi, raggi, testa a testa) e molto altro...",
+                    premium_elbow_slices: "tutti i valori del gomito in sezioni (2 + 2×½), da 4 a 32 generatrici e raggi.",
                     later: "più tardi"         
                 },
 
@@ -692,7 +724,11 @@ export const languages =
                     personalized_ad_text: "Reklamy budou personalizovány pro lépe přizpůsobený zážitek",
                     premium: "Premium",
                     premium_text_title: "Přejděte na vyšší úroveň",
+                    premium_infos: "všechny funkce bez reklam",
                     premium_text: "Pracujte rychle. Učte se víc.\nVýkonné nástroje a mnemotechniky pro zachování kontroly.\nPlynulost. Modernost. Efektivita.",
+                    premium_elbow_double: "všechny hodnoty týkající se dvojitých kolen (úhly, rozteče, poloměry, čelo k čelu) a mnohem více...",
+                    premium_elbow_double_oriented: "všechny hodnoty týkající se orientovaných dvojitých kolen (úhly, rozteče, poloměry, čelo k čelu) a mnohem více...",
+                    premium_elbow_slices: "všechny hodnoty kolena rozděleného do 3 částí (2 + 2×½), od 4 do 32 tvořících a poloměrů.",
                     later: "později"         
                 },
 
@@ -769,7 +805,11 @@ export const languages =
                     personalized_ad_text: "سيتم تخصيص الإعلانات لتجربة أكثر توافقًا",
                     premium: "بريميوم",
                     premium_text_title: "ارتقِ إلى المستوى التالي",
+                    premium_infos: "جميع الميزات بدون إعلانات",
                     premium_text: "اعمل بسرعة. تعلم أكثر.\nأدوات قوية وتقنيات ذهنية لتظل متحكمًا في كل حركة.\nالسلاسة. الحداثة. الكفاءة.",
+                    premium_elbow_double: "جميع القيم المتعلقة بالأكواع المزدوجة (الزوايا، المسافات بين المحاور، الأنصاف القطرية، من طرف إلى طرف) وأكثر...",
+                    premium_elbow_double_oriented: "جميع القيم المتعلقة بالأكواع المزدوجة الموجهة (الزوايا، المسافات بين المحاور، الأنصاف القطرية، من طرف إلى طرف) وأكثر...",
+                    premium_elbow_slices: "جميع قيم الكوع المقطّع إلى 3 أقسام (2 + 2×½)، من 4 إلى 32 مولدًا ونصف قطر.",
                     later: "لاحقًا"
                 },
                 
@@ -846,7 +886,11 @@ export const languages =
                     personalized_ad_text: "광고가 더 맞춤화된 경험을 위해 개인화됩니다",
                     premium: "프리미엄",
                     premium_text_title: "다음 단계로 도약하세요",
+                    premium_infos: "광고 없는 모든 기능",
                     premium_text: "빠르게 작업하세요. 더 많이 배우세요.\n강력한 도구와 기억 보조 기능으로 정확한 제어 유지.\n유연함. 현대성. 효율성.",
+                    premium_elbow_double: "더블 엘보와 관련된 모든 값 (각도, 중심 거리, 반경, 끝과 끝) 그리고 그 이상...",
+                    premium_elbow_double_oriented: "방향이 지정된 더블 엘보와 관련된 모든 값 (각도, 중심 거리, 반경, 끝과 끝) 그리고 그 이상...",
+                    premium_elbow_slices: "3단 분할된 엘보의 모든 값 (2 + 2×½), 4~32개의 생성선 및 반경 포함.",
                     later: "나중에"
         },
 
@@ -923,7 +967,11 @@ export const languages =
                     personalized_ad_text: "Реклама будет персонализирована для более подходящего опыта",
                     premium: "Премиум",
                     premium_text_title: "Поднимитесь на новый уровень",
+                    premium_infos: "все функции без рекламы",
                     premium_text: "Работайте быстро. Учитесь больше.\nМощные инструменты и мнемотехники, чтобы оставаться хозяином процесса.\nПлавность. Современность. Эффективность.",
+                    premium_elbow_double: "все значения, связанные с двойными отводами (углы, межцентровые расстояния, радиусы, от края до края) и многое другое...",
+                    premium_elbow_double_oriented: "все значения, связанные с ориентированными двойными отводами (углы, межцентровые расстояния, радиусы, от края до края) и многое другое...",
+                    premium_elbow_slices: "все значения колена, разделённого на 3 секции (2 + 2×½), от 4 до 32 образующих и радиусов.",
                     later: "позже"
         },
 
@@ -1000,7 +1048,11 @@ export const languages =
                     personalized_ad_text: "विज्ञापन व्यक्तिगत रूप से बेहतर अनुभव के लिए अनुकूलित किए जाएंगे।",
                     premium: "प्रीमियम",
                     premium_text_title: "अगले स्तर पर जाएं",
+                    premium_infos: "बिना विज्ञापनों के सभी सुविधाएँ",
                     premium_text: "तेजी से काम करें। ज़्यादा सीखें।\nशक्तिशाली उपकरण और मेमोटेक से नियंत्रण बनाए रखें।\nस्मूदनेस। आधुनिकता। प्रभावशीलता।",
+                    premium_elbow_double: "डबल एल्बो से संबंधित सभी मान (कोण, केंद्र दूरी, त्रिज्या, सिरा से सिरा) और भी बहुत कुछ...",
+                    premium_elbow_double_oriented: "दिशानिर्देशित डबल एल्बो से संबंधित सभी मान (कोण, केंद्र दूरी, त्रिज्या, सिरा से सिरा) और भी बहुत कुछ...",
+                    premium_elbow_slices: "3 खंडों में विभाजित कोहनी के सभी मान (2 + 2×½), 4 से 32 जनरेटर और त्रिज्या तक।",
                     later: "बाद में"
                 },
 
@@ -1077,7 +1129,11 @@ export const languages =
                     personalized_ad_text: "اشتہارات کو بہتر تجربے کے لیے ذاتی نوعیت کا بنایا جائے گا",
                     premium: "پریمیم",
                     premium_text_title: "اگلی سطح تک جائیں",
+                    premium_infos: "تمام خصوصیات بغیر اشتہارات کے",
                     premium_text: "تیزی سے کام کریں۔ زیادہ سیکھیں۔\nطاقتور ٹولز اور یادداشت کو بہتر بنانے والے ذرائع سے مہارت برقرار رکھیں۔\nروانی۔ جدت۔ کارکردگی۔",
+                    premium_elbow_double: "ڈبل ایلبو سے متعلق تمام قدریں (زاویے، سینٹر فاصلہ، رداس، کنارے سے کنارہ) اور بھی بہت کچھ...",
+                    premium_elbow_double_oriented: "رُخ متعین ڈبل ایلبو سے متعلق تمام قدریں (زاویے، سینٹر فاصلہ، رداس، کنارے سے کنارہ) اور بھی بہت کچھ...",
+                    premium_elbow_slices: "3 حصوں میں تقسیم شدہ ایلبو کی تمام قدریں (2 + 2×½)، 4 سے 32 جنریٹرز اور ریڈیئس تک۔",
                     later: "بعد میں"
                 },
 
@@ -1154,7 +1210,11 @@ export const languages =
                     personalized_ad_text: "Matangazo yatabinafsishwa kwa uzoefu unaofaa zaidi",
                     premium: "Premium",
                     premium_text_title: "Fikia kiwango kinachofuata",
+                    premium_infos: "vipengele vyote bila matangazo",
                     premium_text: "Fanya kazi haraka. Jifunze zaidi.\nZana zenye nguvu na mbinu za kukumbuka ili udhibiti usipotee.\nUfasaha. Kisasa. Ufanisi.",
+                    premium_elbow_double: "thamani zote zinazohusiana na viwiko viwili (pembe, umbali wa kati, miale, mwisho hadi mwisho) na zaidi...",
+                    premium_elbow_double_oriented: "thamani zote zinazohusiana na viwiko viwili vilivyoelekezwa (pembe, umbali wa kati, miale, mwisho hadi mwisho) na zaidi...",
+                    premium_elbow_slices: "thamani zote za kiwiko kilichogawanywa sehemu 3 (2 + 2×½), kutoka 4 hadi 32 jenereta na radii.",
                     later: "baadaye"
             
                 },
@@ -1232,7 +1292,11 @@ export const languages =
                     personalized_ad_text: "广告将被个性化，以提供更合适的体验",
                     premium: "高级",
                     premium_text_title: "迈向更高层次",
+                    premium_infos: "所有功能无广告",
                     premium_text: "快速工作，学得更多。\n强大的工具与记忆技巧，帮助你掌控每一步。\n流畅。现代。高效。",
+                    premium_elbow_double: "与双弯头相关的所有数值（角度、中心距、半径、端对端）以及更多内容...",
+                    premium_elbow_double_oriented: "与定向双弯头相关的所有数值（角度、中心距、半径、端对端）以及更多内容...",
+                    premium_elbow_slices: "三段式分割弯头的所有数值（2 + 2×½），从 4 到 32 条母线及半径。",
                     later: "稍后"
                 },
 
@@ -1309,7 +1373,11 @@ export const languages =
                     personalized_ad_text: "広告は、より適した体験のためにパーソナライズされます",
                     premium: "プレミアム",
                     premium_text_title: "次のレベルへ進もう",
+                    premium_infos: "すべての機能を広告なしで",
                     premium_text: "素早く作業し、さらに学ぶ。\n強力なツールと記憶術で動きを完全にコントロール。\n滑らかさ。モダンさ。効率性。",
+                    premium_elbow_double: "ダブルエルボーに関するすべての値（角度、芯間距離、半径、端から端まで）とさらに多く...",
+                    premium_elbow_double_oriented: "向きを指定したダブルエルボーに関するすべての値（角度、芯間距離、半径、端から端まで）とさらに多く...",
+                    premium_elbow_slices: "3セクションに分割されたエルボーのすべての値（2 + 2×½）、4〜32の母線と半径。",
                     later: "あとで"
                 },
 
@@ -1387,7 +1455,11 @@ export const languages =
                     personalized_ad_text: "Reklamlar, daha iyi uyarlanmış bir deneyim için kişiselleştirilecektir",
                     premium: "Premium",
                     premium_text_title: "Bir üst seviyeye geçin",
+                    premium_infos: "reklamsız tüm özellikler",
                     premium_text: "Hızlı çalış. Daha fazlasını öğren.\nKontrolü elden bırakmamak için güçlü araçlar ve hafıza destekleri.\nAkıcılık. Modernlik. Verimlilik.",
+                    premium_elbow_double: "çift dirsek ile ilgili tüm değerler (açı, eksen mesafesi, yarıçap, uçtan uca) ve daha fazlası...",
+                    premium_elbow_double_oriented: "yönlendirilmiş çift dirsek ile ilgili tüm değerler (açı, eksen mesafesi, yarıçap, uçtan uca) ve daha fazlası...",
+                    premium_elbow_slices: "3 bölümlü dilimlenmiş dirseğin tüm değerleri (2 + 2×½), 4 ila 32 jeneratris ve yarıçap.",
                     later: "daha sonra"
                 }
     }

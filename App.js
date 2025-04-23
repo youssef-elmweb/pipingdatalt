@@ -324,12 +324,12 @@ export default function App() {
                 </View>
 
 
-                <View style={[ { width: width*0.98, minHeight: (height > 1200 ? height*0.025 : height*0.025), maxHeight: (height > 1200 ? height*0.025 : height*0.03), flexDirection: "row", justifyContent: "space-between", backgroundColor: "transparent" } ]}>
+                <View style={[ { width: width*0.98, minHeight: (height > 1200 ? height*0.025 : height*0.025), maxHeight: (height > 1200 ? height*0.0225 : height*0.03), flexDirection: "row", justifyContent: "space-between", backgroundColor: "transparent" } ]}>
                     {
                         (elbowLayer != "reducer" ?
                             (elbowLayer != "elbow-slices" ?
 
-                                <View style={[ { width: width*0.95, marginHorizontal: width*0.029, marginTop: (height > 1200 ? 0 : height*0.005), flexDirection: "row", justifyContent: "space-between", alignItems: "center", backgroundColor: "transparent" } ]}>
+                                <View style={[ { width: width*0.95, marginHorizontal: width*0.029, marginTop: (height > 1200 ? 0 : height*0.0025), flexDirection: "row", justifyContent: "space-between", alignItems: "center", backgroundColor: "transparent" } ]}>
                                     <Text style={[ styles.labelTopBar, { width: width*0.15, lineHeight: height*0.0225, fontSize: width*0.03 } ]}>{`Ø`}</Text>
                                     <Text key={"intra-extra-values"} style={[ styles.labelTopBar, { width: width*0.375, marginHorizontal: width*0.01, lineHeight: height*0.0225, fontSize: width*0.03 } ]}>{`${languages[0][idLanguage].intra}/${languages[0][idLanguage].extra}`}</Text>
                                     <Text key={"radius-values"} style={[ styles.labelTopBar, { width: width*0.375, lineHeight: height*0.0225, fontSize: width*0.03 } ]}>{`${languages[0][idLanguage].angle}/${languages[0][idLanguage].radius}`}</Text>
@@ -340,9 +340,9 @@ export default function App() {
                             false) : 
 
                             <View style={[ { width: width*0.98, flexDirection: "column", justifyContent: "space-between", backgroundColor: "transparent" } ]}>
-                                <View style={[ { width: width*0.95, marginHorizontal: width*0.03, flexDirection: "row", backgroundColor: "transparent" } ]}>
+                                <View style={[ { width: width*0.95, marginTop: (height > 1200 ? 0 : height*0.0025), marginHorizontal: width*0.03, flexDirection: "row", backgroundColor: "transparent" } ]}>
                                     <View style={[ { width: width*0.25, flexDirection: "column", justifyContent: "space-between", backgroundColor: "transparent" } ]}>
-                                        <View style={[ { marginTop: (height > 1200 ? 0 : height*0.005), flexDirection: "row", justifyContent: "space-between", alignItems: "center", backgroundColor: "transparent" } ]}>
+                                        <View style={[ { flexDirection: "row", justifyContent: "space-between", alignItems: "center", backgroundColor: "transparent" } ]}>
                                             <Text style={[ styles.labelTopBar, {width: width*0.15, lineHeight: height*0.0225, fontSize: width*0.03} ]}>{`Ø inf`}</Text>
                                         </View>
 
@@ -353,7 +353,7 @@ export default function App() {
                                     </View>
 
                                     <View style={[ { width: width*0.25, flexDirection: "column", justifyContent: "space-between", backgroundColor: "transparent" } ]}>
-                                        <View style={[ { lineHeight: height*0.0225, marginTop: (height > 1200 ? 0 : height*0.005), flexDirection: "row", justifyContent: "space-between", alignItems: "center", backgroundColor: "transparent" } ]}>
+                                        <View style={[ { lineHeight: height*0.0225, flexDirection: "row", justifyContent: "space-between", alignItems: "center", backgroundColor: "transparent" } ]}>
                                             <Text style={[ styles.labelTopBar, {width: width*0.15, lineHeight: height*0.0225, fontSize: width*0.03} ]}>{`Ø sup`}</Text>
                                         </View>
 
@@ -364,7 +364,7 @@ export default function App() {
                                     </View>
 
                                     <View style={[ { width: width*0.25, flexDirection: "column", justifyContent: "space-between", backgroundColor: "transparent" } ]}>
-                                        <View style={[ { lineHeight: height*0.0225, marginTop: (height > 1200 ? 0 : height*0.005), flexDirection: "row", justifyContent: "space-between", alignItems: "center", backgroundColor: "transparent" } ]}>
+                                        <View style={[ { lineHeight: height*0.0225, flexDirection: "row", justifyContent: "space-between", alignItems: "center", backgroundColor: "transparent" } ]}>
                                             <Text style={[ styles.labelTopBar, {width: width*0.15, lineHeight: height*0.0225, fontSize: width*0.03} ]}>{"/"}</Text>
                                         </View>
 
@@ -375,7 +375,7 @@ export default function App() {
                                     </View>
 
                                     <View style={[ { width: width*0.25, flexDirection: "column", justifyContent: "space-between", backgroundColor: "transparent" } ]}>
-                                        <View style={[ { lineHeight: height*0.0225, marginTop: (height > 1200 ? 0 : height*0.005), flexDirection: "row", justifyContent: "space-between", alignItems: "center", backgroundColor: "transparent" } ]}>
+                                        <View style={[ { lineHeight: height*0.0225, flexDirection: "row", justifyContent: "space-between", alignItems: "center", backgroundColor: "transparent" } ]}>
                                             <Text style={[ styles.labelTopBar, {width: width*0.15, lineHeight: height*0.0225, fontSize: width*0.03} ]}>{`H`}</Text>
                                         </View>
 
@@ -404,12 +404,12 @@ export default function App() {
                                     </View>
 
                                     <View style={[ { width: width*0.3, flexDirection: "row", justifyContent: "space-evenly", alignItems: "center", backgroundColor: "transparent" } ]}>
-                                        <TouchableHighlight key={"reducers"} style={[ { width: width*0.0725, height: width*0.0725, justifyContent: "center", alignItems: "center", borderWidth: 1, borderColor: "white", borderTopRightRadius: 25, borderBottomRightRadius: 25, borderBottomLeftRadius: 25, borderTopLeftRadius: 25, backgroundColor: "#414141" } ]} activeOpacity={0.25} onPress={ () => setCurrentReducer(() => (currentReducer == "reducer-conc" ? "reducer-exc" : "reducer-conc")) }>
+                                        <TouchableHighlight key={"reducers"} style={[ { width: width*0.075, height: width*0.075, justifyContent: "center", alignItems: "center", borderWidth: 1, borderColor: "white", borderTopRightRadius: 25, borderBottomRightRadius: 25, borderBottomLeftRadius: 25, borderTopLeftRadius: 25, backgroundColor: "#414141" } ]} activeOpacity={0.25} onPress={ () => setCurrentReducer(() => (currentReducer == "reducer-conc" ? "reducer-exc" : "reducer-conc")) }>
                                             {
                                                 (
                                                     currentReducer == "reducer-conc" ?
-                                                        <Image alt={"reducer"} style={[ { width: width*0.0725, height: width*0.0725 } ]} source={require('./assets/images/reducer_conc.png')} /> :
-                                                        <Image alt={"reducer"} style={[ { width: width*0.0725, height: width*0.0725 } ]} source={require('./assets/images/reducer_exc.png')} />
+                                                        <Image alt={"reducer"} style={[ { width: width*0.075, height: width*0.075 } ]} source={require('./assets/images/reducer_conc.png')} /> :
+                                                        <Image alt={"reducer"} style={[ { width: width*0.075, height: width*0.075 } ]} source={require('./assets/images/reducer_exc.png')} />
                                                 )
                                             }
                                         </TouchableHighlight>
@@ -465,7 +465,7 @@ export default function App() {
             {/*/////////////////////////////////////////   INTERFACE VIEW   //////////////////////////////////////////////*/}
             {/*///////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
             {(elbowLayer == "elbow" ?
-                <ViewElbow elbowLayer={elbowLayer} baseAngle={BASEANGLE} shareAngleElbow={makeDatasElbowByAngle} curvesMeasure={ {angle: ANGLE, intra: INTRA, extra: EXTRA} } diameter={currentDiameter} format={formatElbow} currentDiameter={currentDiameter} norme={NORME._value} formatElbow={formatElbow} measureUnit={MEASUREUNIT} idSettingsMeasure={idSettingsMeasure} idSettingsAngle={idSettingsAngle} idSettingsDatas={idSettingsDatas} checkboxDatasInterfaceState={checkboxDatasInterfaceState} />                                                        
+                <ViewElbow elbowLayer={elbowLayer} sizeText={sizeText} baseAngle={BASEANGLE} curvesMeasure={ {angle: ANGLE, intra: INTRA, extra: EXTRA} } diameter={currentDiameter} format={formatElbow} currentDiameter={currentDiameter} norme={NORME} formatElbow={formatElbow} measureUnit={MEASUREUNIT} idSettingsMeasure={idSettingsMeasure} idSettingsAngle={idSettingsAngle} idSettingsDatas={idSettingsDatas} checkboxDatasInterfaceState={checkboxDatasInterfaceState} shareAngleElbow={makeDatasElbowByAngle} />                                                        
             : false)}
 
             {(elbowLayer == "reducer" ?

@@ -82,9 +82,11 @@ export function ViewReducer (props) {
 
     const panGesture = Gesture.Pan()
         .onBegin((event) => {
-            let localHeight = event.absoluteY;
+            if (event.absoluteY > Math.round((height*0.36)) && event.absoluteY < Math.round(height*0.775)) {
+                let localHeight = event.absoluteY;
 
-            getDatasForReducer(Math.round(localHeight), getDiameterReducerAndHeightForDatas, getDiameterReducerDiffForPath, true);
+                getDatasForReducer(Math.round(localHeight), getDiameterReducerAndHeightForDatas, getDiameterReducerDiffForPath, true);
+            }
         })
         .onChange((event) => {
             let localHeight;

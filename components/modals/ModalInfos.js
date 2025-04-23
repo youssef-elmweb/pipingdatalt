@@ -14,13 +14,13 @@ export function ModalInfos (props) {
         <View style={[ {justifyContent: "center", alignItems: "center"} ]}>
             <Modal style={[ {justifyContent: "center", alignItems: "center"} ]} animationType={"slide"} transparent={true} visible={props.statusModalInfos}>
                 <Pressable style={[ {width: width, backgroundColor: "transparent"} ]} onPress={ props.makeStatusModalInfos }>
-                    <Pressable style={[ {width: width, height: (height > 1200 ? Number(height*0.95) : Number(height*0.81)), marginTop: (height > 1200 ? Number(height*0.05) : Number(height*0.19)), paddingBottom: Number(width*0.05), justifyContent: 'space-between', alignSelf: "center", alignItems: 'center', opacity: 0.95, backgroundColor : "#151515"} ]} onTouchEnd={ (e) => { e.stopPropagation() } }>
-                        <View style={[ {position: "relative", width: width, paddingVertical: Number(7.5), flexDirection: "row", justifyContent: "center", alignItems: "center", borderTopRightRadius: 5, borderBottomWidth: 0.75, borderTopLeftRadius: 5, borderColor: "white", backgroundColor: "#00BFFF"} ]}>
+                    <Pressable style={[ {width: width, marginTop: height*0.1, paddingBottom: Number(width*0.05), justifyContent: 'space-between', alignSelf: "center", alignItems: 'center', opacity: 0.975, backgroundColor : "#151515"} ]} onTouchEnd={ (e) => { e.stopPropagation() } }>
+                        <View style={[ {position: "relative", width: width, paddingVertical: Number(7.5), flexDirection: "row", justifyContent: "center", alignItems: "center", borderTopRightRadius: 5, borderBottomWidth: 1, borderTopLeftRadius: 5, borderColor: "white", backgroundColor: "#00BFFF"} ]}>
                             <Text style={[ {fontSize: Number(width*0.045), fontWeight: "bold", textAlign: "center", letterSpacing: 0.5, color: "white"} ]}>{firstLetterToUpperCase(languages[0][props.idLanguage].info)}</Text> 
                             <Text style={[ {position: "absolute", right: Number(width*0.025), fontSize: (height > 1200 ? Number(width*0.025) : Number(width*0.033)), fontWeight: "bold", textAlign: "center", letterSpacing: 0.5, color: "black"} ]}>{`${languages[0][props.idLanguage].version} 1.8.0`}</Text>
                         </View>
 
-                        <View style={[ {width: width, height: Number(height*0.75), marginBottom: (height > 1200 ? Number(width*0.05) : Number(0)), flexDirection: "column", justifyContent: "space-evenly", alignItems: "center", backgroundColor: "transparent"} ]}>
+                        <View style={[ {width: width, height: Number(height*0.9), marginBottom: (height > 1200 ? Number(width*0.05) : Number(0)), flexDirection: "column", justifyContent: "space-evenly", alignItems: "center", backgroundColor: "transparent"} ]}>
                             <View style={[ {width: Number(width*0.9), flexDirection: "column"} ]}> 
                                 <Text style={[ {fontSize: Number(width*0.035), textAlign: "center", color: "#54a0ff"} ]}>{firstLetterToUpperCase(languages[0][props.idLanguage].confidentiality)}</Text>
 
@@ -45,8 +45,8 @@ export function ModalInfos (props) {
                                 </View>
                             </View>
 
-                            <Pressable style={[ {height: Number(width*0.035), marginBottom: (height > 1200 ? Number(width*0.025) : Number(width*0.075)), justifyContent: "center", alignSelf: "center", alignItems: "center"} ]} onPress={ props.makeStatusModalInfos }>
-                                <Text style={[ {width: Number(width*0.35), height: Number(height*0.035), lineHeight: Number(height*0.035), fontSize: Number(height*0.02), textAlign: "center", letterSpacing: 0.5, color: "white", borderRadius: 25, backgroundColor: '#3498db'} ]}>{languages[0][props.idLanguage].close}</Text>
+                            <Pressable style={[ { marginBottom: Number(width*0.1), justifyContent: "center", alignSelf: "center", alignItems: "center" } ]} onPress={ props.makeStatusModalInfos }>
+                                <Text style={[ { width: Number(width*0.45), height: Number(height*0.045), lineHeight: Number(height*0.045), fontSize: Number(height*0.02), textAlign: "center", letterSpacing: 0.5, color: "white", borderRadius: 25, backgroundColor: '#3498db' } ]}>{languages[0][props.idLanguage].later}</Text>
                             </Pressable>
                         </View>
                     </Pressable> 
