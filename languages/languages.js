@@ -81,7 +81,8 @@ export const languages =
                     premium_elbow_double_oriented: "toutes les valeurs liées au double coudes orientés (angles, entraxes, rayons, bout à bout) et bien plus...",
                     premium_elbow_slices: "toutes les valeurs du coude en tranches 3 sections (2 + 2×½), de 4 à 32 génératrices et rayons.",
                     later: "plus tard",
-                    pro: "pro"
+                    pro: "pro",
+                    premium_launch_offer: "offre de lancement pendant un mois"
                 }, 
 
         "en":   {
@@ -163,7 +164,8 @@ export const languages =
                     premium_elbow_double_oriented: "all values related to oriented double elbows (angles, center distances, radii, end-to-end) and more...",
                     premium_elbow_slices: "all values of the sliced elbow in 3 sections (2 + 2×½), from 4 to 32 generatrices and radii.",
                     later: "later",
-                    pro: "pro"
+                    pro: "pro",
+                    premium_launch_offer: "launch offer for one month"
                 }, 
 
         "de":   {
@@ -245,10 +247,11 @@ export const languages =
                     premium_elbow_double_oriented: "alle werte für ausgerichtete doppelte bögen (winkel, abstände, radien, end-zu-end) und mehr...",
                     premium_elbow_slices: "alle werte des geschnittenen bogens in 3 abschnitten (2 + 2×½), von 4 bis 32 generatoren und radien.",
                     later: "später",
-                    pro: ""
+                    pro: "pro",
+                    premium_launch_offer: "einführungsangebot für einen monat"
                 }, 
 
-        "ne":   {
+        "nl":   {
                     info: "informatie",
                     for_me_label: "Over de app",
                     for_me: "Deze applicatie is gebaseerd op datavisualisatie, via een interactieve interface die u op optimale wijze in staat stelt om met een eenvoudige beweging een maximale hoeveelheid gegevens te benaderen, wat tijdsbesparing en een soepele, moderne ervaring biedt",
@@ -327,7 +330,8 @@ export const languages =
                     premium_elbow_double_oriented: "alle waarden met betrekking tot gerichte dubbele bochten (hoeken, hart-op-hart, stralen, eind-tot-eind) en meer...",
                     premium_elbow_slices: "alle waarden van de gesneden bocht in 3 secties (2 + 2×½), van 4 tot 32 generatrices en stralen.",
                     later: "later",
-                    pro: ""
+                    pro: "pro",
+                    premium_launch_offer: "lanceringsaanbieding voor een maand"
                 },
 
         "es":   {
@@ -410,10 +414,11 @@ export const languages =
                     premium_elbow_double_oriented: "todos los valores relacionados con codos dobles orientados (ángulos, ejes, radios, extremo a extremo) y mucho más...",
                     premium_elbow_slices: "todos los valores del codo en secciones (2 + 2×½), de 4 a 32 generatrices y radios.",
                     later: "más tarde",
-                    pro: ""
+                    pro: "pro",
+                    premium_launch_offer: "oferta de lanzamiento durante un mes"
                 },
 
-        "po":   {
+        "pt":   {
                     info: "Informação",
                     for_me_label: "Sobre o aplicativo",
                     for_me: "Esta aplicação é baseada na visualização de dados, através de uma interface interativa que permite o acesso de forma otimizada a uma quantidade máxima de dados com um simples gesto, oferecendo economia de tempo e uma experiência suave e moderna",
@@ -492,7 +497,8 @@ export const languages =
                     premium_elbow_double_oriented: "todos os valores relacionados aos cotovelos duplos orientados (ângulos, distâncias entre centros, raios, ponta a ponta) e muito mais...",
                     premium_elbow_slices: "todos os valores do cotovelo em fatias de 3 seções (2 + 2×½), de 4 a 32 geratrizes e raios.",
                     later: "mais tarde",
-                    pro: ""
+                    pro: "pro",
+                    premium_launch_offer: "oferta de lançamento por um mês"
                 },
 
         "ro":   {
@@ -574,7 +580,8 @@ export const languages =
                     premium_elbow_double_oriented: "toate valorile legate de coturi duble orientate (unghiuri, distanțe între axe, raze, cap la cap) și multe altele...",
                     premium_elbow_slices: "toate valorile pentru cotul în secțiuni (2 + 2×½), între 4 și 32 generatoare și raze.",
                     later: "mai târziu",
-                    pro: ""
+                    pro: "pro",
+                    premium_launch_offer: "ofertă de lansare timp de o lună"
                 },
 
         "it":   {
@@ -656,7 +663,8 @@ export const languages =
                     premium_elbow_double_oriented: "tutti i valori relativi ai doppi gomiti orientati (angoli, interassi, raggi, testa a testa) e molto altro...",
                     premium_elbow_slices: "tutti i valori del gomito in sezioni (2 + 2×½), da 4 a 32 generatrici e raggi.",
                     later: "più tardi",
-                    pro: ""         
+                    pro: "pro",
+                    premium_launch_offer: "offerta di lancio per un mese"         
                 },
 
         "cs":   {
@@ -738,7 +746,8 @@ export const languages =
                     premium_elbow_double_oriented: "všechny hodnoty týkající se orientovaných dvojitých kolen (úhly, rozteče, poloměry, čelo k čelu) a mnohem více...",
                     premium_elbow_slices: "všechny hodnoty kolena rozděleného do 3 částí (2 + 2×½), od 4 do 32 tvořících a poloměrů.",
                     later: "později",
-                    pro: ""        
+                    pro: "pro",
+                    premium_launch_offer: "zaváděcí nabídka na jeden měsíc"      
                 },
 
         "ar":   {
@@ -820,10 +829,11 @@ export const languages =
                     premium_elbow_double_oriented: "جميع القيم المتعلقة بالأكواع المزدوجة الموجهة (الزوايا، المسافات بين المحاور، الأنصاف القطرية، من طرف إلى طرف) وأكثر...",
                     premium_elbow_slices: "جميع قيم الكوع المقطّع إلى 3 أقسام (2 + 2×½)، من 4 إلى 32 مولدًا ونصف قطر.",
                     later: "لاحقًا",
-                    pro: ""
+                    pro: "احترافي",
+                    premium_launch_offer: "عرض إطلاق لمدة شهر"
                 },
                 
-        "co":   {
+        "ko":   {
                     info: "정보",
                     for_me_label: "앱 정보",
                     for_me: "이 애플리케이션은 데이터 시각화를 기반으로 하며, 간단한 제스처로 최대한의 데이터를 효율적으로 이용할 수 있는 대화형 인터페이스를 통해 시간을 절약하고 부드럽고 현대적인 경험을 제공합니다",
@@ -902,7 +912,8 @@ export const languages =
                     premium_elbow_double_oriented: "방향이 지정된 더블 엘보와 관련된 모든 값 (각도, 중심 거리, 반경, 끝과 끝) 그리고 그 이상...",
                     premium_elbow_slices: "3단 분할된 엘보의 모든 값 (2 + 2×½), 4~32개의 생성선 및 반경 포함.",
                     later: "나중에",
-                    pro: ""
+                    pro: "프로",
+                    premium_launch_offer: "출시 기념 한 달 간의 혜택"
         },
 
         "ru":   {
@@ -984,7 +995,8 @@ export const languages =
                     premium_elbow_double_oriented: "все значения, связанные с ориентированными двойными отводами (углы, межцентровые расстояния, радиусы, от края до края) и многое другое...",
                     premium_elbow_slices: "все значения колена, разделённого на 3 секции (2 + 2×½), от 4 до 32 образующих и радиусов.",
                     later: "позже",
-                    pro: ""
+                    pro: "профи",
+                    premium_launch_offer: "предложение при запуске на один месяц"
         },
 
         "hi":   { 
@@ -1066,7 +1078,8 @@ export const languages =
                     premium_elbow_double_oriented: "दिशानिर्देशित डबल एल्बो से संबंधित सभी मान (कोण, केंद्र दूरी, त्रिज्या, सिरा से सिरा) और भी बहुत कुछ...",
                     premium_elbow_slices: "3 खंडों में विभाजित कोहनी के सभी मान (2 + 2×½), 4 से 32 जनरेटर और त्रिज्या तक।",
                     later: "बाद में",
-                    pro: ""
+                    pro: "प्रो",
+                    premium_launch_offer: "एक महीने के लिए लॉन्च ऑफर"
                 },
 
         "ur":   {
@@ -1148,7 +1161,8 @@ export const languages =
                     premium_elbow_double_oriented: "رُخ متعین ڈبل ایلبو سے متعلق تمام قدریں (زاویے، سینٹر فاصلہ، رداس، کنارے سے کنارہ) اور بھی بہت کچھ...",
                     premium_elbow_slices: "3 حصوں میں تقسیم شدہ ایلبو کی تمام قدریں (2 + 2×½)، 4 سے 32 جنریٹرز اور ریڈیئس تک۔",
                     later: "بعد میں",
-                    pro: ""
+                    pro: "پرو",
+                    premium_launch_offer: "لانچ آفر ایک ماہ کے لیے"
                 },
 
         "sw":   {
@@ -1230,10 +1244,11 @@ export const languages =
                     premium_elbow_double_oriented: "thamani zote zinazohusiana na viwiko viwili vilivyoelekezwa (pembe, umbali wa kati, miale, mwisho hadi mwisho) na zaidi...",
                     premium_elbow_slices: "thamani zote za kiwiko kilichogawanywa sehemu 3 (2 + 2×½), kutoka 4 hadi 32 jenereta na radii.",
                     later: "baadaye",
-                    pro: ""
+                    pro: "pro",
+                    premium_launch_offer: "oferta ya uzinduzi kwa mwezi mmoja"
                 },
 
-        "ma":   {
+        "zh":   {
                     info: "信息",
                     for_me_label: "关于应用",
                     for_me: "这个应用程序基于数据可视化，通过一个交互式界面，以最优方式让您以简单的手势轻松访问最大量的数据，从而节省时间，提供流畅且现代的体验",
@@ -1312,7 +1327,8 @@ export const languages =
                     premium_elbow_double_oriented: "与定向双弯头相关的所有数值（角度、中心距、半径、端对端）以及更多内容...",
                     premium_elbow_slices: "三段式分割弯头的所有数值（2 + 2×½），从 4 到 32 条母线及半径。",
                     later: "稍后",
-                    pro: ""
+                    pro: "专业版",
+                    premium_launch_offer: "为期一个月的上线优惠"
                 },
 
         "ja":   {
@@ -1394,11 +1410,12 @@ export const languages =
                     premium_elbow_double_oriented: "向きを指定したダブルエルボーに関するすべての値（角度、芯間距離、半径、端から端まで）とさらに多く...",
                     premium_elbow_slices: "3セクションに分割されたエルボーのすべての値（2 + 2×½）、4〜32の母線と半径。",
                     later: "あとで",
-                    pro: ""
+                    pro: "プロ",
+                    premium_launch_offer: "1か月間のローンチオファー"
                 },
 
         
-        "tu":   {
+        "tr":   {
                     info: "bilgiler",
                     for_me_label: "Uygulama Hakkında",
                     for_me: "Bu uygulama, veri görselleştirmesine dayanmaktadır ve tek bir dokunuşla maksimum veriye en etkili şekilde ulaşmayı sağlayan etkileşimli bir arayüz sunar, böylece zaman kazancı ve akıcı, modern bir deneyim sağlar.",
@@ -1477,7 +1494,8 @@ export const languages =
                     premium_elbow_double_oriented: "yönlendirilmiş çift dirsek ile ilgili tüm değerler (açı, eksen mesafesi, yarıçap, uçtan uca) ve daha fazlası...",
                     premium_elbow_slices: "3 bölümlü dilimlenmiş dirseğin tüm değerleri (2 + 2×½), 4 ila 32 jeneratris ve yarıçap.",
                     later: "daha sonra",
-                    pro: ""
+                    pro: "pro",
+                    premium_launch_offer: "bir aylık lansman teklifi"
                 }
     }
 ]

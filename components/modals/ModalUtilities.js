@@ -16,7 +16,7 @@ const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : null;
 export function ModalUtilities (props) {
 
     const [statusModalInfos, setStatusModalInfos] = useState(false);
-    const [statusModalPremium, setStatusModalPremium] = useState(false);
+    //const [statusModalPremium, setStatusModalPremium] = useState(props.statusModalPremiumOnApp);
 
     
     const {width} = Dimensions.get("window");
@@ -46,7 +46,7 @@ export function ModalUtilities (props) {
         },
         {
             id: 5,
-            title: <Pressable onPress={ () => setStatusModalPremium(true) }><View style={{ width: Number(width*0.6), flexDirection: "row", alignItems: "center", justifyContent: "flex-start" }}><Text style={ {height: height*0.06, lineHeight: Number(height*0.06), fontSize: Number(height*0.02), color: "white"} }>{languages[0][props.idLanguage].premium}</Text></View></Pressable>
+            title: <Pressable onPress={ () => props.setStatusModalPremium(true)}><View style={{ width: Number(width*0.6), flexDirection: "row", alignItems: "center", justifyContent: "flex-start" }}><Text style={ {height: height*0.06, lineHeight: Number(height*0.06), fontSize: Number(height*0.02), color: "white"} }>{languages[0][props.idLanguage].premium}</Text></View></Pressable>
         },
     ];
 
@@ -113,9 +113,9 @@ export function ModalUtilities (props) {
     }
 
     const makeStatusModalPremium = () => {
-        setStatusModalPremium(false); 
         props.makeStatusModalPremiumOnApp(false);
     }
+
 
     useEffect(() => {
         loadConsent();
@@ -125,7 +125,7 @@ export function ModalUtilities (props) {
     return  (
                 <View>
                     <ModalInfos idLanguage={props.idLanguage} statusModalInfos={statusModalInfos} makeStatusModalInfos={makeStatusModalInfos} />
-                    <ModalPremium idLanguage={props.idLanguage} statusModalPremiumOnApp={props.statusModalPremiumOnApp} statusModalPremium={statusModalPremium} makeStatusModalPremium={makeStatusModalPremium} />
+                    <ModalPremium idLanguage={props.idLanguage} statusModalPremium={props.statusModalPremiumOnApp} makeStatusModalPremium={makeStatusModalPremium} />
             
                     <Modal style={[ {justifyContent: "center", alignItems: "center", backgroundColor: "transparent"} ]} animationType={"slide"} transparent={true} visible={props.statusModalUtilities}>
                         <Pressable style={[ {width: width, backgroundColor: "transparent"} ]} onPress={ props.makeStatusModalUtilities } >

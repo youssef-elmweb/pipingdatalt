@@ -261,11 +261,10 @@ export default function App() {
 
     const makeStatusModalPremiumOnApp = () => {
         setStatusModalPremiumOnApp(false);
-        console.log(statusModalPremiumOnApp);
     } 
     ///////////////// FUNCTIONS ////////////////////////////////////////
 
-
+    
     return (
         <View style={[ styles.container ]}>
             {/*///////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
@@ -273,7 +272,7 @@ export default function App() {
             
             <StatusBar style={"auto"} />
 
-            <ModalUtilities makeStatusModalPremiumOnApp={makeStatusModalPremiumOnApp} statusModalPremiumOnApp={statusModalPremiumOnApp} idLanguage={idLanguage} statusModalUtilities={statusModalUtilities} makeStatusModalUtilities={ makeStatusModalUtilities } makeStatusModalPrinters={ makeStatusModalPrinters } />
+            <ModalUtilities setStatusModalPremium={setStatusModalPremiumOnApp} makeStatusModalPremiumOnApp={makeStatusModalPremiumOnApp} statusModalPremiumOnApp={statusModalPremiumOnApp} idLanguage={idLanguage} statusModalUtilities={statusModalUtilities} makeStatusModalUtilities={ makeStatusModalUtilities } makeStatusModalPrinters={ makeStatusModalPrinters } />
 
             <ModalPrinters idLanguage={idLanguage} statusModalPrinters={statusModalPrinters} makeStatusModalPrinters={ makeStatusModalPrinters } />
 
@@ -325,8 +324,8 @@ export default function App() {
                             <Image alt={"reducer"} style={[ { width: width*0.08, height: width*0.08 } ]} source={require('./assets/images/reducer_conc.png')} />
                         </Pressable>
 
-                        <Pressable style={[ {flexDirection: "row", justifyContent: "center", alignItems: "center"} ]} onPress={ () => { setStatusModalPremiumOnApp(() => true) } }>
-                            <Text key={"pro"} style={[ styles.labelTopBar, { width: width*0.25, height: width*0.07, lineHeight: width*0.07, fontSize: width*0.045, fontWeight: "bold", letterSpacing: 1 } ]}>{functions.firstLetterToUpperCase(languages[0][idLanguage].pro)}</Text>                        
+                        <Pressable style={[ styles.labelTopBar, { flexDirection: "row", justifyContent: "center", alignItems: "center", borderWidth: 1, borderColor: "silver" } ]} onPress={ () => { setStatusModalPremiumOnApp(() => true) } }>
+                            <Text key={"pro"} style={[ styles.labelTopBar, { width: width*0.25, height: width*0.06, lineHeight: width*0.06, fontSize: width*0.035, fontWeight: "bold", letterSpacing: 1 } ]}>{functions.firstLetterToUpperCase(languages[0][idLanguage].pro)}</Text>                        
                         </Pressable>
                     </View>
                 </View>

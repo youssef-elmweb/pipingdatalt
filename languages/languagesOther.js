@@ -19,7 +19,7 @@ export const languagesOther = [
         containerStyle: {width: width*0.35, paddingLeft: width*0.06, justifyContent: "flex-start"}
     },
     {
-        id: 'co',
+        id: 'ko',
         label: '한국인',
         value: 'corean',
         color: "white",
@@ -35,7 +35,7 @@ export const languagesOther = [
         containerStyle: {width: width*0.35, paddingLeft: width*0.06, justifyContent: "flex-start"}
     },
     {
-        id: 'ma',
+        id: 'zh',
         label: '官話',
         value: 'mandarin',
         color: "white",
@@ -59,7 +59,7 @@ export const languagesOther = [
         containerStyle: {width: width*0.35, paddingLeft: width*0.06, justifyContent: "flex-start"}
     },
     {
-        id: 'tu',
+        id: 'tr',
         label: 'Türk',
         value: 'turkish',
         color: "white",

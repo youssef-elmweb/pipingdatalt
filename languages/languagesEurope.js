@@ -37,7 +37,7 @@ export const languagesEurope = [
         containerStyle: {width: width*0.35, paddingLeft: width*0.06, justifyContent: "flex-start"}
     },
     {
-        id: 'po',
+        id: 'pt',
         label: 'Portuguese',
         value: 'português',
         color: "white",
@@ -45,7 +45,7 @@ export const languagesEurope = [
         containerStyle: {width: width*0.35, paddingLeft: width*0.06, justifyContent: "flex-start"}
     },
     {
-        id: 'ne',
+        id: 'nl',
         label: 'Nederlands',
         value: 'Nederlands',
         color: "white",
