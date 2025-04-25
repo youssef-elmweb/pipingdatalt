@@ -97,7 +97,7 @@ export function ViewElbow (props) {
 
                         { (props.checkboxDatasInterfaceState == true ? 
                             <G>
-                                <ListCurvesStd measureUnit={props.measureUnit} angle={angle} idSettingsDatas={props.idSettingsDatas} norme={props.norme} curvesMeasure={props.curvesMeasure} idSettingsMeasure={props.idSettingsMeasure} currentDiameter={props.currentDiameter} formatElbow={props.formatElbow} />
+                                <ListCurvesStd idSettingsAngle={props.idSettingsAngle} measureUnit={props.measureUnit} angle={angle} idSettingsDatas={props.idSettingsDatas} norme={props.norme} curvesMeasure={props.curvesMeasure} idSettingsMeasure={props.idSettingsMeasure} currentDiameter={props.currentDiameter} formatElbow={props.formatElbow} />
                             </G> :
                             false) 
                         }

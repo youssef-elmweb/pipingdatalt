@@ -11,7 +11,8 @@ import { UNITS_MEASURES } from '../datas/units_measures.js';
 
 export function ListCurvesStd (props) {
 
-    const [, setAngle] = useState(null);
+    const [angle, setAngle] = useState(null);
+    const [color, setColor] = useState("darkgray");
 
     const { width, height } = Dimensions.get("window");
 
@@ -25,6 +26,7 @@ export function ListCurvesStd (props) {
         }
     );
 
+    console.log(Number.parseFloat(angle).toFixed(props.idSettingsAngle));
 
     const TABINTRA = [];
     const TABEXTRA = [];
@@ -38,7 +40,7 @@ export function ListCurvesStd (props) {
             <ReTextSvg norme={props.norme} idSettingsMeasure={props.idSettingsMeasure} idSettingsDatas={props.idSettingsDatas} key={`angle_list_curv_intra_${i}`} fontSize={(height > 1200 ? height*0.035 : width*0.03)} curvesMeasure={props.curvesMeasure} x={Math.cos(i*DATAS_TRIGONOMETRICS.oneDegreRad) * (RADIUSINTRA+20)} y={-Math.sin(i*DATAS_TRIGONOMETRICS.oneDegreRad) * (RADIUSINTRA+20)} name={Number(parseFloat(((((DATAS_PIPES[props.currentDiameter][props.formatElbow] - (DATAS_PIPES[props.currentDiameter][props.norme._value] / 2)) * DATAS_TRIGONOMETRICS.piOverTwo) / 90) * i) * UNITMEASURE).toFixed(props.idSettingsDatas))} i={i} />
         )
         TABEXTRA.push(
-            <ReTextSvg norme={props.norme} idSettingsMeasure={props.idSettingsMeasure} idSettingsDatas={props.idSettingsDatas} key={`angle_list_curv_extra_${i}`} fontSize={(height > 1200 ? height*0.035 : width*0.03)} curvesMeasure={props.curvesMeasure} x={Math.cos(i*DATAS_TRIGONOMETRICS.oneDegreRad) * (RADIUSEXTRA+5)} y={-Math.sin(i*DATAS_TRIGONOMETRICS.oneDegreRad) * (RADIUSEXTRA+5)} name={Number(parseFloat((((((DATAS_PIPES[props.currentDiameter][props.norme._value] / 2) + (DATAS_PIPES[props.currentDiameter][props.formatElbow])) * DATAS_TRIGONOMETRICS.piOverTwo) / 90) * i) * UNITMEASURE).toFixed(props.idSettingsDatas))} i={i} />
+            <ReTextSvg angle={angle} norme={props.norme} idSettingsMeasure={props.idSettingsMeasure} idSettingsDatas={props.idSettingsDatas} key={`angle_list_curv_extra_${i}`} fontSize={(height > 1200 ? height*0.035 : width*0.03)} curvesMeasure={props.curvesMeasure} x={Math.cos(i*DATAS_TRIGONOMETRICS.oneDegreRad) * (RADIUSEXTRA+5)} y={-Math.sin(i*DATAS_TRIGONOMETRICS.oneDegreRad) * (RADIUSEXTRA+5)} name={Number(parseFloat((((((DATAS_PIPES[props.currentDiameter][props.norme._value] / 2) + (DATAS_PIPES[props.currentDiameter][props.formatElbow])) * DATAS_TRIGONOMETRICS.piOverTwo) / 90) * i) * UNITMEASURE).toFixed(props.idSettingsDatas))} i={i} />
         )
     }
 
