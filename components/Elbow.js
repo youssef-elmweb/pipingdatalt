@@ -4,7 +4,7 @@ import { Dimensions } from "react-native";
 import * as functions from "../library/functions.js";
 
 import { G, Path, Circle } from 'react-native-svg';
-import Animated, {  useAnimatedProps, useAnimatedStyle } from 'react-native-reanimated';
+import Animated, { useAnimatedProps, useAnimatedStyle } from 'react-native-reanimated';
 
 import { DATAS_TRIGONOMETRICS } from '../datas/datas_trigonometrics.js';
 
