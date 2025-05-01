@@ -8,7 +8,7 @@ const maxDiameter = Math.round(width*0.8);
 const minDiameter = Math.round(width*0.4); 
 
 
-export const DATAS_REDUCER = { minDiameter: minDiameter, maxDiameter: maxDiameter, curveReducerTop: 0, curveReducerBottom: 11, curveReducerTopExc: 0, curveReducerBottomExc: 11, diameterReductionDiffBase: Math.round((maxDiameter-minDiameter) / 2), reducerHeight: Math.round(height*0.415), positionDiamReducerInferior: (height*0.36), heightRemainder: Math.round(height - (height*0.225)), diamInf: 0, diamSup: 1, absolutePositionHeight: Math.round(height*0.775), currentDiameterRedConcExc: 25, heightReducerTop: 11, heightReducerBottom: 0 };
+export const DATAS_REDUCER = { minDiameter: minDiameter, maxDiameter: maxDiameter, curveReducerTop: 0, curveReducerBottom: 11.25, curveReducerTopExc: 0, curveReducerBottomExc: 11.7, diameterReductionDiffBase: Math.round((maxDiameter-minDiameter) / 2), reducerHeight: Math.round(height*0.415), positionDiamReducerInferior: (height*0.36), heightRemainder: Math.round(height - (height*0.225)), diamInf: 0, diamSup: 1, absolutePositionHeight: Math.round(height*0.36), currentDiameterRedConcExc: 25, heightReducerTop: 0, heightReducerBottom: 11.1 };
 
 
 export default {
