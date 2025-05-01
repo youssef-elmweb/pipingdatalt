@@ -20,8 +20,8 @@ export function ViewReducer (props) {
     //////////////////// GENERAL CONST //////////////////////////////////
     const { width, height } = Dimensions.get("window");
     
-    const absolutePositionHeight = useSharedValue(Number.parseFloat(props.absolutePositionHeight._value).toFixed(0));
-    const angleBegin = useSharedValue(false);
+    const absolutePositionHeight = useSharedValue(Number.parseFloat(props.absolutePositionHeight._value).toFixed(2));
+    const reducerInfBegin = useSharedValue(false);
     const scaleBegin = useSharedValue(1);
 
 
@@ -37,8 +37,8 @@ export function ViewReducer (props) {
         let angle = Math.asin(heightReducer / Math.hypot(heightReducer, diameterReductionDiff)) * DATAS_TRIGONOMETRICS.oneRad;
         let angleExc = Math.asin(heightReducer / Math.hypot(heightReducer, diameterReductionDiffExc)) * DATAS_TRIGONOMETRICS.oneRad;
 
-        let heightReducerTop = Number.parseFloat((heightReducer) - ((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath).toFixed(1));
-        let heightReducerBottom = Number.parseFloat(((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath).toFixed(1));
+        let heightReducerTop = Number.parseFloat((heightReducer) - ((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath).toFixed(2));
+        let heightReducerBottom = Number.parseFloat(((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath).toFixed(2));
         
         let curveReducerTop = heightReducerTop / Math.sin(angle * DATAS_TRIGONOMETRICS.oneDegreRad); 
         let curveReducerBottom = heightReducerBottom / Math.sin(angle * DATAS_TRIGONOMETRICS.oneDegreRad);
@@ -50,14 +50,14 @@ export function ViewReducer (props) {
 
         let currentDiameterRedConcExc = DATAS_PIPES[props.diameterInferiorReducer._value][props.norme._value] + ((diameterReductionDiff - currentDiameterReductionDiff) * 2);
 
-        DATAS_REDUCER.absolutePositionHeight = Number.parseFloat(localHeight.toFixed(1));
-        DATAS_REDUCER.heightReducerTop = Math.round(heightReducerTop);
-        DATAS_REDUCER.heightReducerBottom = Math.round(heightReducerBottom);
-        DATAS_REDUCER.curveReducerTop = Math.round(curveReducerTop);
-        DATAS_REDUCER.curveReducerBottom = Math.round(curveReducerBottom);
-        DATAS_REDUCER.curveReducerTopExc = Math.round(curveReducerTopExc);
-        DATAS_REDUCER.curveReducerBottomExc = Math.round(curveReducerBottomExc);
-        DATAS_REDUCER.currentDiameterRedConcExc = Number.parseFloat(currentDiameterRedConcExc.toFixed(1));
+        DATAS_REDUCER.absolutePositionHeight = Number.parseFloat(localHeight.toFixed(props.baseDatas._value));
+        DATAS_REDUCER.heightReducerTop = Number.parseFloat(heightReducerTop.toFixed(props.baseDatas._value));
+        DATAS_REDUCER.heightReducerBottom = Number.parseFloat(heightReducerBottom.toFixed(props.baseDatas._value));
+        DATAS_REDUCER.curveReducerTop = Number.parseFloat(curveReducerTop.toFixed(props.baseDatas._value));
+        DATAS_REDUCER.curveReducerBottom = Number.parseFloat(curveReducerBottom.toFixed(props.baseDatas._value));
+        DATAS_REDUCER.curveReducerTopExc = Number.parseFloat(curveReducerTopExc.toFixed(props.baseDatas._value));
+        DATAS_REDUCER.curveReducerBottomExc = Number.parseFloat(curveReducerBottomExc.toFixed(props.baseDatas._value));
+        DATAS_REDUCER.currentDiameterRedConcExc = Number.parseFloat(currentDiameterRedConcExc.toFixed(props.baseDatas._value));
     
         props.shareDiameterAndHeight(DATAS_REDUCER);
     }            
@@ -66,7 +66,7 @@ export function ViewReducer (props) {
         "worklet";
 
         absolutePositionHeight.value = localHeight;
-        angleBegin.value = beginAction;
+        reducerInfBegin.value = beginAction;
     }
 
     const getDatasForReducer = (localHeight, renderDiameterReducerAndHeightForDatas, renderDiameterReducerDiffForPath, beginAction) => { 
@@ -77,11 +77,11 @@ export function ViewReducer (props) {
     }
 
     const REDUCER_CONC_MEMOIZED = useMemo(() => {
-        return <ConcentricReducer scaleBegin={scaleBegin} angleBegin={angleBegin} absolutePositionHeight={absolutePositionHeight} sizeText={props.sizeText} idSettingsMeasure={props.idSettingsMeasure} idSettingsDatas={props.idSettingsDatas} checkboxDatasInterfaceState={props.checkboxDatasInterfaceState} />
+        return <ConcentricReducer scaleBegin={scaleBegin} reducerInfBegin={reducerInfBegin} absolutePositionHeight={absolutePositionHeight} sizeText={props.sizeText} idSettingsMeasure={props.idSettingsMeasure} idSettingsDatas={props.idSettingsDatas} checkboxDatasInterfaceState={props.checkboxDatasInterfaceState} />
     }, [])
 
     const REDUCER_EXC_MEMOIZED = useMemo(() => {
-        return <ExcentricReducer scaleBegin={scaleBegin} angleBegin={angleBegin} absolutePositionHeight={absolutePositionHeight} sizeText={props.sizeText} idSettingsMeasure={props.idSettingsMeasure} idSettingsDatas={props.idSettingsDatas} checkboxDatasInterfaceState={props.checkboxDatasInterfaceState} />
+        return <ExcentricReducer scaleBegin={scaleBegin} reducerInfBegin={reducerInfBegin} absolutePositionHeight={absolutePositionHeight} sizeText={props.sizeText} idSettingsMeasure={props.idSettingsMeasure} idSettingsDatas={props.idSettingsDatas} checkboxDatasInterfaceState={props.checkboxDatasInterfaceState} />
     }, [])
 
 
@@ -116,7 +116,7 @@ export function ViewReducer (props) {
             }
         })
         .onTouchesUp(() => {
-            angleBegin.value = withTiming(0, {
+            reducerInfBegin.value = withTiming(0, {
                 duration: 900,
                 easing: Easing.out(Easing.exp)
             });

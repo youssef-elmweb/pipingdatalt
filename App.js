@@ -46,6 +46,7 @@ export default function App() {
     const ValidatedValueAnimated = AnimNat.createAnimatedComponent(ValidatedValue);
 
     const angleBaseShared = useSharedValue(90);
+    const absoluteHeightBaseShared = useSharedValue(25);
 
     const ANGLE = useRef(new AnimNat.Value(DATAS_ELBOWS.angle)).current;
     
@@ -231,7 +232,7 @@ export default function App() {
         }
     }
 
-    const addAngleBaseShared = (value) => {
+    const updateAngleBaseShared = (value) => {
         "worklet"
         angleBaseShared.value = parseFloat((angleBaseShared.value + value));
     }
@@ -241,46 +242,115 @@ export default function App() {
         angleBaseShared.value = parseFloat((angleBaseShared.value - value));
     }
 
+    const updateAbsoluteHeightBaseShared = (value) => {
+        "worklet"
+        absoluteHeightBaseShared.value = parseFloat((absoluteHeightBaseShared.value + value));
+    }
+
+    const subtractAbsoluteHeightBaseShared = (value) => {
+        "worklet"
+        absoluteHeightBaseShared.value = parseFloat((absoluteHeightBaseShared.value - value));
+    }
+
     const addAnglePrecision = () => { 
-        let value = 0
+        let anglePrecision;
 
-        if (elbowLayer == "elbow") {
             if (BASEANGLE._value == 1 && ANGLE._value < parseFloat(90).toFixed(0)) {
-                value = 0.1;
+                anglePrecision = 0.1;
 
-                ANGLE.setValue(parseFloat((ANGLE._value + value).toFixed(1)));
-                runOnUI(addAngleBaseShared)(value);
+                    runOnUI(updateAngleBaseShared)(anglePrecision);
+                    ANGLE.setValue(parseFloat((ANGLE._value + anglePrecision).toFixed(1)));
 
             }   else if (BASEANGLE._value == 2 && ANGLE._value < parseFloat(90).toFixed(0)) {
-                    value = 0.01;
+                anglePrecision = 0.01;
 
-                    runOnUI(addAngleBaseShared)(value);
-                    ANGLE.setValue(parseFloat((ANGLE._value + value).toFixed(2)));
+                    runOnUI(updateAngleBaseShared)(anglePrecision);
+                    ANGLE.setValue(parseFloat((ANGLE._value + anglePrecision).toFixed(2)));
                 }
-
-                makeDatasElbowByAngle(getDatasElbows);
-        }  
-    }
+    } 
 
     const subtractAnglePrecision = () => { 
-        let value = 0;
+        let anglePrecision;
 
-        if (elbowLayer == "elbow") {
-            if (BASEANGLE._value == 1 && ANGLE._value > parseFloat(1).toFixed(0)) {
-                value = 0.1;
+        if (BASEANGLE._value == 1 && ANGLE._value > parseFloat(1).toFixed(0)) {
+            anglePrecision = 0.1;
 
-                ANGLE.setValue(parseFloat((ANGLE._value - value).toFixed(1))); 
-                runOnUI(subtractAngleBaseShared)(value);
+                ANGLE.setValue(parseFloat((ANGLE._value - anglePrecision).toFixed(1))); 
+                runOnUI(subtractAngleBaseShared)(anglePrecision);
 
-            }   else if (BASEANGLE._value == 2 && ANGLE._value > parseFloat(1).toFixed(0)) {
-                    value = 0.01;
+        }   else if (BASEANGLE._value == 2 && ANGLE._value > parseFloat(1).toFixed(0)) {
+            anglePrecision = 0.01;
 
-                    ANGLE.setValue(parseFloat((ANGLE._value - value).toFixed(2)));
-                    runOnUI(subtractAngleBaseShared)(value);
-                }
-                makeDatasElbowByAngle(getDatasElbows);
-        }    
+                ANGLE.setValue(parseFloat((ANGLE._value - anglePrecision).toFixed(2)));
+                runOnUI(subtractAngleBaseShared)(anglePrecision);
+            }
+    } 
+
+
+
+
+
+
+
+
+
+    const addDatasPrecision = () => { 
+        let datasPrecision = 0;
+
+        if (BASEDATAS._value == 1 && ABSOLUTE_POSITION_HEIGHT._value > parseFloat(DATAS_REDUCER.positionDiamReducerInferior).toFixed(0) && ABSOLUTE_POSITION_HEIGHT._value < parseFloat(DATAS_REDUCER.heightRemainder).toFixed(0)) {
+            datasPrecision = 0.1;
+
+                HEIGHT_REDUCER_TOP.setValue(parseFloat((HEIGHT_REDUCER_TOP._value - datasPrecision).toFixed(1)));
+                HEIGHT_REDUCER_BOTTOM.setValue(parseFloat((HEIGHT_REDUCER_BOTTOM._value + datasPrecision).toFixed(1)));
+                CURVE_REDUCER_TOP.setValue(parseFloat((CURVE_REDUCER_TOP._value - datasPrecision).toFixed(1)));
+                CURVE_REDUCER_BOTTOM.setValue(parseFloat((CURVE_REDUCER_BOTTOM._value + datasPrecision).toFixed(1)));
+                CURVE_REDUCER_TOP_EXC.setValue(parseFloat((CURVE_REDUCER_TOP_EXC._value - datasPrecision).toFixed(1)));
+                CURVE_REDUCER_BOTTOM_EXC.setValue(parseFloat((CURVE_REDUCER_BOTTOM_EXC._value + datasPrecision).toFixed(1)));
+                CURRENT_DIAMETER_REDUCER_CONC_EXC.setValue(parseFloat((CURRENT_DIAMETER_REDUCER_CONC_EXC._value - datasPrecision).toFixed(1)));
+        }   else if (BASEDATAS._value == 2 && ABSOLUTE_POSITION_HEIGHT._value > parseFloat(DATAS_REDUCER.positionDiamReducerInferior).toFixed(0) && ABSOLUTE_POSITION_HEIGHT._value < parseFloat(DATAS_REDUCER.heightRemainder).toFixed(0)) {
+            datasPrecision = 0.01;
+
+                HEIGHT_REDUCER_TOP.setValue(parseFloat((HEIGHT_REDUCER_TOP._value - datasPrecision).toFixed(2)));
+                HEIGHT_REDUCER_BOTTOM.setValue(parseFloat((HEIGHT_REDUCER_BOTTOM._value + datasPrecision).toFixed(2)));
+                CURVE_REDUCER_TOP.setValue(parseFloat((CURVE_REDUCER_TOP._value - datasPrecision).toFixed(2)));
+                CURVE_REDUCER_BOTTOM.setValue(parseFloat((CURVE_REDUCER_BOTTOM._value + datasPrecision).toFixed(2)));
+                CURVE_REDUCER_TOP_EXC.setValue(parseFloat((CURVE_REDUCER_TOP_EXC._value - datasPrecision).toFixed(2)));
+                CURVE_REDUCER_BOTTOM_EXC.setValue(parseFloat((CURVE_REDUCER_BOTTOM_EXC._value + datasPrecision).toFixed(2)));
+                CURRENT_DIAMETER_REDUCER_CONC_EXC.setValue(parseFloat((CURRENT_DIAMETER_REDUCER_CONC_EXC._value - datasPrecision).toFixed(2)));           
+            } else {
+                return false;
+            }
+    } 
+
+    const subtractDatasPrecision = () => { 
+        let datasPrecision = 0;
+
+        if (BASEDATAS._value == 1 && ABSOLUTE_POSITION_HEIGHT._value < parseFloat(DATAS_REDUCER.heightRemainder).toFixed(0) && ABSOLUTE_POSITION_HEIGHT._value > parseFloat(DATAS_REDUCER.positionDiamReducerInferior).toFixed(0)) {
+            datasPrecision = 0.1;
+
+                HEIGHT_REDUCER_TOP.setValue(parseFloat((HEIGHT_REDUCER_TOP._value + datasPrecision).toFixed(1)));
+                HEIGHT_REDUCER_BOTTOM.setValue(parseFloat((HEIGHT_REDUCER_BOTTOM._value - datasPrecision).toFixed(1)));
+                CURVE_REDUCER_TOP.setValue(parseFloat((CURVE_REDUCER_TOP._value + datasPrecision).toFixed(1)));
+                CURVE_REDUCER_BOTTOM.setValue(parseFloat((CURVE_REDUCER_BOTTOM._value - datasPrecision).toFixed(1)));
+                CURVE_REDUCER_TOP_EXC.setValue(parseFloat((CURVE_REDUCER_TOP_EXC._value + datasPrecision).toFixed(1)));
+                CURVE_REDUCER_BOTTOM_EXC.setValue(parseFloat((CURVE_REDUCER_BOTTOM_EXC._value - datasPrecision).toFixed(1)));
+                CURRENT_DIAMETER_REDUCER_CONC_EXC.setValue(parseFloat((CURRENT_DIAMETER_REDUCER_CONC_EXC._value + datasPrecision).toFixed(1)));
+        }   else if (BASEDATAS._value == 2 && ABSOLUTE_POSITION_HEIGHT._value < parseFloat(DATAS_REDUCER.heightRemainder).toFixed(0) && ABSOLUTE_POSITION_HEIGHT._value > parseFloat(DATAS_REDUCER.positionDiamReducerInferior).toFixed(0)) {
+            datasPrecision = 0.01;
+
+                HEIGHT_REDUCER_TOP.setValue(parseFloat((HEIGHT_REDUCER_TOP._value + datasPrecision).toFixed(2)));
+                HEIGHT_REDUCER_BOTTOM.setValue(parseFloat((HEIGHT_REDUCER_BOTTOM._value - datasPrecision).toFixed(2)));
+                CURVE_REDUCER_TOP.setValue(parseFloat((CURVE_REDUCER_TOP._value + datasPrecision).toFixed(2)));
+                CURVE_REDUCER_BOTTOM.setValue(parseFloat((CURVE_REDUCER_BOTTOM._value - datasPrecision).toFixed(2)));
+                CURVE_REDUCER_TOP_EXC.setValue(parseFloat((CURVE_REDUCER_TOP_EXC._value + datasPrecision).toFixed(2)));
+                CURVE_REDUCER_BOTTOM_EXC.setValue(parseFloat((CURVE_REDUCER_BOTTOM_EXC._value - datasPrecision).toFixed(2)));
+                CURRENT_DIAMETER_REDUCER_CONC_EXC.setValue(parseFloat((CURRENT_DIAMETER_REDUCER_CONC_EXC._value + datasPrecision).toFixed(2)));             
+            }
     }
+
+
+
+
 
     const makeColorDatasCurves = () => {
         (DATAS_ELBOWS.roundAngles.includes(ANGLE._value) ? setColorDatasCurves(() => "deepskyblue") : setColorDatasCurves(() => "white"));
@@ -485,7 +555,9 @@ export default function App() {
                                     <View style={[ { flexDirection: "row", alignItems: "center", backgroundColor: "transparent" } ]}>
                                         <View style={[ { width: width*0.5, flexDirection: "row", alignItems: "center", backgroundColor: "transparent" } ]}>
                                             <View style={[ { width: width*0.175, flexDirection: "row", alignItems: "center", backgroundColor: "transparent" } ]}>
-                                                <Text style={[ styles.labelTopBar, {width: width*0.15, minHeight: height*0.025, maxHeight: height*0.025, lineHeight: height*0.025, fontSize: width*0.03 } ]}>{`Ø`}</Text>
+                                                <Text style={[ styles.labelTopBar, {width: width*0.15, minHeight: height*0.025, maxHeight: height*0.025, lineHeight: height*0.025, fontSize: width*0.03 } ]}>
+                                                    {`\u2015`}
+                                                </Text>
                                             </View>
 
                                             <View style={[ { width: width*0.275, backgroundColor: "transparent"} ]}>
@@ -507,19 +579,37 @@ export default function App() {
                                     </View>
                                 : false) }
 
-                                {(idSettingsAngle != 0 ?
-                                    <View style={[ {minHeight: height*0.05, maxHeight: height*0.05, flexDirection: "row", justifyContent: "flex-end", alignItems: "center", backgroundColor: "transparent"} ]}> 
-                                        <View style={[ {width: width*0.3, flexDirection: "row", justifyContent: "space-evenly", alignItems: "flex-end", alignSelf: "center"} ]}>
-                                            <TouchableHighlight style={[ {width: width*0.1, height: width*0.065, justifyContent: "center", alignItems: "center", borderTopRightRadius: 3.5, borderBottomRightRadius: 3.5, borderBottomLeftRadius: 7.5, borderTopLeftRadius: 7.5, backgroundColor: "#414141"}]} activeOpacity={0.25} onPress={ () => { subtractAnglePrecision(); makeDatasElbowByAngle(getDatasElbows); } }>
-                                                <Text style={[ {fontSize: width*0.05, fontWeight: "bold", lineHeight: width*0.05, color: "whitesmoke"} ]}>-</Text>
-                                            </TouchableHighlight>
+                                {(elbowLayer == "elbow" ? 
+                                    (idSettingsAngle != 0 ?
+                                        <View style={[ {minHeight: height*0.05, maxHeight: height*0.05, flexDirection: "row", justifyContent: "flex-end", alignItems: "center", backgroundColor: "transparent"} ]}> 
+                                            <View style={[ {width: width*0.3, flexDirection: "row", justifyContent: "space-evenly", alignItems: "flex-end", alignSelf: "center"} ]}>
+                                                <TouchableHighlight style={[ {width: width*0.1, height: width*0.065, justifyContent: "center", alignItems: "center", borderTopRightRadius: 3.5, borderBottomRightRadius: 3.5, borderBottomLeftRadius: 7.5, borderTopLeftRadius: 7.5, backgroundColor: "#414141"}]} activeOpacity={0.25} onPress={ () => { subtractAnglePrecision(); makeDatasElbowByAngle(getDatasElbows); } }>
+                                                    <Text style={[ {fontSize: width*0.05, fontWeight: "bold", lineHeight: width*0.05, color: "whitesmoke"} ]}>-</Text>
+                                                </TouchableHighlight>
 
-                                            <TouchableHighlight style={[ {width: width*0.1, height: width*0.065, justifyContent: "center", alignItems: "center", borderTopRightRadius: 7.5, borderBottomRightRadius: 7.5, borderBottomLeftRadius: 3.5, borderTopLeftRadius: 3.5, backgroundColor: "#414141"} ]} activeOpacity={0.25} onPress={ () => { addAnglePrecision(); makeDatasElbowByAngle(getDatasElbows); } }>
-                                                <Text style={[ {fontSize: width*0.05, lineHeight: width*0.05, color: "whitesmoke"} ]}>+</Text>
-                                            </TouchableHighlight>
-                                        </View>
-                                    </View> 
-                                : <View style={[ {width: width*0.3, minHeight: height*0.05, maxHeight: height*0.05, backgroundColor: "transparent"} ]}></View>)}
+                                                <TouchableHighlight style={[ {width: width*0.1, height: width*0.065, justifyContent: "center", alignItems: "center", borderTopRightRadius: 7.5, borderBottomRightRadius: 7.5, borderBottomLeftRadius: 3.5, borderTopLeftRadius: 3.5, backgroundColor: "#414141"} ]} activeOpacity={0.25} onPress={ () => { addAnglePrecision(); makeDatasElbowByAngle(getDatasElbows); } }>
+                                                    <Text style={[ {fontSize: width*0.05, lineHeight: width*0.05, color: "whitesmoke"} ]}>+</Text>
+                                                </TouchableHighlight>
+                                            </View>
+                                        </View>  
+                                    : <View style={[ {width: width*0.3, minHeight: height*0.05, maxHeight: height*0.05, backgroundColor: "transparent"} ]}></View>) :
+                                false)}
+
+                                {(elbowLayer == "reducer" ? 
+                                    (idSettingsDatas != 0 ?
+                                        <View style={[ {minHeight: height*0.05, maxHeight: height*0.05, flexDirection: "row", justifyContent: "flex-end", alignItems: "center", backgroundColor: "red"} ]}> 
+                                            <View style={[ {width: width*0.3, flexDirection: "row", justifyContent: "space-evenly", alignItems: "flex-end", alignSelf: "center"} ]}>
+                                                <TouchableHighlight style={[ {width: width*0.1, height: width*0.065, justifyContent: "center", alignItems: "center", borderTopRightRadius: 3.5, borderBottomRightRadius: 3.5, borderBottomLeftRadius: 7.5, borderTopLeftRadius: 7.5, backgroundColor: "#414141"}]} activeOpacity={0.25} onPress={ () => { subtractDatasPrecision(); } }>
+                                                    <Text style={[ {fontSize: width*0.05, fontWeight: "bold", lineHeight: width*0.05, color: "whitesmoke"} ]}>-</Text>
+                                                </TouchableHighlight>
+
+                                                <TouchableHighlight style={[ {width: width*0.1, height: width*0.065, justifyContent: "center", alignItems: "center", borderTopRightRadius: 7.5, borderBottomRightRadius: 7.5, borderBottomLeftRadius: 3.5, borderTopLeftRadius: 3.5, backgroundColor: "#414141"} ]} activeOpacity={0.25} onPress={ () => { addDatasPrecision(); } }>
+                                                    <Text style={[ {fontSize: width*0.05, lineHeight: width*0.05, color: "whitesmoke"} ]}>+</Text>
+                                                </TouchableHighlight>
+                                            </View>
+                                        </View> 
+                                    : <View style={[ {width: width*0.3, minHeight: height*0.05, maxHeight: height*0.05, backgroundColor: "transparent"} ]}></View>) :
+                                false)}
                             </View>
                         </View>
                     }
@@ -536,7 +626,7 @@ export default function App() {
             : false)}
 
             {(elbowLayer == "reducer" ?
-                <ViewReducer sizeText={sizeText} currentDiameterInferiorReducer={currentDiameterInferiorReducer} currentDiameterSuperiorReducer={currentDiameterSuperiorReducer} diameterSuperiorReducer={DIAMETER_SUPERIOR_REDUCER} diameterInferiorReducer={DIAMETER_INFERIOR_REDUCER} absolutePositionHeight={ABSOLUTE_POSITION_HEIGHT} currentReducer={currentReducer} currentDiameterRedConcExc={CURRENT_DIAMETER_REDUCER_CONC_EXC} norme={NORME} idSettingsMeasure={idSettingsMeasure} idSettingsDatas={idSettingsDatas} checkboxDatasInterfaceState={checkboxDatasInterfaceState} shareDiameterAndHeight={getDatasReducer} /> 
+                <ViewReducer sizeText={sizeText} baseDatas={BASEDATAS} currentDiameterInferiorReducer={currentDiameterInferiorReducer} currentDiameterSuperiorReducer={currentDiameterSuperiorReducer} diameterSuperiorReducer={DIAMETER_SUPERIOR_REDUCER} diameterInferiorReducer={DIAMETER_INFERIOR_REDUCER} absolutePositionHeight={ABSOLUTE_POSITION_HEIGHT} currentReducer={currentReducer} currentDiameterRedConcExc={CURRENT_DIAMETER_REDUCER_CONC_EXC} norme={NORME} idSettingsMeasure={idSettingsMeasure} idSettingsDatas={idSettingsDatas} checkboxDatasInterfaceState={checkboxDatasInterfaceState} shareDiameterAndHeight={getDatasReducer} /> 
             : 
             false)}
             {/*///////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
