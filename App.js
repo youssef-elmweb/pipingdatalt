@@ -163,16 +163,23 @@ export default function App() {
         CURRENT_DIAMETER_REDUCER_CONC_EXC.setValue(datas.currentDiameterRedConcExc);
     }
 
-    const makeHeightsReducerByDiam = (diameterSup, diameterInf, valuePrecision, decr) => {
-        if (ABSOLUTE_POSITION_HEIGHT._value >= Math.round(DATAS_REDUCER.positionDiamReducerInferior) && ABSOLUTE_POSITION_HEIGHT._value <= Math.round(DATAS_REDUCER.heightRemainder)) {
+    const makeHeightsReducerByDiam = (diameterSup, diameterInf, valuePrecision, decr, boolCurrentDiameter) => {
+        if (ABSOLUTE_POSITION_HEIGHT._value >= DATAS_REDUCER.positionDiamReducerInferior && ABSOLUTE_POSITION_HEIGHT._value <= DATAS_REDUCER.heightRemainder) {
             let valuePrecisionLocal = (valuePrecision === 2 ? 0.01 : 0.1);
             let valueDecimalLocal = (valuePrecision === 2 ? 2 : 1);
 
             let nextAbsolutePositionHeight = (decr === true ? parseFloat((ABSOLUTE_POSITION_HEIGHT._value - valuePrecisionLocal)) : parseFloat((ABSOLUTE_POSITION_HEIGHT._value + valuePrecisionLocal))); 
+            let heightReducerPath;
 
-            ABSOLUTE_POSITION_HEIGHT.setValue(nextAbsolutePositionHeight);
-            
-            let heightReducerPath = DATAS_REDUCER.heightRemainder - nextAbsolutePositionHeight;
+            console.log(diameterSup, "diamterSup");
+
+            if (boolCurrentDiameter === false) {
+                ABSOLUTE_POSITION_HEIGHT.setValue(parseFloat(nextAbsolutePositionHeight.toFixed(2)));
+                heightReducerPath = parseFloat(DATAS_REDUCER.heightRemainder - nextAbsolutePositionHeight.toFixed(2));
+            }   else {
+                    ABSOLUTE_POSITION_HEIGHT.setValue(parseFloat(nextAbsolutePositionHeight.toFixed(0)));
+                    heightReducerPath = parseFloat(DATAS_REDUCER.heightRemainder - nextAbsolutePositionHeight.toFixed(0));
+                }
 
             let heightReducer = (diameterSup - diameterInf) * 3;
             let diameterReductionDiff = ((diameterSup - diameterInf) * 0.5);
@@ -180,8 +187,8 @@ export default function App() {
             let angle = Math.asin(heightReducer / Math.hypot(heightReducer, diameterReductionDiff)) * DATAS_TRIGONOMETRICS.oneRad;
             let angleExc = Math.asin(heightReducer / Math.hypot(heightReducer, diameterReductionDiffExc)) * DATAS_TRIGONOMETRICS.oneRad;
 
-            let heightReducerTop = Number.parseFloat(((heightReducer) - ((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath)).toFixed(2));
-            let heightReducerBottom = Number.parseFloat(((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath).toFixed(2));
+            let heightReducerTop = Number.parseFloat(((heightReducer) - ((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath)).toFixed(0));
+            let heightReducerBottom = Number.parseFloat(((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath).toFixed(0));
 
             let curveReducerTop = heightReducerTop / Math.sin(angle * DATAS_TRIGONOMETRICS.oneDegreRad); 
             let curveReducerBottom = heightReducerBottom / Math.sin(angle * DATAS_TRIGONOMETRICS.oneDegreRad);
@@ -200,16 +207,20 @@ export default function App() {
             CURVE_REDUCER_TOP_EXC.setValue(Number.parseFloat(curveReducerTopExc.toFixed(valueDecimalLocal)));
             CURVE_REDUCER_BOTTOM_EXC.setValue(Number.parseFloat(curveReducerBottomExc.toFixed(valueDecimalLocal)));
             CURRENT_DIAMETER_REDUCER_CONC_EXC.setValue(Number.parseFloat(currentDiameterRedConcExc.toFixed(valueDecimalLocal)));
+            console.log(DATAS_REDUCER.absolutePositionHeight, "DATAS_REDUCER.absolutePositionHeight dans App dans if");
         } else {
-            ABSOLUTE_POSITION_HEIGHT.setValue(Math.round(ABSOLUTE_POSITION_HEIGHT._value));
+            console.log(DATAS_REDUCER.absolutePositionHeight, "DATAS_REDUCER.absolutePositionHeight dans App dans else");
+            ABSOLUTE_POSITION_HEIGHT.setValue(DATAS_REDUCER.positionDiamReducerInferior);
+            // ici voir pour si height = diamSup
+
         }
     }
 
-    const makePrecisionDatasReducer = (valuePrecision, decr) => { 
+    const makePrecisionDatasReducer = (valuePrecision, decr, boolCurrentDiameter) => { 
         let diameterSuperior = (DIAMETER_SUPERIOR_REDUCER._value == 0 ? DATAS_PIPES[1][NORME._value] : DATAS_PIPES[DIAMETER_SUPERIOR_REDUCER._value][NORME._value]);
         let diameterInferior = DATAS_PIPES[DIAMETER_INFERIOR_REDUCER._value][NORME._value];
 
-        makeHeightsReducerByDiam(diameterSuperior, diameterInferior, valuePrecision, decr);
+        makeHeightsReducerByDiam(diameterSuperior, diameterInferior, valuePrecision, decr, boolCurrentDiameter);
     }
 
     const getHeightsReducerByDiamSuperior = (value) => { 
@@ -622,11 +633,11 @@ export default function App() {
                                 {(elbowLayer == "reducer" ? 
                                     <View style={[ {minHeight: height*0.05, maxHeight: height*0.05, flexDirection: "row", justifyContent: "flex-end", alignItems: "center", backgroundColor: "transparent"} ]}> 
                                         <View style={[ {width: width*0.3, flexDirection: "row", justifyContent: "space-evenly", alignItems: "flex-end", alignSelf: "center"} ]}>
-                                            <TouchableHighlight style={[ {width: width*0.1, height: width*0.065, justifyContent: "center", alignItems: "center", borderTopRightRadius: 3.5, borderBottomRightRadius: 3.5, borderBottomLeftRadius: 7.5, borderTopLeftRadius: 7.5, backgroundColor: "#414141"}]} activeOpacity={0.25} onPress={ () => { makePrecisionDatasReducer(idSettingsDatas, false); } }>
+                                            <TouchableHighlight style={[ {width: width*0.1, height: width*0.065, justifyContent: "center", alignItems: "center", borderTopRightRadius: 3.5, borderBottomRightRadius: 3.5, borderBottomLeftRadius: 7.5, borderTopLeftRadius: 7.5, backgroundColor: "#414141"}]} activeOpacity={0.25} onPress={ () => { makePrecisionDatasReducer(idSettingsDatas, false, false); } }>
                                                 <Text style={[ {fontSize: width*0.05, fontWeight: "bold", lineHeight: width*0.05, color: "whitesmoke"} ]}>-</Text>
                                             </TouchableHighlight>
 
-                                            <TouchableHighlight style={[ {width: width*0.1, height: width*0.065, justifyContent: "center", alignItems: "center", borderTopRightRadius: 7.5, borderBottomRightRadius: 7.5, borderBottomLeftRadius: 3.5, borderTopLeftRadius: 3.5, backgroundColor: "#414141"} ]} activeOpacity={0.25} onPress={ () => { makePrecisionDatasReducer(idSettingsDatas, true);  /*makePrecisionDatasReducer(valuePrecision);*/ } }>
+                                            <TouchableHighlight style={[ {width: width*0.1, height: width*0.065, justifyContent: "center", alignItems: "center", borderTopRightRadius: 7.5, borderBottomRightRadius: 7.5, borderBottomLeftRadius: 3.5, borderTopLeftRadius: 3.5, backgroundColor: "#414141"} ]} activeOpacity={0.25} onPress={ () => { makePrecisionDatasReducer(idSettingsDatas, true, false);  /*makePrecisionDatasReducer(valuePrecision);*/ } }>
                                                 <Text style={[ {fontSize: width*0.05, lineHeight: width*0.05, color: "whitesmoke"} ]}>+</Text>
                                             </TouchableHighlight>
                                         </View>

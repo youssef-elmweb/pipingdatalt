@@ -58,6 +58,8 @@ export function ViewReducer (props) {
         DATAS_REDUCER.curveReducerTopExc = Number.parseFloat(curveReducerTopExc.toFixed(props.baseDatas._value));
         DATAS_REDUCER.curveReducerBottomExc = Number.parseFloat(curveReducerBottomExc.toFixed(props.baseDatas._value));
         DATAS_REDUCER.currentDiameterRedConcExc = Number.parseFloat(currentDiameterRedConcExc.toFixed(props.baseDatas._value));
+
+        console.log(DATAS_REDUCER.absolutePositionHeight, "DATAS_REDUCER.absolutePositionHeight dans ViewElbow");
     
         props.shareDiameterAndHeight(DATAS_REDUCER);
     }            
@@ -87,32 +89,32 @@ export function ViewReducer (props) {
 
     const panGesture = Gesture.Pan()
         .onBegin((event) => {
-            if (event.absoluteY >= Math.round((height*0.36)) && event.absoluteY <= Math.round(height*0.775)) {
-                let localHeight = event.absoluteY;
+            if (event.absoluteY >= (height*0.36) && event.absoluteY <= height*0.775) {
+                let localHeight = Math.round(event.absoluteY);
 
-                getDatasForReducer(Math.round(localHeight), getDiameterReducerAndHeightForDatas, getDiameterReducerDiffForPath, true);
+                getDatasForReducer(localHeight, getDiameterReducerAndHeightForDatas, getDiameterReducerDiffForPath, true);
             }
         })
         .onChange((event) => {
             let localHeight;
 
-            if (event.absoluteY >= Math.round(height*0.775)) { 
-                localHeight = height*0.775;
+            if (event.absoluteY >= height*0.775) { 
+                localHeight = Math.round(height*0.775);
 
                 getDatasForReducer(Math.round(localHeight), getDiameterReducerAndHeightForDatas, getDiameterReducerDiffForPath, false);
 
                 return;
             }
-            if (event.absoluteY <= Math.round((height*0.36))) {
-                localHeight = height*0.36;
+            if (event.absoluteY <= (height*0.36)) {
+                localHeight = Math.round(height*0.36);
 
                 getDatasForReducer(Math.round(localHeight), getDiameterReducerAndHeightForDatas, getDiameterReducerDiffForPath, false);
 
                 return;
             } else {
-                localHeight = event.absoluteY;
+                localHeight = Math.round(event.absoluteY);
 
-                getDatasForReducer(Math.round(localHeight), getDiameterReducerAndHeightForDatas, getDiameterReducerDiffForPath, false);
+                getDatasForReducer(localHeight, getDiameterReducerAndHeightForDatas, getDiameterReducerDiffForPath, false);
             }
         })
         .onTouchesUp(() => {
