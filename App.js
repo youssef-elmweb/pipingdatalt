@@ -164,7 +164,7 @@ export default function App() {
     }
 
     const makeHeightsReducerByDiam = (diameterSup, diameterInf, valuePrecision, decr, boolCurrentDiameter) => {
-        if (ABSOLUTE_POSITION_HEIGHT._value >= DATAS_REDUCER.positionDiamReducerInferior && ABSOLUTE_POSITION_HEIGHT._value <= DATAS_REDUCER.heightRemainder) {
+        if (ABSOLUTE_POSITION_HEIGHT._value > DATAS_REDUCER.positionDiamReducerInferior && ABSOLUTE_POSITION_HEIGHT._value < DATAS_REDUCER.heightRemainder) {
             let valuePrecisionLocal = (valuePrecision === 2 ? 0.01 : 0.1);
             let valueDecimalLocal = (valuePrecision === 2 ? 2 : 1);
 
@@ -181,14 +181,14 @@ export default function App() {
                     heightReducerPath = parseFloat(DATAS_REDUCER.heightRemainder - nextAbsolutePositionHeight.toFixed(0));
                 }
 
-            let heightReducer = (diameterSup - diameterInf) * 3;
-            let diameterReductionDiff = ((diameterSup - diameterInf) * 0.5);
-            let diameterReductionDiffExc = (diameterSup - diameterInf);
+            let heightReducer = Math.round((diameterSup - diameterInf) * 3);
+            let diameterReductionDiff = Math.round(((diameterSup - diameterInf) * 0.5));
+            let diameterReductionDiffExc = Math.round((diameterSup - diameterInf));
             let angle = Math.asin(heightReducer / Math.hypot(heightReducer, diameterReductionDiff)) * DATAS_TRIGONOMETRICS.oneRad;
             let angleExc = Math.asin(heightReducer / Math.hypot(heightReducer, diameterReductionDiffExc)) * DATAS_TRIGONOMETRICS.oneRad;
 
-            let heightReducerTop = Number.parseFloat(((heightReducer) - ((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath)).toFixed(0));
-            let heightReducerBottom = Number.parseFloat(((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath).toFixed(0));
+            let heightReducerTop = Number.parseFloat(((heightReducer) - ((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath)).toFixed(1));
+            let heightReducerBottom = Number.parseFloat(((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath).toFixed(1));
 
             let curveReducerTop = heightReducerTop / Math.sin(angle * DATAS_TRIGONOMETRICS.oneDegreRad); 
             let curveReducerBottom = heightReducerBottom / Math.sin(angle * DATAS_TRIGONOMETRICS.oneDegreRad);
@@ -212,6 +212,49 @@ export default function App() {
             console.log(DATAS_REDUCER.absolutePositionHeight, "DATAS_REDUCER.absolutePositionHeight dans App dans else");
             ABSOLUTE_POSITION_HEIGHT.setValue(DATAS_REDUCER.positionDiamReducerInferior);
             // ici voir pour si height = diamSup
+            let valuePrecisionLocal = (valuePrecision === 2 ? 0.01 : 0.1);
+            let valueDecimalLocal = (valuePrecision === 2 ? 2 : 1);
+
+            let nextAbsolutePositionHeight = (decr === true ? parseFloat((ABSOLUTE_POSITION_HEIGHT._value - 0)) : parseFloat((ABSOLUTE_POSITION_HEIGHT._value + valuePrecisionLocal))); 
+            let heightReducerPath;
+
+            console.log(diameterSup, "diamterSup");
+
+            if (boolCurrentDiameter === false) {
+                ABSOLUTE_POSITION_HEIGHT.setValue(parseFloat(nextAbsolutePositionHeight.toFixed(2)));
+                heightReducerPath = parseFloat(DATAS_REDUCER.heightRemainder - nextAbsolutePositionHeight.toFixed(2));
+            }   else {
+                    ABSOLUTE_POSITION_HEIGHT.setValue(parseFloat(nextAbsolutePositionHeight.toFixed(0)));
+                    heightReducerPath = parseFloat(DATAS_REDUCER.heightRemainder - nextAbsolutePositionHeight.toFixed(0));
+                }
+
+            let heightReducer = Math.round((diameterSup - diameterInf) * 3);
+            let diameterReductionDiff = Math.round(((diameterSup - diameterInf) * 0.5));
+            let diameterReductionDiffExc = Math.round((diameterSup - diameterInf));
+            let angle = Math.asin(heightReducer / Math.hypot(heightReducer, diameterReductionDiff)) * DATAS_TRIGONOMETRICS.oneRad;
+            let angleExc = Math.asin(heightReducer / Math.hypot(heightReducer, diameterReductionDiffExc)) * DATAS_TRIGONOMETRICS.oneRad;
+
+            let heightReducerTop = Number.parseFloat(((heightReducer) - ((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath)).toFixed(1));
+            let heightReducerBottom = Number.parseFloat(((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath).toFixed(1));
+
+            let curveReducerTop = heightReducerTop / Math.sin(angle * DATAS_TRIGONOMETRICS.oneDegreRad); 
+            let curveReducerBottom = heightReducerBottom / Math.sin(angle * DATAS_TRIGONOMETRICS.oneDegreRad);
+
+            let curveReducerTopExc = heightReducerTop / Math.sin(angleExc * DATAS_TRIGONOMETRICS.oneDegreRad); 
+            let curveReducerBottomExc = heightReducerBottom / Math.sin(angleExc * DATAS_TRIGONOMETRICS.oneDegreRad);
+
+            let currentDiameterReductionDiff = Math.cos(angle * DATAS_TRIGONOMETRICS.oneDegreRad) * curveReducerBottom;
+            
+            let currentDiameterRedConcExc = DATAS_PIPES[DIAMETER_INFERIOR_REDUCER._value][NORME._value] + ((diameterReductionDiff - currentDiameterReductionDiff) * 2);
+
+            HEIGHT_REDUCER_TOP.setValue(parseFloat((heightReducerTop).toFixed(valueDecimalLocal)));
+            HEIGHT_REDUCER_BOTTOM.setValue(parseFloat((heightReducerBottom).toFixed(valueDecimalLocal)));
+            CURVE_REDUCER_TOP.setValue(Number.parseFloat(curveReducerTop.toFixed(valueDecimalLocal)));
+            CURVE_REDUCER_BOTTOM.setValue(Number.parseFloat(curveReducerBottom.toFixed(valueDecimalLocal)));
+            CURVE_REDUCER_TOP_EXC.setValue(Number.parseFloat(curveReducerTopExc.toFixed(valueDecimalLocal)));
+            CURVE_REDUCER_BOTTOM_EXC.setValue(Number.parseFloat(curveReducerBottomExc.toFixed(valueDecimalLocal)));
+            CURRENT_DIAMETER_REDUCER_CONC_EXC.setValue(Number.parseFloat(currentDiameterRedConcExc.toFixed(valueDecimalLocal)));
+            console.log(DATAS_REDUCER.absolutePositionHeight, "DATAS_REDUCER.absolutePositionHeight dans App dans if");
 
         }
     }
