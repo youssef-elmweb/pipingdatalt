@@ -163,15 +163,22 @@ export default function App() {
         CURRENT_DIAMETER_REDUCER_CONC_EXC.setValue(datas.currentDiameterRedConcExc);
     }
 
-    const makeHeightsReducerByDiam = (diameterSup, diameterInf, valuePrecision, decr, boolCurrentDiameter) => {
-        if (ABSOLUTE_POSITION_HEIGHT._value > DATAS_REDUCER.positionDiamReducerInferior && ABSOLUTE_POSITION_HEIGHT._value <= DATAS_REDUCER.heightRemainder) {
+
+
+
+
+
+
+    const makeHeightsReducerByDiam = (diameterSup, diameterInf, valuePrecision, boolCurrentDiameter) => {
+        console.log("init");
+        if (ABSOLUTE_POSITION_HEIGHT._value < DATAS_REDUCER.heightRemainder) {
+            console.log(ABSOLUTE_POSITION_HEIGHT._value, DATAS_REDUCER.positionDiamReducerInferior);
+            
             let valuePrecisionLocal = (valuePrecision === 2 ? 0.01 : 0.1);
-            let valueDecimalLocal = (valuePrecision === 2 ? 2 : 1);
+            let valueDecimalLocal = (valuePrecision === 2 ? 2 : (valuePrecision === 1 ? 1 : 0));
 
-            let nextAbsolutePositionHeight = (decr === true ? parseFloat((ABSOLUTE_POSITION_HEIGHT._value - valuePrecisionLocal)) : parseFloat((ABSOLUTE_POSITION_HEIGHT._value + valuePrecisionLocal))); 
+            let nextAbsolutePositionHeight = parseFloat(ABSOLUTE_POSITION_HEIGHT._value + valuePrecisionLocal); 
             let heightReducerPath;
-
-            //console.log(diameterSup, "diamterSup");
 
             if (boolCurrentDiameter === false) {
                 ABSOLUTE_POSITION_HEIGHT.setValue(parseFloat(nextAbsolutePositionHeight.toFixed(2)));
@@ -190,105 +197,154 @@ export default function App() {
             let angleExc = Math.asin(heightReducer / Math.hypot(heightReducer, diameterReductionDiffExc)) * DATAS_TRIGONOMETRICS.oneRad;
 
             let heightReducerTop = Number.parseFloat(((heightReducer) - ((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath)).toFixed(1));
-            let heightReducerBottom = Number.parseFloat(((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath).toFixed(1));
-
             let curveReducerTop = heightReducerTop / Math.sin(angle * DATAS_TRIGONOMETRICS.oneDegreRad); 
-            let curveReducerBottom = heightReducerBottom / Math.sin(angle * DATAS_TRIGONOMETRICS.oneDegreRad);
-
             let curveReducerTopExc = heightReducerTop / Math.sin(angleExc * DATAS_TRIGONOMETRICS.oneDegreRad); 
+            
+
+            let heightReducerBottom = Number.parseFloat(((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath).toFixed(1));
+            let curveReducerBottom = heightReducerBottom / Math.sin(angle * DATAS_TRIGONOMETRICS.oneDegreRad);
             let curveReducerBottomExc = heightReducerBottom / Math.sin(angleExc * DATAS_TRIGONOMETRICS.oneDegreRad);
+            
 
             let currentDiameterReductionDiff = Math.cos(angle * DATAS_TRIGONOMETRICS.oneDegreRad) * curveReducerBottom;
-            
             let currentDiameterRedConcExc = DATAS_PIPES[DIAMETER_INFERIOR_REDUCER._value][NORME._value] + ((diameterReductionDiff - currentDiameterReductionDiff) * 2);
-            //console.log(currentDiameterRedConcExc, "ici");
 
-            HEIGHT_REDUCER_TOP.setValue(parseFloat((heightReducerTop).toFixed(valueDecimalLocal)));
-            HEIGHT_REDUCER_BOTTOM.setValue(parseFloat((heightReducerBottom).toFixed(valueDecimalLocal)));
+            HEIGHT_REDUCER_TOP.setValue(parseFloat((heightReducerTop).toFixed(valueDecimalLocal))); //valueDecimalLocal
             CURVE_REDUCER_TOP.setValue(Number.parseFloat(curveReducerTop.toFixed(valueDecimalLocal)));
-            CURVE_REDUCER_BOTTOM.setValue(Number.parseFloat(curveReducerBottom.toFixed(valueDecimalLocal)));
             CURVE_REDUCER_TOP_EXC.setValue(Number.parseFloat(curveReducerTopExc.toFixed(valueDecimalLocal)));
+
+            HEIGHT_REDUCER_BOTTOM.setValue(parseFloat((heightReducerBottom).toFixed(valueDecimalLocal)));
+            CURVE_REDUCER_BOTTOM.setValue(Number.parseFloat(curveReducerBottom.toFixed(valueDecimalLocal)));
             CURVE_REDUCER_BOTTOM_EXC.setValue(Number.parseFloat(curveReducerBottomExc.toFixed(valueDecimalLocal)));
-            CURRENT_DIAMETER_REDUCER_CONC_EXC.setValue(Number.parseFloat(currentDiameterRedConcExc.toFixed(valueDecimalLocal)));
-            ///console.log(DATAS_REDUCER.absolutePositionHeight, "DATAS_REDUCER.absolutePositionHeight dans App dans if");
-        } else {
-            //console.log(DATAS_REDUCER.absolutePositionHeight, "DATAS_REDUCER.absolutePositionHeight dans App dans else");
-            ABSOLUTE_POSITION_HEIGHT.setValue(DATAS_REDUCER.positionDiamReducerInferior);
-            // ici voir pour si height = diamSup
-            let valuePrecisionLocal = (valuePrecision === 2 ? 0.01 : 0.1);
-            let valueDecimalLocal = (valuePrecision === 2 ? 2 : 1);
-
-            let nextAbsolutePositionHeight = (decr === true ? parseFloat((ABSOLUTE_POSITION_HEIGHT._value - 0)) : parseFloat((ABSOLUTE_POSITION_HEIGHT._value + valuePrecisionLocal))); 
-            let heightReducerPath;
-
-            //console.log(diameterSup, "diamterSup");
-
-            if (boolCurrentDiameter === false) {
-                ABSOLUTE_POSITION_HEIGHT.setValue(parseFloat(nextAbsolutePositionHeight.toFixed(2)));
-                heightReducerPath = parseFloat(DATAS_REDUCER.heightRemainder - nextAbsolutePositionHeight.toFixed(2));
-            }   else {
-                    ABSOLUTE_POSITION_HEIGHT.setValue(parseFloat(nextAbsolutePositionHeight.toFixed(0)));
-                    heightReducerPath = parseFloat(DATAS_REDUCER.heightRemainder - nextAbsolutePositionHeight.toFixed(0));
-                    console.log("slider 2")
-                }
-
-            let heightReducer = Math.round((diameterSup - diameterInf) * 3);
-            let diameterReductionDiff = Math.round(((diameterSup - diameterInf) * 0.5));
-            let diameterReductionDiffExc = Math.round((diameterSup - diameterInf));
-            let angle = Math.asin(heightReducer / Math.hypot(heightReducer, diameterReductionDiff)) * DATAS_TRIGONOMETRICS.oneRad;
-            let angleExc = Math.asin(heightReducer / Math.hypot(heightReducer, diameterReductionDiffExc)) * DATAS_TRIGONOMETRICS.oneRad;
-
-            let heightReducerTop = Number.parseFloat(((heightReducer) - ((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath)).toFixed(1));
-            let heightReducerBottom = Number.parseFloat(((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath).toFixed(1));
-
-            let curveReducerTop = heightReducerTop / Math.sin(angle * DATAS_TRIGONOMETRICS.oneDegreRad); 
-            let curveReducerBottom = heightReducerBottom / Math.sin(angle * DATAS_TRIGONOMETRICS.oneDegreRad);
-
-            let curveReducerTopExc = heightReducerTop / Math.sin(angleExc * DATAS_TRIGONOMETRICS.oneDegreRad); 
-            let curveReducerBottomExc = heightReducerBottom / Math.sin(angleExc * DATAS_TRIGONOMETRICS.oneDegreRad);
-
-            let currentDiameterReductionDiff = Math.cos(angle * DATAS_TRIGONOMETRICS.oneDegreRad) * curveReducerBottom;
             
-            let currentDiameterRedConcExc = DATAS_PIPES[DIAMETER_INFERIOR_REDUCER._value][NORME._value] + ((diameterReductionDiff - currentDiameterReductionDiff) * 2);
-
-            HEIGHT_REDUCER_TOP.setValue(parseFloat((heightReducerTop.toFixed(1))));
-            HEIGHT_REDUCER_BOTTOM.setValue(parseFloat(heightReducerBottom.toFixed(1)));
-            CURVE_REDUCER_TOP.setValue(Number.parseFloat(curveReducerTop.toFixed(1)));
-            CURVE_REDUCER_BOTTOM.setValue(Number.parseFloat(curveReducerBottom.toFixed(1)));
-            CURVE_REDUCER_TOP_EXC.setValue(Number.parseFloat(curveReducerTopExc.toFixed(1)));
-            CURVE_REDUCER_BOTTOM_EXC.setValue(Number.parseFloat(curveReducerBottomExc.toFixed(1)));
-            CURRENT_DIAMETER_REDUCER_CONC_EXC.setValue(Number.parseFloat(currentDiameterRedConcExc.toFixed(1)));
-            //console.log(DATAS_REDUCER.absolutePositionHeight, "DATAS_REDUCER.absolutePositionHeight dans App dans if");
-
+            CURRENT_DIAMETER_REDUCER_CONC_EXC.setValue(Number.parseFloat(currentDiameterRedConcExc.toFixed(valueDecimalLocal)));
+        } else {
+            CURRENT_DIAMETER_REDUCER_CONC_EXC.setValue(diameterSup);
+            return;
         }
     }
 
-    const makePrecisionDatasReducer = (valuePrecision, decr, boolCurrentDiameter) => { 
+    const makePrecisionDatasReducer = (valuePrecision, boolCurrentDiameter) => { 
         let diameterSuperior = (DIAMETER_SUPERIOR_REDUCER._value == 0 ? DATAS_PIPES[1][NORME._value] : DATAS_PIPES[DIAMETER_SUPERIOR_REDUCER._value][NORME._value]);
         let diameterInferior = DATAS_PIPES[DIAMETER_INFERIOR_REDUCER._value][NORME._value];
 
-        makeHeightsReducerByDiam(diameterSuperior, diameterInferior, valuePrecision, decr, boolCurrentDiameter);
+        makeHeightsReducerByDiam(diameterSuperior, diameterInferior, valuePrecision, boolCurrentDiameter);
     }
 
     const getHeightsReducerByDiamSuperior = (value) => { 
-        let diameterSuperior = (value == 0 ? DATAS_PIPES[1][NORME._value] : DATAS_PIPES[value][NORME._value]);
-        let diameterInferior = DATAS_PIPES[DIAMETER_INFERIOR_REDUCER._value][NORME._value];
+        let currentDiameterRedConcExc;
 
-        ABSOLUTE_POSITION_HEIGHT.setValue(Math.round(ABSOLUTE_POSITION_HEIGHT._value));
-        HEIGHT_REDUCER_TOP.setValue(Math.round(HEIGHT_REDUCER_TOP._value));
-        HEIGHT_REDUCER_BOTTOM.setValue(Math.round(HEIGHT_REDUCER_BOTTOM._value));
-        CURVE_REDUCER_TOP.setValue(Math.round(CURVE_REDUCER_TOP._value));
-        CURVE_REDUCER_BOTTOM.setValue(Math.round(CURVE_REDUCER_BOTTOM._value));
+        let diameterSup = (value == 0 ? DATAS_PIPES[1][NORME._value] : DATAS_PIPES[value][NORME._value]);
+        let diameterInf = DATAS_PIPES[DIAMETER_INFERIOR_REDUCER._value][NORME._value];
 
-        makeHeightsReducerByDiam(diameterSuperior, diameterInferior);
+        let valuePrecisionLocal = (0.01);
+        let valueDecimalLocal = (2);
+
+        let nextAbsolutePositionHeight = parseFloat(ABSOLUTE_POSITION_HEIGHT._value + valuePrecisionLocal); 
+        let heightReducerPath;
+
+        ABSOLUTE_POSITION_HEIGHT.setValue(parseFloat(nextAbsolutePositionHeight.toFixed(1)));
+        heightReducerPath = parseFloat(DATAS_REDUCER.heightRemainder - nextAbsolutePositionHeight.toFixed(1));
+
+        let heightReducer = (diameterSup - diameterInf) * 3;
+        let diameterReductionDiff = ((diameterSup - diameterInf) * 0.5);
+        let diameterReductionDiffExc = (diameterSup - diameterInf);
+        let angle = Math.asin(heightReducer / Math.hypot(heightReducer, diameterReductionDiff)) * DATAS_TRIGONOMETRICS.oneRad;
+        let angleExc = Math.asin(heightReducer / Math.hypot(heightReducer, diameterReductionDiffExc)) * DATAS_TRIGONOMETRICS.oneRad;
+
+        let heightReducerTop = Number.parseFloat(((heightReducer) - ((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath)).toFixed(0));
+        let curveReducerTop = heightReducerTop / Math.sin(angle * DATAS_TRIGONOMETRICS.oneDegreRad); 
+        let curveReducerTopExc = heightReducerTop / Math.sin(angleExc * DATAS_TRIGONOMETRICS.oneDegreRad);
+
+        let heightReducerBottom = Number.parseFloat(((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath).toFixed(2));
+        let curveReducerBottom = heightReducerBottom / Math.sin(angle * DATAS_TRIGONOMETRICS.oneDegreRad);
+        let curveReducerBottomExc = heightReducerBottom / Math.sin(angleExc * DATAS_TRIGONOMETRICS.oneDegreRad);
+
+        let currentDiameterReductionDiff = Math.cos(angle * DATAS_TRIGONOMETRICS.oneDegreRad) * curveReducerBottom; //curveReducerBottom
+        
+        if (Math.round(ABSOLUTE_POSITION_HEIGHT._value) >= Math.round(DATAS_REDUCER.heightRemainder)) { // voir >= ou <= pour plus de sécurité
+            console.log("list sup if");
+
+            currentDiameterRedConcExc = DATAS_PIPES[DIAMETER_INFERIOR_REDUCER._value][NORME._value] + (parseFloat(((diameterReductionDiff - currentDiameterReductionDiff) * 2).toFixed(2)));
+
+            HEIGHT_REDUCER_TOP.setValue(parseFloat((heightReducerTop).toFixed(idSettingsDatas))); //valueDecimalLocal
+            CURVE_REDUCER_TOP.setValue(Number.parseFloat(curveReducerTop.toFixed(idSettingsDatas))); //valueDecimalLocal
+            CURVE_REDUCER_TOP_EXC.setValue(Number.parseFloat(curveReducerTopExc.toFixed(idSettingsDatas))); //valueDecimalLocal
+            CURRENT_DIAMETER_REDUCER_CONC_EXC.setValue(Number.parseFloat(currentDiameterRedConcExc.toFixed((ABSOLUTE_POSITION_HEIGHT._value == DATAS_REDUCER.positionDiamReducerInferior || ABSOLUTE_POSITION_HEIGHT._value == DATAS_REDUCER.heightRemainder ? 1 : idSettingsDatas)))); //valueDecimalLocal
+        } else if (Math.round(ABSOLUTE_POSITION_HEIGHT._value) <= Math.round(DATAS_REDUCER.positionDiamReducerInferior)) {
+            console.log("list sup else if");
+
+            currentDiameterRedConcExc = DATAS_PIPES[DIAMETER_INFERIOR_REDUCER._value][NORME._value] + (parseFloat(((diameterReductionDiff - currentDiameterReductionDiff) * 2).toFixed(0)));
+
+            HEIGHT_REDUCER_BOTTOM.setValue(parseFloat((heightReducerBottom).toFixed(idSettingsDatas))); //valueDecimalLocal
+            CURVE_REDUCER_BOTTOM.setValue(Number.parseFloat(curveReducerBottom.toFixed(idSettingsDatas))); //valueDecimalLocal
+            CURVE_REDUCER_BOTTOM_EXC.setValue(Number.parseFloat(curveReducerBottomExc.toFixed(idSettingsDatas))); //valueDecimalLocal
+            CURRENT_DIAMETER_REDUCER_CONC_EXC.setValue(Number.parseFloat(currentDiameterRedConcExc.toFixed((ABSOLUTE_POSITION_HEIGHT._value == DATAS_REDUCER.positionDiamReducerInferior || ABSOLUTE_POSITION_HEIGHT._value == DATAS_REDUCER.heightRemainder ? 1 : idSettingsDatas)))); //valueDecimalLocal
+        } else {
+            makeHeightsReducerByDiam(diameterSup, diameterInf);
+        }
     }
 
     const getHeightsReducerByDiamInferior = (value) => { 
-        let diameterSuperior = DATAS_PIPES[DIAMETER_SUPERIOR_REDUCER._value][NORME._value];
-        let diameterInferior = DATAS_PIPES[value][NORME._value];
+        let currentDiameterRedConcExc;
 
-        makeHeightsReducerByDiam(diameterSuperior, diameterInferior);  
+        let diameterSup = DATAS_PIPES[DIAMETER_SUPERIOR_REDUCER._value][NORME._value];
+        let diameterInf = DATAS_PIPES[value][NORME._value];
+
+        let valuePrecisionLocal = (0.01);
+        let valueDecimalLocal = (2);
+
+        let nextAbsolutePositionHeight = parseFloat(ABSOLUTE_POSITION_HEIGHT._value + valuePrecisionLocal); 
+        let heightReducerPath;
+
+        ABSOLUTE_POSITION_HEIGHT.setValue(parseFloat(nextAbsolutePositionHeight.toFixed(0)));
+        heightReducerPath = parseFloat(DATAS_REDUCER.heightRemainder - nextAbsolutePositionHeight.toFixed(0));
+
+        let heightReducer = (diameterSup - diameterInf) * 3;
+        let diameterReductionDiff = ((diameterSup - diameterInf) * 0.5);
+        let diameterReductionDiffExc = (diameterSup - diameterInf);
+        let angle = Math.asin(heightReducer / Math.hypot(heightReducer, diameterReductionDiff)) * DATAS_TRIGONOMETRICS.oneRad;
+        let angleExc = Math.asin(heightReducer / Math.hypot(heightReducer, diameterReductionDiffExc)) * DATAS_TRIGONOMETRICS.oneRad;
+
+        let heightReducerTop = Number.parseFloat(((heightReducer) - ((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath)).toFixed(0));
+        let curveReducerTop = heightReducerTop / Math.sin(angle * DATAS_TRIGONOMETRICS.oneDegreRad); 
+        let curveReducerTopExc = heightReducerTop / Math.sin(angleExc * DATAS_TRIGONOMETRICS.oneDegreRad);
+
+        let heightReducerBottom = Number.parseFloat(((heightReducer / DATAS_REDUCER.reducerHeight) * heightReducerPath).toFixed(2));
+        let curveReducerBottom = heightReducerBottom / Math.sin(angle * DATAS_TRIGONOMETRICS.oneDegreRad);
+        let curveReducerBottomExc = heightReducerBottom / Math.sin(angleExc * DATAS_TRIGONOMETRICS.oneDegreRad);
+
+        let currentDiameterReductionDiff = Math.cos(angle * DATAS_TRIGONOMETRICS.oneDegreRad) * curveReducerBottom; //curveReducerBottom
+
+        if (Math.round(ABSOLUTE_POSITION_HEIGHT._value) >= Math.round(DATAS_REDUCER.heightRemainder)) { // voir >= ou <= pour plus de sécurité
+            console.log("list inf if");
+
+            currentDiameterRedConcExc = DATAS_PIPES[DIAMETER_INFERIOR_REDUCER._value][NORME._value] + (parseFloat(((diameterReductionDiff - currentDiameterReductionDiff) * 2).toFixed(2)));
+
+            HEIGHT_REDUCER_TOP.setValue(parseFloat((heightReducerTop).toFixed(idSettingsDatas))); //valueDecimalLocal
+            CURVE_REDUCER_TOP.setValue(Number.parseFloat(curveReducerTop.toFixed(idSettingsDatas))); //valueDecimalLocal
+            CURVE_REDUCER_TOP_EXC.setValue(Number.parseFloat(curveReducerTopExc.toFixed(idSettingsDatas))); //valueDecimalLocal
+            CURRENT_DIAMETER_REDUCER_CONC_EXC.setValue(Number.parseFloat(currentDiameterRedConcExc.toFixed((ABSOLUTE_POSITION_HEIGHT._value == DATAS_REDUCER.positionDiamReducerInferior || ABSOLUTE_POSITION_HEIGHT._value == DATAS_REDUCER.heightRemainder ? 1 : idSettingsDatas)))); //valueDecimalLocal
+        } else if (Math.round(ABSOLUTE_POSITION_HEIGHT._value) <= Math.round(DATAS_REDUCER.positionDiamReducerInferior)) {
+            console.log("list inf else if");
+
+            currentDiameterRedConcExc = DATAS_PIPES[DIAMETER_INFERIOR_REDUCER._value][NORME._value] + (parseFloat(((diameterReductionDiff - currentDiameterReductionDiff) * 2).toFixed(0)));
+
+            HEIGHT_REDUCER_BOTTOM.setValue(parseFloat((heightReducerBottom).toFixed(idSettingsDatas))); //valueDecimalLocal
+            CURVE_REDUCER_BOTTOM.setValue(Number.parseFloat(curveReducerBottom.toFixed(idSettingsDatas))); //valueDecimalLocal
+            CURVE_REDUCER_BOTTOM_EXC.setValue(Number.parseFloat(curveReducerBottomExc.toFixed(idSettingsDatas))); //valueDecimalLocal
+            CURRENT_DIAMETER_REDUCER_CONC_EXC.setValue(Number.parseFloat(currentDiameterRedConcExc.toFixed((ABSOLUTE_POSITION_HEIGHT._value == DATAS_REDUCER.positionDiamReducerInferior || ABSOLUTE_POSITION_HEIGHT._value == DATAS_REDUCER.heightRemainder ? 1 : idSettingsDatas)))); //valueDecimalLocal
+        } else {
+            makeHeightsReducerByDiam(diameterSup, diameterInf);
+        } 
     }
+
+
+
+
+
+
+
 
     const makeFormat = () => {
         makeDatasElbowByAngle(getDatasElbows);
@@ -367,72 +423,6 @@ export default function App() {
                 runOnUI(subtractAngleBaseShared)(anglePrecision);
             }
     } 
-
-
-
-
-
-
-
-
-
-    /*const addDatasPrecision = () => { 
-        let datasPrecision = 0;
-
-        if (BASEDATAS._value == 1 && ABSOLUTE_POSITION_HEIGHT._value > parseFloat(DATAS_REDUCER.positionDiamReducerInferior).toFixed(0) && ABSOLUTE_POSITION_HEIGHT._value < parseFloat(DATAS_REDUCER.heightRemainder).toFixed(0)) {
-            datasPrecision = 0.1;
-
-                HEIGHT_REDUCER_TOP.setValue(parseFloat((HEIGHT_REDUCER_TOP._value - datasPrecision).toFixed(1)));
-                HEIGHT_REDUCER_BOTTOM.setValue(parseFloat((HEIGHT_REDUCER_BOTTOM._value + datasPrecision).toFixed(1)));
-                CURVE_REDUCER_TOP.setValue(parseFloat((CURVE_REDUCER_TOP._value - datasPrecision).toFixed(1)));
-                CURVE_REDUCER_BOTTOM.setValue(parseFloat((CURVE_REDUCER_BOTTOM._value + datasPrecision).toFixed(1)));
-                CURVE_REDUCER_TOP_EXC.setValue(parseFloat((CURVE_REDUCER_TOP_EXC._value - datasPrecision).toFixed(1)));
-                CURVE_REDUCER_BOTTOM_EXC.setValue(parseFloat((CURVE_REDUCER_BOTTOM_EXC._value + datasPrecision).toFixed(1)));
-                CURRENT_DIAMETER_REDUCER_CONC_EXC.setValue(parseFloat((CURRENT_DIAMETER_REDUCER_CONC_EXC._value - datasPrecision).toFixed(1)));
-        }   else if (BASEDATAS._value == 2 && ABSOLUTE_POSITION_HEIGHT._value > parseFloat(DATAS_REDUCER.positionDiamReducerInferior).toFixed(0) && ABSOLUTE_POSITION_HEIGHT._value < parseFloat(DATAS_REDUCER.heightRemainder).toFixed(0)) {
-            datasPrecision = 0.01;
-
-                HEIGHT_REDUCER_TOP.setValue(parseFloat((HEIGHT_REDUCER_TOP._value - datasPrecision).toFixed(2)));
-                HEIGHT_REDUCER_BOTTOM.setValue(parseFloat((HEIGHT_REDUCER_BOTTOM._value + datasPrecision).toFixed(2)));
-                CURVE_REDUCER_TOP.setValue(parseFloat((CURVE_REDUCER_TOP._value - datasPrecision).toFixed(2)));
-                CURVE_REDUCER_BOTTOM.setValue(parseFloat((CURVE_REDUCER_BOTTOM._value + datasPrecision).toFixed(2)));
-                CURVE_REDUCER_TOP_EXC.setValue(parseFloat((CURVE_REDUCER_TOP_EXC._value - datasPrecision).toFixed(2)));
-                CURVE_REDUCER_BOTTOM_EXC.setValue(parseFloat((CURVE_REDUCER_BOTTOM_EXC._value + datasPrecision).toFixed(2)));
-                CURRENT_DIAMETER_REDUCER_CONC_EXC.setValue(parseFloat((CURRENT_DIAMETER_REDUCER_CONC_EXC._value - datasPrecision).toFixed(2)));           
-            } else {
-                return false;
-            }
-    } 
-
-    const subtractDatasPrecision = () => { 
-        let datasPrecision = 0;
-
-        if (BASEDATAS._value == 1 && ABSOLUTE_POSITION_HEIGHT._value < parseFloat(DATAS_REDUCER.heightRemainder).toFixed(0) && ABSOLUTE_POSITION_HEIGHT._value > parseFloat(DATAS_REDUCER.positionDiamReducerInferior).toFixed(0)) {
-            datasPrecision = 0.1;
-
-                HEIGHT_REDUCER_TOP.setValue(parseFloat((HEIGHT_REDUCER_TOP._value + datasPrecision).toFixed(1)));
-                HEIGHT_REDUCER_BOTTOM.setValue(parseFloat((HEIGHT_REDUCER_BOTTOM._value - datasPrecision).toFixed(1)));
-                CURVE_REDUCER_TOP.setValue(parseFloat((CURVE_REDUCER_TOP._value + datasPrecision).toFixed(1)));
-                CURVE_REDUCER_BOTTOM.setValue(parseFloat((CURVE_REDUCER_BOTTOM._value - datasPrecision).toFixed(1)));
-                CURVE_REDUCER_TOP_EXC.setValue(parseFloat((CURVE_REDUCER_TOP_EXC._value + datasPrecision).toFixed(1)));
-                CURVE_REDUCER_BOTTOM_EXC.setValue(parseFloat((CURVE_REDUCER_BOTTOM_EXC._value - datasPrecision).toFixed(1)));
-                CURRENT_DIAMETER_REDUCER_CONC_EXC.setValue(parseFloat((CURRENT_DIAMETER_REDUCER_CONC_EXC._value + datasPrecision).toFixed(1)));
-        }   else if (BASEDATAS._value == 2 && ABSOLUTE_POSITION_HEIGHT._value < parseFloat(DATAS_REDUCER.heightRemainder).toFixed(0) && ABSOLUTE_POSITION_HEIGHT._value > parseFloat(DATAS_REDUCER.positionDiamReducerInferior).toFixed(0)) {
-            datasPrecision = 0.01;
-
-                HEIGHT_REDUCER_TOP.setValue(parseFloat((HEIGHT_REDUCER_TOP._value + datasPrecision).toFixed(2)));
-                HEIGHT_REDUCER_BOTTOM.setValue(parseFloat((HEIGHT_REDUCER_BOTTOM._value - datasPrecision).toFixed(2)));
-                CURVE_REDUCER_TOP.setValue(parseFloat((CURVE_REDUCER_TOP._value + datasPrecision).toFixed(2)));
-                CURVE_REDUCER_BOTTOM.setValue(parseFloat((CURVE_REDUCER_BOTTOM._value - datasPrecision).toFixed(2)));
-                CURVE_REDUCER_TOP_EXC.setValue(parseFloat((CURVE_REDUCER_TOP_EXC._value + datasPrecision).toFixed(2)));
-                CURVE_REDUCER_BOTTOM_EXC.setValue(parseFloat((CURVE_REDUCER_BOTTOM_EXC._value - datasPrecision).toFixed(2)));
-                CURRENT_DIAMETER_REDUCER_CONC_EXC.setValue(parseFloat((CURRENT_DIAMETER_REDUCER_CONC_EXC._value + datasPrecision).toFixed(2)));             
-            }
-    }*/
-
-
-
-
 
     const makeColorDatasCurves = () => {
         (DATAS_ELBOWS.roundAngles.includes(ANGLE._value) ? setColorDatasCurves(() => "deepskyblue") : setColorDatasCurves(() => "white"));
@@ -627,7 +617,7 @@ export default function App() {
 
                                     <View style={[ {paddingLeft: width*0.007, justifyContent: "space-between", alignItems: "flex-start", backgroundColor: "transparent"} ]}>
                                         <ValidatedValueAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color="silver" valueForCheck={ HEIGHT_REDUCER_TOP } />
-                                        <ValidatedValueAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color="white" valueForCheck={ HEIGHT_REDUCER_BOTTOM } />
+                                        <ValidatedValueAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color="lime" valueForCheck={ HEIGHT_REDUCER_BOTTOM } />
                                     </View>
                                 </View>] )}
                             </View>
@@ -680,11 +670,11 @@ export default function App() {
                                 {(elbowLayer == "reducer" ? 
                                     <View style={[ {minHeight: height*0.05, maxHeight: height*0.05, flexDirection: "row", justifyContent: "flex-end", alignItems: "center", backgroundColor: "transparent"} ]}> 
                                         <View style={[ {width: width*0.3, flexDirection: "row", justifyContent: "space-evenly", alignItems: "flex-end", alignSelf: "center"} ]}>
-                                            <TouchableHighlight style={[ {width: width*0.1, height: width*0.065, justifyContent: "center", alignItems: "center", borderTopRightRadius: 3.5, borderBottomRightRadius: 3.5, borderBottomLeftRadius: 7.5, borderTopLeftRadius: 7.5, backgroundColor: "#414141"}]} activeOpacity={0.25} onPress={ () => { makePrecisionDatasReducer(idSettingsDatas, false, false); } }>
+                                            <TouchableHighlight style={[ {width: width*0.1, height: width*0.065, justifyContent: "center", alignItems: "center", borderTopRightRadius: 3.5, borderBottomRightRadius: 3.5, borderBottomLeftRadius: 7.5, borderTopLeftRadius: 7.5, backgroundColor: "#414141"}]} activeOpacity={0.25} onPress={ () => { makePrecisionDatasReducer(idSettingsDatas, false); } }>
                                                 <Text style={[ {fontSize: width*0.05, fontWeight: "bold", lineHeight: width*0.05, color: "whitesmoke"} ]}>-</Text>
                                             </TouchableHighlight>
 
-                                            <TouchableHighlight style={[ {width: width*0.1, height: width*0.065, justifyContent: "center", alignItems: "center", borderTopRightRadius: 7.5, borderBottomRightRadius: 7.5, borderBottomLeftRadius: 3.5, borderTopLeftRadius: 3.5, backgroundColor: "#414141"} ]} activeOpacity={0.25} onPress={ () => { makePrecisionDatasReducer(idSettingsDatas, true, false);  /*makePrecisionDatasReducer(valuePrecision);*/ } }>
+                                            <TouchableHighlight style={[ {width: width*0.1, height: width*0.065, justifyContent: "center", alignItems: "center", borderTopRightRadius: 7.5, borderBottomRightRadius: 7.5, borderBottomLeftRadius: 3.5, borderTopLeftRadius: 3.5, backgroundColor: "#414141"} ]} activeOpacity={0.25} onPress={ () => { /*makePrecisionDatasReducer(idSettingsDatas, true, false);*/ } }>
                                                 <Text style={[ {fontSize: width*0.05, lineHeight: width*0.05, color: "whitesmoke"} ]}>+</Text>
                                             </TouchableHighlight>
                                         </View>

@@ -49,7 +49,7 @@ export function ViewReducer (props) {
         let currentDiameterReductionDiff = Math.cos(angle * DATAS_TRIGONOMETRICS.oneDegreRad) * curveReducerBottom;
 
         let currentDiameterRedConcExc = DATAS_PIPES[props.diameterInferiorReducer._value][props.norme._value] + ((diameterReductionDiff - currentDiameterReductionDiff) * 2);
-
+console.log(localHeight, heightReducerPath, DATAS_REDUCER.absolutePositionHeight);
         DATAS_REDUCER.absolutePositionHeight = Number.parseFloat(localHeight.toFixed(props.baseDatas._value));
         DATAS_REDUCER.heightReducerTop = Number.parseFloat(heightReducerTop.toFixed(props.baseDatas._value));
         DATAS_REDUCER.heightReducerBottom = Number.parseFloat(heightReducerBottom.toFixed(props.baseDatas._value));
@@ -57,7 +57,7 @@ export function ViewReducer (props) {
         DATAS_REDUCER.curveReducerBottom = Number.parseFloat(curveReducerBottom.toFixed(props.baseDatas._value));
         DATAS_REDUCER.curveReducerTopExc = Number.parseFloat(curveReducerTopExc.toFixed(props.baseDatas._value));
         DATAS_REDUCER.curveReducerBottomExc = Number.parseFloat(curveReducerBottomExc.toFixed(props.baseDatas._value));
-        DATAS_REDUCER.currentDiameterRedConcExc = Number.parseFloat(currentDiameterRedConcExc.toFixed(props.baseDatas._value));
+        DATAS_REDUCER.currentDiameterRedConcExc = Number.parseFloat(currentDiameterRedConcExc.toFixed((localHeight == DATAS_REDUCER.positionDiamReducerInferior || localHeight == DATAS_REDUCER.heightRemainder ? 2 : props.baseDatas._value)));
 
         console.log(DATAS_REDUCER.absolutePositionHeight, "DATAS_REDUCER.absolutePositionHeight dans ViewElbow");
     
