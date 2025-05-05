@@ -26,6 +26,8 @@ export function ViewReducer (props) {
 
 
     const getDiameterReducerAndHeightForDatas = (localHeight) => { // FOR DATAS
+        const tabValuesReducer = {};
+
         let heightReducerPath = DATAS_REDUCER.heightRemainder - localHeight;
 
         let diameterSuperior = (props.diameterSuperiorReducer._value == 0 ? DATAS_PIPES[1][props.norme._value] : DATAS_PIPES[props.diameterSuperiorReducer._value][props.norme._value]);
@@ -49,19 +51,17 @@ export function ViewReducer (props) {
         let currentDiameterReductionDiff = Math.cos(angle * DATAS_TRIGONOMETRICS.oneDegreRad) * curveReducerBottom;
 
         let currentDiameterRedConcExc = DATAS_PIPES[props.diameterInferiorReducer._value][props.norme._value] + ((diameterReductionDiff - currentDiameterReductionDiff) * 2);
-console.log(localHeight, heightReducerPath, DATAS_REDUCER.absolutePositionHeight);
-        DATAS_REDUCER.absolutePositionHeight = Number.parseFloat(localHeight.toFixed(props.baseDatas._value));
-        DATAS_REDUCER.heightReducerTop = Number.parseFloat(heightReducerTop.toFixed(props.baseDatas._value));
-        DATAS_REDUCER.heightReducerBottom = Number.parseFloat(heightReducerBottom.toFixed(props.baseDatas._value));
-        DATAS_REDUCER.curveReducerTop = Number.parseFloat(curveReducerTop.toFixed(props.baseDatas._value));
-        DATAS_REDUCER.curveReducerBottom = Number.parseFloat(curveReducerBottom.toFixed(props.baseDatas._value));
-        DATAS_REDUCER.curveReducerTopExc = Number.parseFloat(curveReducerTopExc.toFixed(props.baseDatas._value));
-        DATAS_REDUCER.curveReducerBottomExc = Number.parseFloat(curveReducerBottomExc.toFixed(props.baseDatas._value));
-        DATAS_REDUCER.currentDiameterRedConcExc = Number.parseFloat(currentDiameterRedConcExc.toFixed((localHeight == DATAS_REDUCER.positionDiamReducerInferior || localHeight == DATAS_REDUCER.heightRemainder ? 2 : props.baseDatas._value)));
 
-        console.log(DATAS_REDUCER.absolutePositionHeight, "DATAS_REDUCER.absolutePositionHeight dans ViewElbow");
+        tabValuesReducer.absolutePositionHeight = localHeight;
+        tabValuesReducer.heightReducerTop = heightReducerTop;
+        tabValuesReducer.heightReducerBottom = heightReducerBottom;
+        tabValuesReducer.curveReducerTop = curveReducerTop;
+        tabValuesReducer.curveReducerBottom = curveReducerBottom;
+        tabValuesReducer.curveReducerTopExc = curveReducerTopExc;
+        tabValuesReducer.curveReducerBottomExc = curveReducerBottomExc;
+        tabValuesReducer.currentDiameterRedConcExc = currentDiameterRedConcExc;
     
-        props.shareDiameterAndHeight(DATAS_REDUCER);
+        props.shareDiameterAndHeight(tabValuesReducer);
     }            
 
     const getDiameterReducerDiffForPath = (localHeight, beginAction) => { // FOR PATH SVG
