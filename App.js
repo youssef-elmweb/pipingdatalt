@@ -45,8 +45,8 @@ export default function App() {
     const ReTextAnimated = AnimNat.createAnimatedComponent(ReText); 
     const ValidatedValueAnimated = AnimNat.createAnimatedComponent(ValidatedValue);
 
-    const angleBaseShared = useSharedValue(90);
-    const absoluteHeightBaseShared = useSharedValue(25);
+    const angleBaseShared = useSharedValue(DATAS_ELBOWS.angle);
+    const absoluteHeightBaseShared = useSharedValue(DATAS_REDUCER.positionDiamReducerInferior);
 
     const ANGLE = useRef(new AnimNat.Value(DATAS_ELBOWS.angle)).current;
     
@@ -249,6 +249,8 @@ export default function App() {
         
         const precision = valuePrecision ?? 0;
 
+        runOnUI(addAbsoluteHeightBaseShared)(precision);
+
         let nextAbsolutePositionHeight = parseFloat(ABSOLUTE_POSITION_HEIGHT._value - precision); 
 
         const datasReducer = makeDatasReducer(diameterSup, diameterInf, nextAbsolutePositionHeight); 
@@ -259,6 +261,8 @@ export default function App() {
     const makeSubtractDatasReducer = (diameterSup, diameterInf, valuePrecision) => {
         
         const precision = valuePrecision ?? 0;
+
+        runOnUI(subtractAbsoluteHeightBaseShared)(precision);
 
         let nextAbsolutePositionHeight = parseFloat(ABSOLUTE_POSITION_HEIGHT._value + precision); 
 
@@ -276,6 +280,7 @@ export default function App() {
             getDatasReducer(valuesReducer);
         } else {
             CURRENT_DIAMETER_REDUCER_CONC_EXC.setValue(diameterSup);
+            runOnUI(subtractAbsoluteHeightBaseShared)(DATAS_REDUCER.heightRemainder - absoluteHeightBaseShared.value);
             return;
         }
     }
@@ -289,6 +294,7 @@ export default function App() {
             getDatasReducer(valuesReducer);
         } else {
             CURRENT_DIAMETER_REDUCER_CONC_EXC.setValue(diameterInf);
+            runOnUI(subtractAbsoluteHeightBaseShared)(absoluteHeightBaseShared.value - DATAS_REDUCER.positionDiamReducerInferior);
             return;
         }
     }
@@ -348,14 +354,14 @@ export default function App() {
         } 
     }
 
-    const updateAbsoluteHeightBaseShared = (value) => {
+    const addAbsoluteHeightBaseShared = (value) => {
         "worklet"
-        absoluteHeightBaseShared.value = parseFloat((absoluteHeightBaseShared.value + value));
+        absoluteHeightBaseShared.value = parseFloat((absoluteHeightBaseShared.value - value));
     }
 
     const subtractAbsoluteHeightBaseShared = (value) => {
         "worklet"
-        absoluteHeightBaseShared.value = parseFloat((absoluteHeightBaseShared.value - value));
+        absoluteHeightBaseShared.value = parseFloat((absoluteHeightBaseShared.value + value));
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////// REDUCER ///////////////////////////////////////////////////////
@@ -594,7 +600,7 @@ export default function App() {
                                             </View>
 
                                             <View style={[ { width: width*0.275, backgroundColor: "transparent"} ]}>
-                                                <ValidatedValueAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color="white" valueForCheck={ CURRENT_DIAMETER_REDUCER_CONC_EXC } />
+                                                <ValidatedValueAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color={"white"} valueForCheck={ CURRENT_DIAMETER_REDUCER_CONC_EXC } />
                                             </View>
                                         </View>
 
@@ -657,7 +663,7 @@ export default function App() {
             : false)}
 
             {(elbowLayer == "reducer" ?
-                <ViewReducer sizeText={sizeText} baseDatas={BASEDATAS} currentDiameterInferiorReducer={currentDiameterInferiorReducer} currentDiameterSuperiorReducer={currentDiameterSuperiorReducer} diameterSuperiorReducer={DIAMETER_SUPERIOR_REDUCER} diameterInferiorReducer={DIAMETER_INFERIOR_REDUCER} absolutePositionHeight={ABSOLUTE_POSITION_HEIGHT} currentReducer={currentReducer} currentDiameterRedConcExc={CURRENT_DIAMETER_REDUCER_CONC_EXC} norme={NORME} idSettingsMeasure={idSettingsMeasure} idSettingsDatas={idSettingsDatas} checkboxDatasInterfaceState={checkboxDatasInterfaceState} shareDiameterAndHeight={getDatasReducer} /> 
+                <ViewReducer sizeText={sizeText} baseDatas={BASEDATAS} absoluteHeight={absoluteHeightBaseShared} currentDiameterInferiorReducer={currentDiameterInferiorReducer} currentDiameterSuperiorReducer={currentDiameterSuperiorReducer} diameterSuperiorReducer={DIAMETER_SUPERIOR_REDUCER} diameterInferiorReducer={DIAMETER_INFERIOR_REDUCER} absolutePositionHeight={ABSOLUTE_POSITION_HEIGHT} currentReducer={currentReducer} currentDiameterRedConcExc={CURRENT_DIAMETER_REDUCER_CONC_EXC} norme={NORME} idSettingsMeasure={idSettingsMeasure} idSettingsDatas={idSettingsDatas} checkboxDatasInterfaceState={checkboxDatasInterfaceState} shareDiameterAndHeight={getDatasReducer} /> 
             : 
             false)}
             {/*///////////////////////////////////////////////////////////////////////////////////////////////////////////*/}

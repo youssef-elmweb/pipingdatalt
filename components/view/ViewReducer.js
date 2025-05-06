@@ -67,7 +67,7 @@ export function ViewReducer (props) {
     const getDiameterReducerDiffForPath = (localHeight, beginAction) => { // FOR PATH SVG
         "worklet";
 
-        absolutePositionHeight.value = localHeight;
+        props.absoluteHeight.value = localHeight;
         reducerInfBegin.value = beginAction;
     }
 
@@ -79,11 +79,11 @@ export function ViewReducer (props) {
     }
 
     const REDUCER_CONC_MEMOIZED = useMemo(() => {
-        return <ConcentricReducer scaleBegin={scaleBegin} reducerInfBegin={reducerInfBegin} absolutePositionHeight={absolutePositionHeight} sizeText={props.sizeText} idSettingsMeasure={props.idSettingsMeasure} idSettingsDatas={props.idSettingsDatas} checkboxDatasInterfaceState={props.checkboxDatasInterfaceState} />
+        return <ConcentricReducer scaleBegin={scaleBegin} absoluteHeight={props.absoluteHeight} reducerInfBegin={reducerInfBegin} absolutePositionHeight={absolutePositionHeight} sizeText={props.sizeText} idSettingsMeasure={props.idSettingsMeasure} idSettingsDatas={props.idSettingsDatas} checkboxDatasInterfaceState={props.checkboxDatasInterfaceState} />
     }, [])
 
     const REDUCER_EXC_MEMOIZED = useMemo(() => {
-        return <ExcentricReducer scaleBegin={scaleBegin} reducerInfBegin={reducerInfBegin} absolutePositionHeight={absolutePositionHeight} sizeText={props.sizeText} idSettingsMeasure={props.idSettingsMeasure} idSettingsDatas={props.idSettingsDatas} checkboxDatasInterfaceState={props.checkboxDatasInterfaceState} />
+        return <ExcentricReducer scaleBegin={scaleBegin} absoluteHeight={props.absoluteHeight} reducerInfBegin={reducerInfBegin} absolutePositionHeight={absolutePositionHeight} sizeText={props.sizeText} idSettingsMeasure={props.idSettingsMeasure} idSettingsDatas={props.idSettingsDatas} checkboxDatasInterfaceState={props.checkboxDatasInterfaceState} />
     }, [])
 
 

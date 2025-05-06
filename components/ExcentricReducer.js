@@ -23,34 +23,34 @@ export function ExcentricReducer (props) {
         let maxDiameter = Math.round(width*0.8);
         let minDiameter = Math.round(width*0.4);
 
-        let absolutePositionHeight = props.absolutePositionHeight.value;
+        let absoluteHeight = props.absoluteHeight.value;
 
-        let hypotenuse = ((Math.round(height - (height*0.225)) - absolutePositionHeight) / (Math.sin(angleBase * DATAS_TRIGONOMETRICS.oneDegreRad)));
+        let hypotenuse = ((Math.round(height - (height*0.225)) - absoluteHeight) / (Math.sin(angleBase * DATAS_TRIGONOMETRICS.oneDegreRad)));
         let diameterReductionDiff = Math.cos(angleBase * DATAS_TRIGONOMETRICS.oneDegreRad) * hypotenuse;
 
         let diameterReductionDiffInverse = (Math.round((maxDiameter - minDiameter) / 2) - diameterReductionDiff);
 
         return  {   
-                    d: `M ${Math.round(width*0.1)} ${Math.round(height*0.775)} L ${width*0.1 + ((width*0.2 - diameterReductionDiffInverse))} ${absolutePositionHeight} L ${width*0.5 + ((width*0.2))} ${absolutePositionHeight}`,
+                    d: `M ${Math.round(width*0.1)} ${Math.round(height*0.775)} L ${width*0.1 + ((width*0.2 - diameterReductionDiffInverse))} ${absoluteHeight} L ${width*0.5 + ((width*0.2))} ${absoluteHeight}`,
                     stroke: props.reducerInfBegin.value ? "silver" : "white",
                     strokeWidth: props.reducerInfBegin.value ? "5" : "2.75"
                 };
     });
 
     const rightHeightReducerInferior = useAnimatedProps(() => {
-        let absolutePositionHeight = props.absolutePositionHeight.value;
+        let absoluteHeight = props.absoluteHeight.value;
 
         return  {    
-                    d: `M ${Math.round(width*0.7)} ${Math.round(height*0.775)} L ${Math.round(width*0.7)} ${absolutePositionHeight}`,
+                    d: `M ${Math.round(width*0.7)} ${Math.round(height*0.775)} L ${Math.round(width*0.7)} ${absoluteHeight}`,
                     stroke: props.reducerInfBegin.value ? "silver" : "white",
                     strokeWidth: props.reducerInfBegin.value ? "5" : "2.75"
                 };
     });
 
     const heightBottom = useAnimatedProps(() => {
-        let absolutePositionHeight = props.absolutePositionHeight.value;
+        let absoluteHeight = props.absoluteHeight.value;
 
-        return { d: `M ${width*0.5} ${Math.round(height*0.775)} L ${width*0.5} ${Math.round(absolutePositionHeight)}` };
+        return { d: `M ${width*0.5} ${Math.round(height*0.775)} L ${width*0.5} ${Math.round(absoluteHeight)}` };
     });
 
     const pathBaseStaticInferior = useAnimatedProps(() => {
