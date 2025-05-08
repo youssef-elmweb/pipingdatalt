@@ -70,8 +70,8 @@ export function ModalUtilities (props) {
                       languages[0][props.idLanguage].personalized_ad,
                       languages[0][props.idLanguage].personalized_ad_text,
                       [
-                          { text: "Non", onPress: () => saveConsent(false) },
-                          { text: "Oui", onPress: () => saveConsent(true) }
+                          { text: "Non"/*, onPress: () => saveConsent(false)*/ },
+                          { text: "Oui"/*, onPress: () => saveConsent(true)*/ }
                       ]
                   );
               }
@@ -117,9 +117,9 @@ export function ModalUtilities (props) {
     }
 
 
-    useEffect(() => {
+    /*useEffect(() => {
         loadConsent();
-    }, [userConsent]);
+    }, [userConsent]);*/
 
 
     return  (

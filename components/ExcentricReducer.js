@@ -32,7 +32,7 @@ export function ExcentricReducer (props) {
 
         return  {   
                     d: `M ${Math.round(width*0.1)} ${Math.round(height*0.775)} L ${width*0.1 + ((width*0.2 - diameterReductionDiffInverse))} ${absoluteHeight} L ${width*0.5 + ((width*0.2))} ${absoluteHeight}`,
-                    stroke: props.reducerInfBegin.value ? "silver" : "white",
+                    stroke: props.reducerInfBegin.value ? "white" : "white",
                     strokeWidth: props.reducerInfBegin.value ? "5" : "2.75"
                 };
     });
@@ -42,7 +42,7 @@ export function ExcentricReducer (props) {
 
         return  {    
                     d: `M ${Math.round(width*0.7)} ${Math.round(height*0.775)} L ${Math.round(width*0.7)} ${absoluteHeight}`,
-                    stroke: props.reducerInfBegin.value ? "silver" : "white",
+                    stroke: props.reducerInfBegin.value ? "lime" : "lime",
                     strokeWidth: props.reducerInfBegin.value ? "5" : "2.75"
                 };
     });
@@ -55,7 +55,7 @@ export function ExcentricReducer (props) {
 
     const pathBaseStaticInferior = useAnimatedProps(() => {
         return  { 
-                    stroke: props.reducerInfBegin.value ? "silver" : "white",
+                    stroke: props.reducerInfBegin.value ? "white" : "white",
                     strokeWidth: props.reducerInfBegin.value ? "5" : "2.75",
                 };
     });
