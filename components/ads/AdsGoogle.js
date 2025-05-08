@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { View } from "react-native";
-import * as adsmamager from "../ads/interstitial-hook/adsmanager.js"
+import * as adsmamager from "../ads/interstitial-hook/adsmanager.js";
 
 
 export function AdsGoogle() {

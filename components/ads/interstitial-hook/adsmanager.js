@@ -4,15 +4,28 @@ import { MobileAds, InterstitialAd, AdEventType, TestIds } from "react-native-go
 
 const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : null; 
 
+export const loadConsentFromUtilities = (setUserConsent) => {
+    AsyncStorage.removeItem("userConsent").then(() => setUserConsent(null));
+
+    Alert.alert(
+        "Publicité :",
+        "Je préfère les publicités personnalisées pour une meillleure expérience utilisateur ?",
+        [
+            { text: "non personnalisé", onPress: () => saveConsent(false, setUserConsent) },
+            { text: "personnalisé", onPress: () => saveConsent(true, setUserConsent) }
+        ]
+    );
+}
+
 export const loadConsent = async (userConsent, setUserConsent) => {
   try {
       if (userConsent == null) {
           Alert.alert(
-              "Publicité personnalisée",
-              "J'accepte les publicités personnalisées pour une meilleure expérience ?",
+              "Publicité :",
+              "Je préfère les publicités personnalisées pour une meillleure expérience utilisateur ?",
               [
-                  { text: "Non", onPress: () => saveConsent(false, setUserConsent) },
-                  { text: "Oui", onPress: () => saveConsent(true, setUserConsent) }
+                  { text: "non personnalisé", onPress: () => saveConsent(false, setUserConsent) },
+                  { text: "personnalisé", onPress: () => saveConsent(true, setUserConsent) }
               ]
           );
 

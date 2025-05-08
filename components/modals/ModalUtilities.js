@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Dimensions, Button, Pressable, Text, Modal, View, Image, SafeAreaView, FlatList, Alert } from "react-native";
-
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { MobileAds, InterstitialAd, AdEventType, TestIds } from "react-native-google-mobile-ads";
+import React, { useState } from "react";
+import { StyleSheet, Dimensions, Button, Pressable, Text, Modal, View, Image, SafeAreaView, FlatList } from "react-native";
 
 import * as functions from "./../../library/functions.js";
 
@@ -11,19 +8,17 @@ import { languages } from "../../languages/languages";
 import { ModalInfos } from "./ModalInfos.js";
 import { ModalPremium } from "./ModalPremium.js";
 
-const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : null; 
+import * as adsmamager from "../ads/interstitial-hook/adsmanager.js";
 
 export function ModalUtilities (props) {
 
     const [statusModalInfos, setStatusModalInfos] = useState(false);
-    //const [statusModalPremium, setStatusModalPremium] = useState(props.statusModalPremiumOnApp);
-
     
     const {width} = Dimensions.get("window");
     const {height} = Dimensions.get("window"); 
 
 
-    const [userConsent, setUserConsent] = useState(null);
+    const [, setUserConsent] = useState(null);
     const [showModalConsent, setShowModalConsent] = useState(false);
 
 
@@ -38,7 +33,7 @@ export function ModalUtilities (props) {
         },
         {
             id: 3,
-            title: <Pressable title={languages[0][props.idLanguage].modify_choice} onPress={() => AsyncStorage.removeItem("userConsent").then(() => setUserConsent(null))}><Text style={ {height: height*0.06, lineHeight: Number(height*0.06), fontSize: Number(height*0.02), color: "white"} }>{languages[0][props.idLanguage].ad_preferences}</Text></Pressable>
+            title: <Pressable title={languages[0][props.idLanguage].modify_choice} onPress={() => { applyModalAds(setUserConsent); }}><Text style={ {height: height*0.06, lineHeight: Number(height*0.06), fontSize: Number(height*0.02), color: "white"} }>{languages[0][props.idLanguage].ad_preferences}</Text></Pressable>
         },
         {
             id: 4,
@@ -46,7 +41,7 @@ export function ModalUtilities (props) {
         },
         {
             id: 5,
-            title: <Pressable onPress={ () => props.setStatusModalPremium(true)}><View style={{ width: Number(width*0.6), flexDirection: "row", alignItems: "center", justifyContent: "flex-start" }}><Text style={ {height: height*0.06, lineHeight: Number(height*0.06), fontSize: Number(height*0.02), color: "white"} }>{languages[0][props.idLanguage].premium}</Text></View></Pressable>
+            title: <Pressable onPress={ () => test}><View style={{ width: Number(width*0.6), flexDirection: "row", alignItems: "center", justifyContent: "flex-start" }}><Text style={ {height: height*0.06, lineHeight: Number(height*0.06), fontSize: Number(height*0.02), color: "white"} }>{languages[0][props.idLanguage].premium}</Text></View></Pressable>
         },
     ];
 
@@ -57,57 +52,6 @@ export function ModalUtilities (props) {
         </View>
     );
 
-    const loadConsent = async () => {
-
-        try {
-
-            if (userConsent !== null) {
-
-                // si non null on lance la pub pour l'instant desactivé => loadAds(userConsent); 
-
-            } else {
-                  Alert.alert(
-                      languages[0][props.idLanguage].personalized_ad,
-                      languages[0][props.idLanguage].personalized_ad_text,
-                      [
-                          { text: "Non"/*, onPress: () => saveConsent(false)*/ },
-                          { text: "Oui"/*, onPress: () => saveConsent(true)*/ }
-                      ]
-                  );
-              }
-        } catch (error) {
-            console.error("Erreur de chargement du consentement :", error);
-        }
-    };
-
-    const saveConsent = async (choice) => {
-        await AsyncStorage.setItem("userConsent", choice.toString());
-        setUserConsent(choice);
-    };
-
-    const loadAds = async (consent) => {
-        try {
-            await MobileAds().initialize();
-
-            const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
-                requestNonPersonalizedAdsOnly: !consent, // ici false quand pub acceptée pour que non personnalisé soit false donc = pubs personnalisées
-            });
-
-            interstitial.load();
-
-            const adListener = interstitial.addAdEventListener(AdEventType.LOADED, () => {
-                interstitial.show();
-            });
-
-            return () => {
-                adListener.remove();
-            };
-
-        } catch (error) {
-            console.error("Erreur lors du chargement des pubs :", error);
-        }
-    };
-
     const makeStatusModalInfos = () => {
         setStatusModalInfos(false); 
     }
@@ -116,10 +60,9 @@ export function ModalUtilities (props) {
         props.makeStatusModalPremiumOnApp(false);
     }
 
-
-    /*useEffect(() => {
-        loadConsent();
-    }, [userConsent]);*/
+    const applyModalAds = (setUserConsent) => {
+        adsmamager.loadConsentFromUtilities(setUserConsent);
+    }
 
 
     return  (
