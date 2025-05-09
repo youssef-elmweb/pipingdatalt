@@ -1,21 +1,30 @@
 import { useEffect, useState } from "react";
-import { View } from "react-native";
-import * as adsmamager from "../ads/interstitial-hook/adsmanager.js";
+
+import ModalConsent from "../modals/ModalConsent.js";
 
 
 export function AdsGoogle() {
 
     const [userConsent, setUserConsent] = useState(null);
+    const [visible, setVisible] = useState(false);
 
+    const loadConsent = async (userConsent) => {
+    try {
+            if (userConsent == null) {
+                setVisible(true);
+            }   
+    }   catch (error) {
+            console.error("Erreur de chargement du consentement :", error);
+        }
+    };
 
     useEffect(() => {
-        adsmamager.loadConsent(userConsent, setUserConsent);
+        loadConsent(userConsent, setUserConsent);
     }, []);
 
 
     return (
-        <View>
-        </View>
+        <ModalConsent visible={visible} setVisible={setVisible} setUserConsent={setUserConsent} />
     );
 
 }

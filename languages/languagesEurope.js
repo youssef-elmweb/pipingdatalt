@@ -6,7 +6,7 @@ export const languagesEurope = [
     {
         id: 'fr', 
         selected: true,
-        label: 'Français',
+        label: 'Français  🇫🇷',
         value: 'french',
         color: "white",
         labelStyle: {color: "white", fontSize: height*0.015},
@@ -14,7 +14,7 @@ export const languagesEurope = [
     },
     {
         id: 'de',
-        label: 'Deutsh',
+        label: 'Deutsh  🇩🇪',
         value: 'deutsh',
         color: "white",
         labelStyle: {color: "white", fontSize: height*0.015},
@@ -22,7 +22,7 @@ export const languagesEurope = [
     },
     {
         id: 'en',
-        label: 'English',
+        label: 'English  🇬🇧',
         value: 'english',
         color: "white",
         labelStyle: {color: "white", fontSize: height*0.015},
@@ -30,7 +30,7 @@ export const languagesEurope = [
     },
     {
         id: 'es',
-        label: 'Español',
+        label: 'Español  🇪🇸',
         value: 'espanol',
         color: "white",
         labelStyle: {color: "white", fontSize: height*0.015},
@@ -38,7 +38,7 @@ export const languagesEurope = [
     },
     {
         id: 'pt',
-        label: 'Portuguese',
+        label: 'Portuguese  🇵🇹',
         value: 'português',
         color: "white",
         labelStyle: {color: "white", fontSize: height*0.015},
@@ -46,7 +46,7 @@ export const languagesEurope = [
     },
     {
         id: 'nl',
-        label: 'Nederlands',
+        label: 'Nederlands  🇳🇱',
         value: 'Nederlands',
         color: "white",
         labelStyle: {color: "white", fontSize: height*0.015},
@@ -54,7 +54,7 @@ export const languagesEurope = [
     },
     {
         id: 'ro',
-        label: 'Romanian',
+        label: 'Romanian  🇷🇴',
         value: 'Română',
         color: "white",
         labelStyle: {color: "white", fontSize: height*0.015},
@@ -62,7 +62,7 @@ export const languagesEurope = [
     },
     {
         id: 'it',
-        label: 'Italiano',
+        label: 'Italiano  🇮🇹',
         value: 'italian',
         color: "white",
         labelStyle: {color: "white", fontSize: height*0.015},
@@ -70,7 +70,7 @@ export const languagesEurope = [
     },
     {
         id: 'cs',
-        label: 'Český',
+        label: 'Český  🇨🇿',
         value: 'czech',
         color: "white",
         labelStyle: {color: "white", fontSize: height*0.015},

@@ -4,7 +4,7 @@ const { width, height } = Dimensions.get("window");
 export const languagesOther = [
     {
         id: 'ar', 
-        label: 'عرب',
+        label: 'عرب  🇸🇦',
         value: 'arabe',
         color: "white",
         labelStyle: {color: "white", fontSize: height*0.015},
@@ -12,7 +12,7 @@ export const languagesOther = [
     },
     {
         id: 'hi',
-        label: 'हिंदी',
+        label: 'हिंदी  🇮🇳',
         value: 'hindi',
         color: "white",
         labelStyle: {color: "white", fontSize: height*0.015},
@@ -20,7 +20,7 @@ export const languagesOther = [
     },
     {
         id: 'ko',
-        label: '한국인',
+        label: '한국인  🇰🇷',
         value: 'corean',
         color: "white",
         labelStyle: {color: "white", fontSize: height*0.015},
@@ -28,7 +28,7 @@ export const languagesOther = [
     },
     {
         id: 'ru',
-        label: 'Русский',
+        label: 'Русский  🇷🇺',
         value: 'russian',
         color: "white",
         labelStyle: {color: "white", fontSize: height*0.015},
@@ -36,7 +36,7 @@ export const languagesOther = [
     },
     {
         id: 'zh',
-        label: '官話',
+        label: '官話  🇨🇳',
         value: 'mandarin',
         color: "white",
         labelStyle: {color: "white", fontSize: height*0.015},
@@ -44,7 +44,7 @@ export const languagesOther = [
     },
     {
         id: 'ur',
-        label: 'اردو',
+        label: 'اردو  🇵🇰',
         value: 'urdu',
         color: "white",
         labelStyle: {color: "white", fontSize: height*0.015},
@@ -52,7 +52,7 @@ export const languagesOther = [
     },
     {
         id: 'ja',
-        label: '日本語',
+        label: '日本語  🇯🇵',
         value: 'japanese',
         color: "white",
         labelStyle: {color: "white", fontSize: height*0.015},
@@ -60,7 +60,7 @@ export const languagesOther = [
     },
     {
         id: 'tr',
-        label: 'Türk',
+        label: 'Türk  🇹🇷',
         value: 'turkish',
         color: "white",
         labelStyle: {color: "white", fontSize: height*0.015},
@@ -68,7 +68,7 @@ export const languagesOther = [
     },
     {
         id: 'sw',
-        label: 'Kiswahili',
+        label: 'Kiswahili 🇰🇪',
         value: 'swahili',
         color: "white",
         labelStyle: {color: "white", fontSize: height*0.015},

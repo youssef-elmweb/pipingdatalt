@@ -1,65 +1,33 @@
-import { Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MobileAds, InterstitialAd, AdEventType, TestIds } from "react-native-google-mobile-ads";
 
-const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : null; 
+  const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : null; 
 
-export const loadConsentFromUtilities = (setUserConsent) => {
-    AsyncStorage.removeItem("userConsent").then(() => setUserConsent(null));
+  export const saveConsent = async (choice, setUserConsent) => {
+      await AsyncStorage.setItem("userConsent", choice.toString());
+      setUserConsent(() => choice);
+      loadAds(choice); 
+  };
 
-    Alert.alert(
-        "Publicité :",
-        "Je préfère les publicités personnalisées pour une meillleure expérience utilisateur ?",
-        [
-            { text: "non personnalisé", onPress: () => saveConsent(false, setUserConsent) },
-            { text: "personnalisé", onPress: () => saveConsent(true, setUserConsent) }
-        ]
-    );
-}
+  export const loadAds = async (consent) => {
+      try {
+          await MobileAds().initialize();
 
-export const loadConsent = async (userConsent, setUserConsent) => {
-  try {
-      if (userConsent == null) {
-          Alert.alert(
-              "Publicité :",
-              "Je préfère les publicités personnalisées pour une meillleure expérience utilisateur ?",
-              [
-                  { text: "non personnalisé", onPress: () => saveConsent(false, setUserConsent) },
-                  { text: "personnalisé", onPress: () => saveConsent(true, setUserConsent) }
-              ]
-          );
+          const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
+              requestNonPersonalizedAdsOnly: !consent, 
+          });
 
-      }   
-  }   catch (error) {
-          console.error("Erreur de chargement du consentement :", error);
-      }
-};
+          interstitial.load();
 
-export const saveConsent = async (choice, setUserConsent) => {
-  await AsyncStorage.setItem("userConsent", choice.toString());
-  setUserConsent(() => choice);
-  loadAds(choice); 
-};
+          const adListener = interstitial.addAdEventListener(AdEventType.LOADED, () => {
+              interstitial.show();
+          });
 
-export const loadAds = async (consent) => {
-  try {
-      await MobileAds().initialize();
-
-      const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
-          requestNonPersonalizedAdsOnly: !consent, // ici false quand pub acceptée pour que non personnalisé soit false donc = pubs personnalisées
-      });
-
-      interstitial.load();
-
-      const adListener = interstitial.addAdEventListener(AdEventType.LOADED, () => {
-          interstitial.show();
-      });
-
-      return () => {
-          adListener.remove();
-      };
-  }   catch (error) {
-          console.error("Erreur lors du chargement des pubs :", error);
-      }
-};
+          return () => {
+              adListener.remove();
+          };
+      }   catch (error) {
+              console.error("Erreur lors du chargement des pubs :", error);
+          }
+  };
 

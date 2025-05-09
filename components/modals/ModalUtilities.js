@@ -8,18 +8,15 @@ import { languages } from "../../languages/languages";
 import { ModalInfos } from "./ModalInfos.js";
 import { ModalPremium } from "./ModalPremium.js";
 
-import * as adsmamager from "../ads/interstitial-hook/adsmanager.js";
+import ModalConsent from "./ModalConsent.js";
 
 export function ModalUtilities (props) {
 
     const [statusModalInfos, setStatusModalInfos] = useState(false);
+    const [showModalConsent, setShowModalConsent] = useState(false);
     
     const {width} = Dimensions.get("window");
     const {height} = Dimensions.get("window"); 
-
-
-    const [, setUserConsent] = useState(null);
-    const [showModalConsent, setShowModalConsent] = useState(false);
 
 
     const DATA = [
@@ -33,7 +30,7 @@ export function ModalUtilities (props) {
         },
         {
             id: 3,
-            title: <Pressable title={languages[0][props.idLanguage].modify_choice} onPress={() => { applyModalAds(setUserConsent); }}><Text style={ {height: height*0.06, lineHeight: Number(height*0.06), fontSize: Number(height*0.02), color: "white"} }>{languages[0][props.idLanguage].ad_preferences}</Text></Pressable>
+            title: <Pressable title={languages[0][props.idLanguage].modify_choice} onPress={() => { setShowModalConsent(true); }}><Text style={ {height: height*0.06, lineHeight: Number(height*0.06), fontSize: Number(height*0.02), color: "white"} }>{languages[0][props.idLanguage].ad_preferences}</Text></Pressable>
         },
         {
             id: 4,
@@ -41,7 +38,7 @@ export function ModalUtilities (props) {
         },
         {
             id: 5,
-            title: <Pressable onPress={ () => test}><View style={{ width: Number(width*0.6), flexDirection: "row", alignItems: "center", justifyContent: "flex-start" }}><Text style={ {height: height*0.06, lineHeight: Number(height*0.06), fontSize: Number(height*0.02), color: "white"} }>{languages[0][props.idLanguage].premium}</Text></View></Pressable>
+            title: <Pressable onPress={ () => props.setStatusModalPremium(true) }><View style={{ width: Number(width*0.6), flexDirection: "row", alignItems: "center", justifyContent: "flex-start" }}><Text style={ {height: height*0.06, lineHeight: Number(height*0.06), fontSize: Number(height*0.02), color: "white"} }>{languages[0][props.idLanguage].premium}</Text></View></Pressable>
         },
     ];
 
@@ -60,16 +57,13 @@ export function ModalUtilities (props) {
         props.makeStatusModalPremiumOnApp(false);
     }
 
-    const applyModalAds = (setUserConsent) => {
-        adsmamager.loadConsentFromUtilities(setUserConsent);
-    }
-
 
     return  (
                 <View>
                     <ModalInfos idLanguage={props.idLanguage} statusModalInfos={statusModalInfos} makeStatusModalInfos={makeStatusModalInfos} />
                     <ModalPremium idLanguage={props.idLanguage} statusModalPremium={props.statusModalPremiumOnApp} makeStatusModalPremium={makeStatusModalPremium} />
-            
+                    <ModalConsent visible={showModalConsent} setVisible={setShowModalConsent} />
+
                     <Modal style={[ {justifyContent: "center", alignItems: "center", backgroundColor: "transparent"} ]} animationType={"slide"} transparent={true} visible={props.statusModalUtilities}>
                         <Pressable style={[ {width: width, backgroundColor: "transparent"} ]} onPress={ props.makeStatusModalUtilities } >
                             <Pressable style={[ {width: width, height: Number(height*0.94), flexDirection: "row", marginTop: Number(height*0.06), flexDirection: "column", justifyContent: "space-around", alignSelf: "flex-start", alignItems: "flex-start", opacity: 0.95, backgroundColor: "#353535"} ]} onTouchEnd={ (e) => { e.stopPropagation() } }>
@@ -93,7 +87,7 @@ export function ModalUtilities (props) {
                                 <SafeAreaView>
                                     <Text style={[ styles.titleUtility, {width: width*0.6, height: Number(height*0.05), marginVertical: Number(height*0.01), textAlign: "center", fontSize: Number(height*0.03)} ]}>{"PipingData"}</Text>
                                     
-                                    <FlatList key={"listUtilities"} data={DATA} renderItem={ ({item}) => <Pressable style={[ {height: height*0.1, marginTop: Number(height*0.0025)} ]} key={item.title} onPress={ () => { if (item.id == 1) { props.makeStatusModalUtilities(false); props.makeStatusModalPrinters(true); } else if (item.id == 3) { setShowModalConsent(!showModalConsent) } else if (item.id == 4) { functions.onShare(); } }}><Item key={item.title} title={item.title} /></Pressable>} />
+                                    <FlatList key={"listUtilities"} data={DATA} renderItem={ ({item}) => <Pressable style={[ {height: height*0.1, marginTop: Number(height*0.0025)} ]} key={item.title} onPress={ () => { if (item.id == 1) { props.makeStatusModalUtilities(false); props.makeStatusModalPrinters(true); } else if (item.id == 4) { functions.onShare(); } }}><Item key={item.title} title={item.title} /></Pressable>} />
                                 </SafeAreaView>
                             </Pressable>
                         </Pressable> 
