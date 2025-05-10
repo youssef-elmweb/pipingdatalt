@@ -24,7 +24,8 @@ import { ModalPrinters } from "./components/modals/ModalPrinters.js";
 
 import { ViewElbow } from "./components/view/ViewElbow";
 import { ViewReducer } from "./components/view/ViewReducer.js";
-import { AdsGoogle } from "./components/ads/AdsGoogle.js";
+
+import { InterstitialAd } from "./components/ads/interstitial_ads/InterstitialAd.js";
 
 
 export default function App() {
@@ -433,7 +434,7 @@ export default function App() {
             {/*/////////////////////////////////////////////   HEADER   //////////////////////////////////////////////////*/}
             <StatusBar style={"auto"} />
 
-            <AdsGoogle />
+            <InterstitialAd />
 
             {/*///////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
             {/*/////////////////////////////////////////////   MODALS   //////////////////////////////////////////////////*/}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, View, Text, Pressable, StyleSheet } from 'react-native';
 
-import { saveConsent } from '../ads/interstitial-hook/adsmanager.js';
+import { saveConsent } from '../ads/interstitial_ads/adsmanager.js';
 
 
 export default function ModalConsent({ visible = null, showModalConsent, setVisible, setUserConsent }) {

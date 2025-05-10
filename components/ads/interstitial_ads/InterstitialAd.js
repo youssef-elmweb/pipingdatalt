@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 
-import ModalConsent from "../modals/ModalConsent.js";
+import ModalConsent from "../../modals/ModalConsent.js";
 
 
-export function AdsGoogle() {
+export function InterstitialAd() {
 
     const [userConsent, setUserConsent] = useState(null);
     const [visible, setVisible] = useState(true);
