@@ -62,7 +62,7 @@ export function ModalUtilities (props) {
                 <View>
                     <ModalInfos idLanguage={props.idLanguage} statusModalInfos={statusModalInfos} makeStatusModalInfos={makeStatusModalInfos} />
                     <ModalPremium idLanguage={props.idLanguage} statusModalPremium={props.statusModalPremiumOnApp} makeStatusModalPremium={makeStatusModalPremium} />
-                    <ModalConsent visible={showModalConsent} setVisible={setShowModalConsent} />
+                    <ModalConsent showModalConsent={showModalConsent || null} setVisible={setShowModalConsent} />
 
                     <Modal style={[ {justifyContent: "center", alignItems: "center", backgroundColor: "transparent"} ]} animationType={"slide"} transparent={true} visible={props.statusModalUtilities}>
                         <Pressable style={[ {width: width, backgroundColor: "transparent"} ]} onPress={ props.makeStatusModalUtilities } >

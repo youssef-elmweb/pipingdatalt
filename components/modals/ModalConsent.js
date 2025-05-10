@@ -1,30 +1,32 @@
 import React from 'react';
 import { Modal, View, Text, Pressable, StyleSheet } from 'react-native';
+
 import { saveConsent } from '../ads/interstitial-hook/adsmanager.js';
 
-export default function ModalConsent({ visible, setVisible, setUserConsent }) {
 
-return (
-    <Modal transparent visible={visible} animationType="fade">
-        <View style={styles.overlay}>
-            <View style={styles.modalContainer}>
-                <Text style={styles.title}>Publicité personnalisée</Text>
-                <Text style={styles.message}>J'accepte les publicités personnalisées pour une meilleure expérience ?</Text>
-                
-                <View style={styles.buttons}>
-                    <Pressable style={styles.button} onPress={() => { saveConsent(false, setUserConsent=saveConsent); setVisible(false) }}>
-                        <Text style={styles.buttonText}>Non</Text>
-                    </Pressable>
+export default function ModalConsent({ visible = null, showModalConsent, setVisible, setUserConsent }) {
+    return (
+        <Modal transparent visible={visible || !!showModalConsent} animationType="fade">
+            <View style={styles.overlay}>
+                <View style={styles.modalContainer}>
+                    <Text style={styles.title}>Publicité</Text>
+                    <Text style={styles.message}>J'accepte les publicités personnalisées pour une meilleure expérience ?</Text>
                     
-                    <Pressable style={styles.button} onPress={() => { saveConsent(true, setUserConsent=saveConsent); setVisible(false) }}>
-                        <Text style={styles.buttonText}>Oui</Text>
-                    </Pressable>
+                    <View style={styles.buttons}>
+                        <Pressable style={styles.button} onPress={() => { const setter = typeof setUserConsent === 'function' ? setUserConsent : () => {}; saveConsent(true, setter); setVisible(false); }}>
+                            <Text style={styles.buttonText}>Non</Text>
+                        </Pressable>
+
+                        <Pressable style={styles.button} onPress={() => { const setter = typeof setUserConsent === 'function' ? setUserConsent : () => {}; saveConsent(true, setter); setVisible(false); }}>
+                            <Text style={styles.buttonText}>Oui</Text>
+                        </Pressable>
+                    </View>
                 </View>
             </View>
-        </View>
-    </Modal>
-  );
+        </Modal>
+    );
 }
+
 
 const styles = StyleSheet.create({
   overlay: {
@@ -67,3 +69,5 @@ const styles = StyleSheet.create({
     fontWeight: 'bold'
   }
 });
+
+
