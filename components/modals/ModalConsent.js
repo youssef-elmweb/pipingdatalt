@@ -20,6 +20,19 @@ const handleClickWithAd = async () => {
     await showAdIfReady(consent, adUnitId);
 };
 
+/*
+    const handleClickWithAd = async () => {
+    try {
+        const consentValue = await AsyncStorage.getItem("user_consent");
+        const consent = consentValue === "true";
+
+        await showAdIfReady(consent, adUnitId);
+    } catch (error) {
+        console.error("Erreur lors de la récupération du consentement :", error);
+    }
+    };
+*/
+
     return (
         <Modal transparent visible={visible || !!showModalConsent} animationType="fade">
             <View style={styles.overlay}>

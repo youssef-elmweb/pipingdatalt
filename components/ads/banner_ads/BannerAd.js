@@ -12,7 +12,7 @@ const { height } = Dimensions.get("window");
 export default function TestBannerAd() {
     
     const [userConsent, setUserConsent] = useState(null);
-
+    
 
     useEffect(() => {
         const fetchConsent = async () => {
