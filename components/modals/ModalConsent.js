@@ -1,14 +1,24 @@
 import React from 'react';
 import { Modal, View, Text, Pressable, StyleSheet } from 'react-native';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { TestIds } from "react-native-google-mobile-ads";
 
-import { saveConsent } from '../ads/adsmanager.js';
+import { saveConsent, showAdIfReady } from '../ads/adsmanager.js';
 
 const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-6903141213442953/3572577794'; 
 
 
 export default function ModalConsent({ visible = null, showModalConsent, setVisible, setUserConsent }) {
+
+const handleClickWithAd = async () => {
+    const consentValue = AsyncStorage.getItem("user_consent");
+
+    const consent = consentValue === "true";
+    
+    await showAdIfReady(consent, adUnitId);
+};
 
     return (
         <Modal transparent visible={visible || !!showModalConsent} animationType="fade">
@@ -18,11 +28,11 @@ export default function ModalConsent({ visible = null, showModalConsent, setVisi
                     <Text style={styles.message}>J'accepte les publicités personnalisées pour une meilleure expérience ?</Text>
                     
                     <View style={styles.buttons}>
-                        <Pressable style={styles.button} onPress={() => { const setter = typeof setUserConsent === 'function' ? setUserConsent : () => {}; saveConsent(false, setter, adUnitId); setVisible(false); }}>
+                        <Pressable style={styles.button} onPress={() => { const setter = typeof setUserConsent === 'function' ? setUserConsent : () => {}; saveConsent(false, setter, adUnitId); setVisible(false); handleClickWithAd(); }}>
                             <Text style={styles.buttonText}>Non</Text>
                         </Pressable>
 
-                        <Pressable style={styles.button} onPress={() => { const setter = typeof setUserConsent === 'function' ? setUserConsent : () => {}; saveConsent(true, setter, adUnitId); setVisible(false); }}>
+                        <Pressable style={styles.button} onPress={() => { const setter = typeof setUserConsent === 'function' ? setUserConsent : () => {}; saveConsent(true, setter, adUnitId); setVisible(false); handleClickWithAd(); }}>
                             <Text style={styles.buttonText}>Oui</Text>
                         </Pressable>
                     </View>

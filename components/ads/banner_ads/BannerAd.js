@@ -16,14 +16,15 @@ export default function TestBannerAd() {
 
     useEffect(() => {
         const fetchConsent = async () => {
-        try {
-            const value = await AsyncStorage.getItem("user_consent");
-            const parsed = value === "true";
-            setUserConsent(parsed);
-        } catch (err) {
-            console.error("Error AsyncStorage:", err);
-        }
+            try {
+                const value = await AsyncStorage.getItem("user_consent");
+                const parsed = value === "true";
+                setUserConsent(parsed);
+            } catch (err) {
+                console.error("Error AsyncStorage:", err);
+            }
         };
+        
         fetchConsent();
     }, []);
 
