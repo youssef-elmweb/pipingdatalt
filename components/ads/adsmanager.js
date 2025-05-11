@@ -1,15 +1,14 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { MobileAds, InterstitialAd, AdEventType, TestIds } from "react-native-google-mobile-ads";
+import { MobileAds, InterstitialAd, AdEventType } from "react-native-google-mobile-ads";
 
-const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : null; 
 
-export const saveConsent = async (choice, setUserConsent) => {
-    await AsyncStorage.setItem("userConsent", choice.toString());
-    setUserConsent(() => choice);
-    loadAds(choice); 
+export const saveConsent = async (choice, setUserConsent, adUnitId) => {
+    await AsyncStorage.setItem("user_consent", choice.toString());
+    setUserConsent(() => (choice));
+    //loadAds(choice, adUnitId); // A REACTIVER APRES DEVELOPMENT ET ET TESTER DE TEMPS EN TEMPS
 };
 
-export const loadAds = async (consent) => {
+export const loadAds = async (consent, adUnitId) => {
     try {
         await MobileAds().initialize();
 
@@ -30,4 +29,5 @@ export const loadAds = async (consent) => {
             console.error("Erreur lors du chargement des pubs :", error);
         }
 };
+
 

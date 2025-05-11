@@ -9,15 +9,14 @@ import { ModalInfos } from "./ModalInfos.js";
 import { ModalPremium } from "./ModalPremium.js";
 
 import ModalConsent from "./ModalConsent.js";
-import SponsorFallback from "../SponsorFallback.js";
+import BannerAd from "../ads/banner_ads/BannerAd.js";
 
 export function ModalUtilities (props) {
 
     const [statusModalInfos, setStatusModalInfos] = useState(false);
     const [showModalConsent, setShowModalConsent] = useState(false);
     
-    const {width} = Dimensions.get("window");
-    const {height} = Dimensions.get("window"); 
+    const {width, height} = Dimensions.get("window");
 
 
     const DATA = [
@@ -93,7 +92,7 @@ export function ModalUtilities (props) {
                             </Pressable>
                         </Pressable> 
                         
-                        <SponsorFallback style={ { width: width } } />
+                        <BannerAd />
                     </Modal>
                 </View>
             )
