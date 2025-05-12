@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
-
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 
@@ -9,24 +7,10 @@ const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-6903141213442953/1438804
 const { height } = Dimensions.get("window");
 
 
-export default function TestBannerAd() {
+export default function TestBannerAd( { userConsent } ) {
     
-    const [userConsent, setUserConsent] = useState(null);
-    
+    console.log(userConsent, "userConsent in scope global of BannerAd");
 
-    useEffect(() => {
-        const fetchConsent = async () => {
-            try {
-                const value = await AsyncStorage.getItem("user_consent");
-                const parsed = value === "true";
-                setUserConsent(parsed);
-            } catch (err) {
-                console.error("Error AsyncStorage:", err);
-            }
-        };
-        
-        fetchConsent();
-    }, []);
 
     if (userConsent === null) {
         return null;
@@ -41,7 +25,7 @@ export default function TestBannerAd() {
                 requestOptions={{
                 requestNonPersonalizedAdsOnly: !userConsent,
                 }}
-                onAdLoaded={() => console.log('Banner loaded')}
+                onAdLoaded={() => console.log('Banner loaded avec userContent update pour requestNonPersonalizedAdsOnly', userConsent)}
                 onAdFailedToLoad={(err) => console.error('Banner failed:', err)} />
         </View>
     );

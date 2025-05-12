@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Dimensions, Button, Pressable, Text, Modal, View, Image, SafeAreaView, FlatList } from "react-native";
 
 import * as functions from "./../../library/functions.js";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { showAdIfReady } from '../ads/adsmanager.js';
 
 import { languages } from "../../languages/languages";
 
@@ -9,14 +12,45 @@ import { ModalInfos } from "./ModalInfos.js";
 import { ModalPremium } from "./ModalPremium.js";
 
 import ModalConsent from "./ModalConsent.js";
+import ModalConsentInitial from "./ModalConsentInitial.js";
 import BannerAd from "../ads/banner_ads/BannerAd.js";
 
 export function ModalUtilities (props) {
 
     const [statusModalInfos, setStatusModalInfos] = useState(false);
     const [showModalConsent, setShowModalConsent] = useState(false);
+    const [userConsent, setUserConsent] = useState(null);
     
     const {width, height} = Dimensions.get("window");
+
+    console.log(userConsent, "userConsent in scope global of ModalUtilities");
+
+    const tryLoadingAd = async (adUnitId) => {
+        try {
+            const consentValue = await AsyncStorage.getItem("user_consent");
+            console.log(consentValue, "consentValue afetr getItem in ModalConsent in tryLoadingAd");
+            //const consent = consentValue === "true";
+
+            setUserConsent(consentValue);
+
+            await showAdIfReady(consentValue, adUnitId);
+        }   catch (error) {
+                console.error("Erreur lors de la récupération du consentement :", error);
+            }
+    };
+
+
+    useEffect(() => {
+        const getStoredConsent = async () => {
+
+                const stored = await AsyncStorage.getItem("user_consent");
+                console.log(stored, "stored");
+                setUserConsent(stored);
+
+        };
+      
+        getStoredConsent();
+    }, []);
 
 
     const DATA = [
@@ -62,7 +96,10 @@ export function ModalUtilities (props) {
                 <View>
                     <ModalInfos idLanguage={props.idLanguage} statusModalInfos={statusModalInfos} makeStatusModalInfos={makeStatusModalInfos} />
                     <ModalPremium idLanguage={props.idLanguage} statusModalPremium={props.statusModalPremiumOnApp} makeStatusModalPremium={makeStatusModalPremium} />
-                    <ModalConsent showModalConsent={showModalConsent || null} setVisible={setShowModalConsent} />
+
+                    {/*<ModalConsent tryLoadingAd={tryLoadingAd} showModalConsent={showModalConsent || null} setVisible={setShowModalConsent} userConsent={userConsent} setUserConsent={setUserConsent} />*/}
+
+
 
                     <Modal style={[ {justifyContent: "center", alignItems: "center", backgroundColor: "transparent"} ]} animationType={"slide"} transparent={true} visible={props.statusModalUtilities}>
                         <Pressable style={[ {width: width, backgroundColor: "transparent"} ]} onPress={ props.makeStatusModalUtilities } >
@@ -92,7 +129,7 @@ export function ModalUtilities (props) {
                             </Pressable>
                         </Pressable> 
                         
-                        <BannerAd />
+                        <BannerAd userConsent={userConsent} />
                     </Modal>
                 </View>
             )

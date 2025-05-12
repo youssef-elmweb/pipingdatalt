@@ -1,37 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Modal, View, Text, Pressable, StyleSheet } from 'react-native';
-
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { TestIds } from "react-native-google-mobile-ads";
 
-import { saveConsent, showAdIfReady } from '../ads/adsmanager.js';
+import { saveConsent } from '../ads/adsmanager.js';
 
 const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-6903141213442953/3572577794'; 
 
 
-export default function ModalConsent({ visible = null, showModalConsent, setVisible, setUserConsent }) {
+export default function ModalConsent({ visible = null, showModalConsent, setVisible, userConsent = null, setUserConsent, tryLoadingAd }) {
 
-const handleClickWithAd = async () => {
-    const consentValue = AsyncStorage.getItem("user_consent");
+    console.log(userConsent, "userConsent scope global of modalConsent");
 
-    const consent = consentValue === "true";
-    
-    await showAdIfReady(consent, adUnitId);
-};
+    useEffect(() => {
+        const getStoredConsent = async () => {
 
-/*
-    const handleClickWithAd = async () => {
-    try {
-        const consentValue = await AsyncStorage.getItem("user_consent");
-        const consent = consentValue === "true";
+                const stored = await AsyncStorage.getItem("user_consent");
+                console.log(stored, "stored");
+                setUserConsent(stored);
+                console.log(userConsent, "userConsent inside useEffect of modalConsent");
 
-        await showAdIfReady(consent, adUnitId);
-    } catch (error) {
-        console.error("Erreur lors de la récupération du consentement :", error);
-    }
-    };
-*/
+        };
+      
+        getStoredConsent();
+    }, []);
 
     return (
         <Modal transparent visible={visible || !!showModalConsent} animationType="fade">
@@ -41,11 +33,11 @@ const handleClickWithAd = async () => {
                     <Text style={styles.message}>J'accepte les publicités personnalisées pour une meilleure expérience ?</Text>
                     
                     <View style={styles.buttons}>
-                        <Pressable style={styles.button} onPress={() => { const setter = typeof setUserConsent === 'function' ? setUserConsent : () => {}; saveConsent(false, setter, adUnitId); setVisible(false); handleClickWithAd(); }}>
+                        <Pressable style={styles.button} onPress={() => { const setter = typeof setUserConsent === 'function' ? setUserConsent : () => {}; saveConsent(userConsent = false, setter, adUnitId); setVisible(false); if (typeof tryLoadingAd === 'function') { tryLoadingAd(adUnitId); } }}>
                             <Text style={styles.buttonText}>Non</Text>
                         </Pressable>
 
-                        <Pressable style={styles.button} onPress={() => { const setter = typeof setUserConsent === 'function' ? setUserConsent : () => {}; saveConsent(true, setter, adUnitId); setVisible(false); handleClickWithAd(); }}>
+                        <Pressable style={styles.button} onPress={() => { const setter = typeof setUserConsent === 'function' ? setUserConsent : () => {}; saveConsent(userConsent = true, setter, adUnitId); setVisible(false); if (typeof tryLoadingAd === 'function') { tryLoadingAd(adUnitId); } }}>
                             <Text style={styles.buttonText}>Oui</Text>
                         </Pressable>
                     </View>

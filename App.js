@@ -30,6 +30,7 @@ import { InterstitialAd } from "./components/ads/interstitial_ads/InterstitialAd
 
 export default function App() {
 
+
     ////////////////////// HOOKS ///////////////////////////////////////
     const [statusModalLanguages, setStatusModalLanguages] = useState(false);
     const [idLanguage, setIdLanguage] = useState('en');
