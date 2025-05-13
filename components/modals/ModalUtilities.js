@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Dimensions, Button, Pressable, Text, Modal, View, Image, SafeAreaView, FlatList } from "react-native";
 
 import * as functions from "./../../library/functions.js";
 
 import { languages } from "../../languages/languages";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { ModalInfos } from "./ModalInfos.js";
 import { ModalPremium } from "./ModalPremium.js";
@@ -13,13 +15,34 @@ import BannerAd from "../ads/banner_ads/BannerAd.js";
 
 export function ModalUtilities (props) {
 
-    const [statusModalInfos, setStatusModalInfos] = useState(false);
-    const [showModalConsent, setShowModalConsent] = useState(false);
-    const [userConsent, setUserConsent] = useState(true);
-    
     const {width, height} = Dimensions.get("window");
 
+    const [statusModalInfos, setStatusModalInfos] = useState(false);
+    const [showModalConsent, setShowModalConsent] = useState(false);
+    const [userConsent, setUserConsent] = useState(null);
+
     console.log(userConsent, "userConsent in scope global of ModalUtilities");
+
+
+    useEffect(() => {
+        const getStoredConsentInitial = async () => {
+
+                let userConsentLocal = await AsyncStorage.getItem("user_consent");
+
+                //console.log(typeof userConsentLocal, userConsentLocal, "userConsentLocal in ModalLanguage before if");
+
+                if (userConsentLocal == null) {
+                    //console.log(userConsentLocal, "userConsentLocal in ModalLanguage after if");
+                    setUserConsent(null);
+                } else {
+                    //console.log(userConsentLocal, "userConsentLocal in ModalLanguage before else");
+                    setUserConsent(userConsentLocal);
+                }
+        };
+
+        getStoredConsentInitial();
+    }, []);
+
 
     const DATA = [
         {

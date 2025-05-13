@@ -13,7 +13,7 @@ export default function ModalConsentInitial( { visible, setVisible } ) {
     useEffect(() => {
         const getStoredConsentInitial = async () => {
 
-                let userConsentInitialLocal = await AsyncStorage.getItem("user_consent_initial");
+                let userConsentInitialLocal = await AsyncStorage.getItem("user_consent");
 
                 if (userConsentInitialLocal != null) {
                     setUserConsentInitial(true);
@@ -29,7 +29,7 @@ export default function ModalConsentInitial( { visible, setVisible } ) {
 
     const initStoredConsentInitial = async (choice) => {
         setVisible(false);
-        await AsyncStorage.setItem("user_consent_initial", choice.toString());
+        await AsyncStorage.setItem("user_consent", choice.toString());
         saveConsent(choice);
     };
 

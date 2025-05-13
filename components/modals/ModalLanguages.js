@@ -1,7 +1,9 @@
-import { React } from "react";
-import { Dimensions, Pressable, Text, Modal, View, Platform, SafeAreaView } from "react-native";
+import React, { useState, useEffect } from "react";
+import { Dimensions, Pressable, Text, Modal, View, SafeAreaView } from "react-native";
 
 import RadioGroup from "react-native-radio-buttons-group";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import BannerAd from "../ads/banner_ads/BannerAd.js";
 
@@ -9,10 +11,45 @@ import { languages } from "../../languages/languages";
 import { languagesEurope } from '../../languages/languagesEurope.js';
 import { languagesOther } from '../../languages/languagesOther.js';
 
+
 export function ModalLanguages (props) {
 
-    const {width} = Dimensions.get("window");
-    const {height} = Dimensions.get("window"); 
+    const {width, height} = Dimensions.get("window");
+
+    const [userConsent, setUserConsent] = useState(null);
+
+    console.log(userConsent, "userConsent in global scope of ModalLanguage");
+
+    const userConsentLocalC = AsyncStorage.getItem("user_consent");
+
+    useEffect(() => {
+        const getStoredConsentInitial = async () => {
+
+                let userConsentLocal = await userConsentLocalC;
+                let choice;
+
+                setUserConsent(userConsentLocal);
+                
+                console.log("✅ ", typeof userConsent, userConsent, "userConsentLocal in ModalLanguage before if");
+                if (userConsentLocal != null) {
+                    console.log(userConsentLocal, "userConsentLocal in ModalLanguage after if");
+                    setUserConsent(userConsentLocal);
+                } else {
+                    console.log(userConsentLocal, "userConsentLocal in ModalLanguage before else");
+                    if (userConsentLocal == "true") {
+                        choice = true;
+                        await AsyncStorage.setItem("user_consent", choice.toString());
+                        setUserConsent(choice);
+                    } else if (userConsentLocal == "false") {
+                        choice = true;
+                        await AsyncStorage.setItem("user_consent", choice.toString());
+                        setUserConsent(choice);
+                    }
+                }
+        };
+
+        getStoredConsentInitial();
+    }, [userConsent, userConsentLocalC]);
     
 
     return  (
@@ -40,7 +77,7 @@ export function ModalLanguages (props) {
                     </Pressable>
                 </Pressable> 
 
-                <BannerAd />
+                <BannerAd userConsent={userConsent} />
             </Modal>
         </View>
     )
