@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
 import ModalConsentInitial from "../../modals/ModalConsentInitial";
 
@@ -6,12 +6,7 @@ import ModalConsentInitial from "../../modals/ModalConsentInitial";
 export function InterstitialAd() {
 
     const [userConsent, setUserConsent] = useState(null);
-    const [visible, setVisible] = useState(true);
-    
-
-
-
-
+    const [visible, setVisible] = useState(null);
 
     const CONSENT_MODAL = useMemo(() => {
         return <ModalConsentInitial visible={visible} setVisible={setVisible} setUserConsent={setUserConsent} />

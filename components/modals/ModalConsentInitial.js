@@ -3,39 +3,35 @@ import { Modal, View, Text, Pressable, StyleSheet } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { saveConsent } from '../ads/adsmanager';
+
 
 export default function ModalConsentInitial( { visible, setVisible } ) {
 
-    const [userConsentInitial, _] = useState(null);
-    const [shouldShow, setShouldShow] = useState(null);
+    const [userConsentInitial, setUserConsentInitial] = useState(null);
 
     useEffect(() => {
-        const checkConsentFlag = async () => {
-            try {
-                const flag = await AsyncStorage.getItem("user_consent_initial");
-        
-                if (flag !== null) {
-                    setShouldShow(false);
+        const getStoredConsentInitial = async () => {
+
+                let userConsentInitialLocal = await AsyncStorage.getItem("user_consent_initial");
+
+                if (userConsentInitialLocal != null) {
+                    setUserConsentInitial(true);
                     setVisible(false);
-                }   else {
-                        setShouldShow(true);
-                    }
-            }   catch (e) {
-                    console.error("Erreur AsyncStorage:", e);
-                    setShouldShow(false);
-            }
+                } else {
+                    setVisible(true);
+                }
         };
-    
-        checkConsentFlag();
+
+        getStoredConsentInitial();
     }, []);
-    
-    const acknowledge = async () => {
-        await AsyncStorage.setItem("user_consent_initial", "true");
-        setShouldShow(false);
+
+
+    const initStoredConsentInitial = async (choice) => {
         setVisible(false);
+        await AsyncStorage.setItem("user_consent_initial", choice.toString());
+        saveConsent(choice);
     };
-    
-    if (shouldShow !== true) return null;
 
 
     return (
@@ -48,7 +44,7 @@ export default function ModalConsentInitial( { visible, setVisible } ) {
                         <Text style={styles.message}>J'ai la possibilité de changer d'avis dans la section Utilities onglet ad preferences</Text>
 
                         <View style={styles.buttons}>
-                            <Pressable style={styles.button} onPress={acknowledge}>
+                            <Pressable style={styles.button} onPress={() => { let choice = true; initStoredConsentInitial(choice); }}>
                                 <Text style={styles.buttonText}>J'ai compris</Text>
                             </Pressable>
                         </View>
@@ -56,6 +52,7 @@ export default function ModalConsentInitial( { visible, setVisible } ) {
                 </View>
             </Modal>
         : false)
+
     );
 
 }

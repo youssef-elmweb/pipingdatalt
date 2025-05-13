@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
 
 import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
@@ -9,9 +9,6 @@ const { height } = Dimensions.get("window");
 
 export default function TestBannerAd( { userConsent } ) {
     
-    console.log(userConsent, "userConsent in scope global of BannerAd");
-
-
     if (userConsent === null) {
         return null;
     }
@@ -25,10 +22,11 @@ export default function TestBannerAd( { userConsent } ) {
                 requestOptions={{
                 requestNonPersonalizedAdsOnly: !userConsent,
                 }}
-                onAdLoaded={() => console.log('Banner loaded avec userContent update pour requestNonPersonalizedAdsOnly', userConsent)}
+                onAdLoaded={() => console.log("userConsent : ", userConsent, 'Banner loaded avec userContent update pour requestNonPersonalizedAdsOnly in BannerAd', userConsent)}
                 onAdFailedToLoad={(err) => console.error('Banner failed:', err)} />
         </View>
     );
+
 }
 
 const styles = StyleSheet.create({
