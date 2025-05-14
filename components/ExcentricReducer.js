@@ -74,8 +74,8 @@ export function ExcentricReducer (props) {
     return (
 
         <G>
-            <PathAnimated strokeLinecap="round" strokeLinejoin={"round"} fill="none" strokeWidth="1.5" stroke={"silver"} d={ `M ${width*0.5} ${Math.round(height*0.36)} L ${width*0.5} ${Math.round(height*0.775)}` } />
-            <PathAnimated strokeLinecap="round" strokeLinejoin={"round"} fill="none" strokeWidth="1.5" stroke={"lime"} animatedProps={ heightBottom } />
+            <PathAnimated strokeLinecap="round" strokeLinejoin={"round"} fill="none" strokeWidth="1" stroke={"silver"} d={ `M ${width*0.5} ${Math.round(height*0.36)} L ${width*0.5} ${Math.round(height*0.775)}` } />
+            <PathAnimated strokeLinecap="round" strokeLinejoin={"round"} fill="none" strokeWidth="1" stroke={"lime"} animatedProps={ heightBottom } />
 
             <PathAnimated strokeLinecap="round" strokeLinejoin={"round"} fill="none" strokeWidth="2.75" stroke={"silver"} d={ `M ${Math.round(width*0.7)} ${Math.round(height*0.775)} L ${width*0.7} ${height*0.36}` } />
             <PathAnimated strokeLinecap="round" strokeLinejoin={"round"} fill="none" strokeWidth="2.75" stroke={"silver"} d={ `M ${Math.round(width*0.1)} ${Math.round(height*0.775)} L ${width*0.3} ${height*0.36}` } />

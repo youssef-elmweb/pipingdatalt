@@ -17,7 +17,7 @@ export function ModalLanguages (props) {
 
     const {width, height} = Dimensions.get("window");
 
-    const { userConsentContext } = useConsent();
+    const { userConsentContext } = useConsent(); 
     
 
     return  (

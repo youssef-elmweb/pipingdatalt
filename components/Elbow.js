@@ -105,8 +105,8 @@ export function Elbow (props) {
             <PathAnimated strokeLinecap="square" strokeLinejoin={"bevel"} fill="none" d={`M ${width*0.24} 0 L ${width*0.8} 0`} animatedProps={ pathBaseStatic } style={ [highlightStyle] } />
             <Path strokeLinecap="square" strokeLinejoin={"bevel"} fill="none" strokeWidth="3" stroke="#3D3D3D" d={`M 0 -${width*0.24} L 0 -${width*0.8}`} />             
         
-            <PathAnimated strokeLinecap="square" strokeLinejoin={"bevel"} style={[ {strokeWidth: 1, stroke: "#2ecc71"} ]} animatedProps={ pathRadiusLeft } />
-            <PathAnimated strokeLinecap="square" strokeLinejoin={"bevel"} style={[ {strokeWidth: 1, stroke: "#2ecc71"} ]} animatedProps={ pathRadiusRight } />                       
+            <PathAnimated strokeLinecap="square" strokeLinejoin={"bevel"} style={[ {strokeWidth: 1, stroke: "lime"} ]} animatedProps={ pathRadiusLeft } />
+            <PathAnimated strokeLinecap="square" strokeLinejoin={"bevel"} style={[ {strokeWidth: 1, stroke: "lime"} ]} animatedProps={ pathRadiusRight } />                       
     
         
             <PathAnimated strokeLinecap="square" strokeLinejoin={"bevel"} fill="none" animatedProps={ pathIntrado } style={ [highlightStyle] } />
