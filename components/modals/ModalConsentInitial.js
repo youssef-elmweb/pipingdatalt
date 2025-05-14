@@ -1,18 +1,15 @@
 //////////////////////////////////////////////////////////////////////////////////////////
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Modal, View, Text, Pressable, StyleSheet } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-import { saveConsent } from '../ads/ads_manager/adsmanager.js';
 
 import { useConsent } from '../ads/ads_manager/ConsentContext.js';
 
 
 export default function ModalConsentInitial( { visible, setVisible } ) {
 
-    const [userConsentInitial, setUserConsentInitial] = useState(null);
-    const { saveConsentContext } = useConsent();
+    const { saveConsentInitialContext, setUserConsentContext, userConsentContext } = useConsent();
 
     useEffect(() => {
         const getStoredConsentInitial = async () => {
@@ -20,7 +17,7 @@ export default function ModalConsentInitial( { visible, setVisible } ) {
                 let userConsentInitialLocal = await AsyncStorage.getItem("user_consent");
 
                 if (userConsentInitialLocal != null) {
-                    setUserConsentInitial(true);
+                    setUserConsentContext(true);
                     setVisible(false);
                 } else {
                     setVisible(true);
@@ -33,14 +30,12 @@ export default function ModalConsentInitial( { visible, setVisible } ) {
 
     const initStoredConsentInitial = async (choice) => {
         setVisible(false);
-        await AsyncStorage.setItem("user_consent", choice.toString());
-        saveConsent(choice);
-        saveConsentContext(choice);
+        saveConsentInitialContext(choice);
     };
 
 
     return (
-        (userConsentInitial != "true" ?
+        (userConsentContext != "true" ?
             <Modal transparent visible={visible} animationType="fade">
                 <View style={styles.overlay}>
                     <View style={styles.modalContainer}>

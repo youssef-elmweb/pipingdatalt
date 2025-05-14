@@ -22,7 +22,7 @@ export function ModalUtilities (props) {
 
     const {width, height} = Dimensions.get("window");
 
-    const { userConsentContext, setUserConsentContext } = useConsent();
+    const { userConsentContext, setUserConsentContext } = useConsent(); console.log(userConsentContext, "ModalUtilities global");
 
     const [statusModalInfos, setStatusModalInfos] = useState(false);
     const [showModalConsent, setShowModalConsent] = useState(false);

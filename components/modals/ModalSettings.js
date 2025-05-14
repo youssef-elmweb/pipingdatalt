@@ -17,7 +17,7 @@ export function ModalSettings (props) {
 
     const {width, height} = Dimensions.get("window");
 
-    const { userConsentContext } = useConsent(); 
+    const { userConsentContext } = useConsent(); console.log(userConsentContext, "ModalSettings global");
 
 
 ///////////////// constants datas //////////////////////////////////

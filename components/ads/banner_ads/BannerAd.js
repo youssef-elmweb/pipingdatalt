@@ -5,6 +5,7 @@ import { View, StyleSheet, Dimensions } from 'react-native';
 import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 
 const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-6903141213442953/1438804207';
+
 const { height } = Dimensions.get("window");
 
 

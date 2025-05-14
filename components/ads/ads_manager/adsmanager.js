@@ -2,10 +2,11 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MobileAds, InterstitialAd, AdEventType, TestIds } from "react-native-google-mobile-ads";
 
-const MIN_DELAY_MS = 300000; // 5 minutes
+const MIN_DELAY_MS = 10000; // 5 minutes
 const LAST_SHOWN_KEY = 'last_ad_shown_at';
 
 const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-6903141213442953/3572577794';
+
 
 export const saveConsent = async (choice = null) => {
     return showAd(choice); 
@@ -46,10 +47,6 @@ export const showAd = async (consent) => {
 
 };
 
-
-//////////////////////////////////////////////////////////////////////////////////////////////
-
-
 export const canShowAd = async () => {
     const last = await AsyncStorage.getItem(LAST_SHOWN_KEY);
     const lastShownAt = parseInt(last, 10) || 10000;
@@ -70,7 +67,7 @@ export const showAdIfReady = async () => {
 
     let userConsentLocal = await AsyncStorage.getItem("user_consent");
     (userConsentLocal !== null ? (userConsentLocal === "true" ? userConsentLocal = true : userConsentLocal = false) : false);
-
+    console.log(typeof userConsentLocal, userConsentLocal, "userConsentLocal before swhowAdIfReady");
     await AsyncStorage.setItem(LAST_SHOWN_KEY, Date.now().toString());
 
     return showAd(userConsentLocal, adUnitId); 
