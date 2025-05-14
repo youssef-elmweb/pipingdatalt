@@ -1,14 +1,18 @@
+//////////////////////////////////////////////////////////////////////////////////////////
 import React, { useEffect, useState } from 'react';
 import { Modal, View, Text, Pressable, StyleSheet } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { saveConsent } from '../ads/adsmanager';
+import { saveConsent } from '../ads/ads_manager/adsmanager.js';
+
+import { useConsent } from '../ads/ads_manager/ConsentContext.js';
 
 
 export default function ModalConsentInitial( { visible, setVisible } ) {
 
     const [userConsentInitial, setUserConsentInitial] = useState(null);
+    const { saveConsentContext } = useConsent();
 
     useEffect(() => {
         const getStoredConsentInitial = async () => {
@@ -31,6 +35,7 @@ export default function ModalConsentInitial( { visible, setVisible } ) {
         setVisible(false);
         await AsyncStorage.setItem("user_consent", choice.toString());
         saveConsent(choice);
+        saveConsentContext(choice);
     };
 
 

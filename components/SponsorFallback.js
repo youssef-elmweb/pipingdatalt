@@ -1,3 +1,4 @@
+//////////////////////////////////////////////////////////////////////////////////////////
 import React from 'react';
 import { View, Image, TouchableOpacity, Linking, StyleSheet, Text, Dimensions } from 'react-native';
 
@@ -7,7 +8,7 @@ const { width, height } = Dimensions.get('window');
 export default function SponsorFallback() {
     
     const displaySponsor = () => {
-        Linking.openURL('https://elm-web.fr'); 
+        Linking.openURL("https://play.google.com/store/apps/details?id=com.production.pipingdata&utm_source=emea_Med"); 
     };
 
     return (

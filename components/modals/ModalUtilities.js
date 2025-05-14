@@ -1,7 +1,10 @@
+//////////////////////////////////////////////////////////////////////////////////////////
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Dimensions, Button, Pressable, Text, Modal, View, Image, SafeAreaView, FlatList } from "react-native";
 
 import * as functions from "./../../library/functions.js";
+
+import { useConsent } from "../ads/ads_manager/ConsentContext.js";
 
 import { languages } from "../../languages/languages";
 
@@ -10,6 +13,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ModalInfos } from "./ModalInfos.js";
 import { ModalPremium } from "./ModalPremium.js";
 
+import { showAdIfReady } from "../ads/ads_manager/adsmanager.js";
+
 import ModalConsent from "./ModalConsent.js";
 import BannerAd from "../ads/banner_ads/BannerAd.js";
 
@@ -17,11 +22,10 @@ export function ModalUtilities (props) {
 
     const {width, height} = Dimensions.get("window");
 
+    const { userConsentContext, setUserConsentContext } = useConsent();
+
     const [statusModalInfos, setStatusModalInfos] = useState(false);
     const [showModalConsent, setShowModalConsent] = useState(false);
-    const [userConsent, setUserConsent] = useState(null);
-
-    console.log(userConsent, "userConsent in scope global of ModalUtilities");
 
 
     useEffect(() => {
@@ -29,15 +33,9 @@ export function ModalUtilities (props) {
 
                 let userConsentLocal = await AsyncStorage.getItem("user_consent");
 
-                //console.log(typeof userConsentLocal, userConsentLocal, "userConsentLocal in ModalLanguage before if");
-
-                if (userConsentLocal == null) {
-                    //console.log(userConsentLocal, "userConsentLocal in ModalLanguage after if");
-                    setUserConsent(null);
-                } else {
-                    //console.log(userConsentLocal, "userConsentLocal in ModalLanguage before else");
-                    setUserConsent(userConsentLocal);
-                }
+                if (userConsentLocal != null) {
+                    setUserConsentContext(userConsentContext);
+                } 
         };
 
         getStoredConsentInitial();
@@ -87,7 +85,7 @@ export function ModalUtilities (props) {
                 <View>
                     <ModalInfos idLanguage={props.idLanguage} statusModalInfos={statusModalInfos} makeStatusModalInfos={makeStatusModalInfos} />
                     <ModalPremium idLanguage={props.idLanguage} statusModalPremium={props.statusModalPremiumOnApp} makeStatusModalPremium={makeStatusModalPremium} />
-                    <ModalConsent showModalConsent={showModalConsent || null} setVisible={setShowModalConsent} userConsent={userConsent} setUserConsent={setUserConsent} />
+                    <ModalConsent showModalConsent={showModalConsent || null} setVisible={setShowModalConsent} userConsentContext={userConsentContext} setUserConsentContext={setUserConsentContext} />
 
                     <Modal style={[ {justifyContent: "center", alignItems: "center", backgroundColor: "transparent"} ]} animationType={"slide"} transparent={true} visible={props.statusModalUtilities}>
                         <Pressable style={[ {width: width, backgroundColor: "transparent"} ]} onPress={ props.makeStatusModalUtilities } >
@@ -98,7 +96,7 @@ export function ModalUtilities (props) {
                                     </View>
                                     
                                     {(height > 650 ?
-                                    <Pressable style={[ {width: width*0.2, height: height*0.06, flexDirection: "row", justifyContent: "center", alignItems: "center"} ]} onPress={ props.makeStatusModalUtilities }>
+                                    <Pressable style={[ {width: width*0.2, height: height*0.06, flexDirection: "row", justifyContent: "center", alignItems: "center"} ]} onPress={ () => { props.makeStatusModalUtilities(); showAdIfReady();} }>
                                         <View style={[ {width: width*0.2, height: height*0.06, lineHeight: height*0.035, fontSize: height*0.02, justifyContent: "center", alignItems: "center", textAlign: "center", letterSpacing: 0.5, color: "white", borderBottomWidth: 0.75, borderColor: "white", backgroundColor: 'dodgerblue'} ]}>
                                             <Image alt={"down"} style={[ {width: height*0.06, height: height*0.06} ]} source={ require("../../assets/images/chevron-bas.png") } />
                                         </View>
@@ -117,7 +115,7 @@ export function ModalUtilities (props) {
                             </Pressable>
                         </Pressable> 
                         
-                        <BannerAd userConsent={userConsent} />
+                        <BannerAd userConsentContext={userConsentContext} />
                     </Modal>
                 </View>
             )

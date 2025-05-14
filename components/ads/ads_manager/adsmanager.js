@@ -1,23 +1,20 @@
+//////////////////////////////////////////////////////////////////////////////////////////
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MobileAds, InterstitialAd, AdEventType, TestIds } from "react-native-google-mobile-ads";
 
-const MIN_DELAY_MS = 10000; // 10 secondes
+const MIN_DELAY_MS = 300000; // 5 minutees
 const LAST_SHOWN_KEY = 'last_ad_shown_at';
 
 const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-6903141213442953/3572577794';
 
 export const saveConsent = async (choice = true) => {
-    return showAd(choice); // A reactiver en PROD Ne doit pas être en conflit avec loadAd de showAdIfReady
+    return showAd(choice); 
 };
 
 export const showAd = async (consent) => {
-    console.log(typeof consent, consent, "consent in showAd");
-    try {
-        console.log("Avant initialize");
-        await MobileAds().initialize();
-        console.log("Après initialize");
 
-        console.log(typeof consent, consent, "consent inside showAd inside after try in adsmanager");
+    try {
+        await MobileAds().initialize();
 
         const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
             requestNonPersonalizedAdsOnly: !consent, 
@@ -26,16 +23,16 @@ export const showAd = async (consent) => {
         interstitial.load();
 
         const adListenerLoaded = interstitial.addAdEventListener(AdEventType.LOADED, () => {
-            console.log("Interstitial loaded, attempting to show...");
+            //console.log("Ad loaded");
             interstitial.show();
         });
 
         const adListenerError = interstitial.addAdEventListener(AdEventType.ERROR, (error) => {
-            console.error("Erreur de chargement interstitielle :", error);
+            //console.error("Ad failed", error);
         });
 
         const adListenerClosed = interstitial.addAdEventListener(AdEventType.CLOSED, () => {
-            console.log("L'utilisateur a fermé l'interstitielle");
+            //console.log("Ad closed");
           });
 
         return () => {
@@ -44,14 +41,13 @@ export const showAd = async (consent) => {
             adListenerClosed.remove();
         };
     }   catch (error) {
-            console.error("Erreur lors du chargement des pubs :", error);
+            //console.error("Error loading ad:", error);
         }
+
 };
 
 
-///////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 
 export const canShowAd = async () => {
@@ -66,17 +62,16 @@ export const showAdIfReady = async () => {
     const isReady = await canShowAd();
 
     if (!isReady) {
-        console.log("Pas de pub (trop tôt)");
+        console.log("ad not ready");
         return false;
     }
 
-    console.log("Pub autorisée");
+    console.log("ad ready");
 
-    let userConsentInitialLocal = await AsyncStorage.getItem("user_consent_initial");
-
+    let userConsentLocal = await AsyncStorage.getItem("user_consent");
     await AsyncStorage.setItem(LAST_SHOWN_KEY, Date.now().toString());
-    console.log(userConsentInitialLocal, "userConsentInitialLocal after showAdIfReady");
-    return showAd(userConsentInitialLocal, adUnitId); // A reactiver en PROD Ne doit pas être en conflit avec loadAd de showAd
+
+    return showAd(userConsentLocal, adUnitId); // A reactiver en PROD Ne doit pas être en conflit avec loadAd de showAd
 };
 
 

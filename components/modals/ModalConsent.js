@@ -1,17 +1,16 @@
+//////////////////////////////////////////////////////////////////////////////////////////
 import React from 'react';
 import { Modal, View, Text, Pressable, StyleSheet } from 'react-native';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-import { saveConsent } from '../ads/adsmanager.js';
+import { useConsent } from '../ads/ads_manager/ConsentContext.js';
 
 
-export default function ModalConsent({ visible = null, showModalConsent, setVisible, userConsent = null, setUserConsent }) {
+export default function ModalConsent({ visible = null, showModalConsent, setVisible }) {
+
+    const { saveConsentContext } = useConsent();
 
     const storedConsent = async (choice) => {
-        //await AsyncStorage.removeItem("user_consent");
-        await AsyncStorage.setItem("user_consent", choice.toString());
-        saveConsent(choice);
+        saveConsentContext(choice);
     };
 
 
@@ -23,11 +22,11 @@ export default function ModalConsent({ visible = null, showModalConsent, setVisi
                     <Text style={styles.message}>J'accepte les publicités personnalisées pour une meilleure expérience ?</Text>
                     
                     <View style={styles.buttons}>
-                        <Pressable style={styles.button} onPress={() => { storedConsent(false); setVisible(false); setUserConsent(false); }}>
+                        <Pressable style={styles.button} onPress={() => { storedConsent(false); setVisible(false); }}>
                             <Text style={styles.buttonText}>Non</Text>
                         </Pressable>
 
-                        <Pressable style={styles.button} onPress={() => { storedConsent(true); setVisible(false); setUserConsent(true) ;}}>
+                        <Pressable style={styles.button} onPress={() => { storedConsent(true); setVisible(false); }}>
                             <Text style={styles.buttonText}>Oui</Text>
                         </Pressable>
                     </View>

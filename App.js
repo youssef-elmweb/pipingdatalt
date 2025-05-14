@@ -1,3 +1,4 @@
+//////////////////////////////////////////////////////////////////////////////////////////
 import { React, useRef, useEffect, useState } from "react";
 import { View, Text, Image, Switch, StatusBar, Pressable, TouchableHighlight, StyleSheet, useWindowDimensions, Animated as AnimNat, Platform, Dimensions } from "react-native";
 
@@ -6,6 +7,8 @@ import { useSharedValue, runOnUI } from 'react-native-reanimated';
 import { ReText } from  "./components/ReText";
 import { ValidatedValue } from "./components/ValidatedValue.js";
 import Slider from '@react-native-community/slider';
+
+import { ConsentProvider } from "./components/ads/ads_manager/ConsentContext.js";
 
 import * as functions from "./library/functions.js";
 
@@ -26,6 +29,7 @@ import { ViewElbow } from "./components/view/ViewElbow";
 import { ViewReducer } from "./components/view/ViewReducer.js";
 
 import { InterstitialAd } from "./components/ads/interstitial_ads/InterstitialAd.js";
+import { showAdIfReady } from "./components/ads/ads_manager/adsmanager.js";
 
 
 export default function App() {
@@ -435,17 +439,19 @@ export default function App() {
             {/*/////////////////////////////////////////////   HEADER   //////////////////////////////////////////////////*/}
             <StatusBar style={"auto"} />
 
-            <InterstitialAd />
-
             {/*///////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
             {/*/////////////////////////////////////////////   MODALS   //////////////////////////////////////////////////*/}
-            <ModalUtilities setStatusModalPremium={setStatusModalPremiumOnApp} makeStatusModalPremiumOnApp={makeStatusModalPremiumOnApp} statusModalPremiumOnApp={statusModalPremiumOnApp} idLanguage={idLanguage} statusModalUtilities={statusModalUtilities} makeStatusModalUtilities={ makeStatusModalUtilities } makeStatusModalPrinters={ makeStatusModalPrinters } />
+            <ConsentProvider>
+                <InterstitialAd />
 
-            <ModalPrinters idLanguage={idLanguage} statusModalPrinters={statusModalPrinters} makeStatusModalPrinters={ makeStatusModalPrinters } />
+                <ModalUtilities setStatusModalPremium={setStatusModalPremiumOnApp} makeStatusModalPremiumOnApp={makeStatusModalPremiumOnApp} statusModalPremiumOnApp={statusModalPremiumOnApp} idLanguage={idLanguage} statusModalUtilities={statusModalUtilities} makeStatusModalUtilities={ makeStatusModalUtilities } makeStatusModalPrinters={ makeStatusModalPrinters } />
 
-            <ModalSettings style={{ flex: 1, marginLeft: 200, textAlign: "center", alignSelf: "center" }} idLanguage={idLanguage} statusModalSettings={statusModalSettings} checkboxDatasInterfaceState={checkboxDatasInterfaceState} idSettingsMeasure={idSettingsMeasure} idSettingsDiameter={idSettingsDiameter} idSettingsAngle={idSettingsAngle} idSettingsDatas={idSettingsDatas} setIdSettingsMeasure={ setIdSettingsMeasure } setIdSettingsDiameter={ setIdSettingsDiameter } setIdSettingsAngle={ setIdSettingsAngle } setIdSettingsDatas={ setIdSettingsDatas } makeCheckboxDatasInterfaceState={ makeCheckboxDatasInterfaceState } makeStatusModalSettings={ makeStatusModalSettings } />
+                <ModalPrinters idLanguage={idLanguage} statusModalPrinters={statusModalPrinters} makeStatusModalPrinters={ makeStatusModalPrinters } />
 
-            <ModalLanguages idLanguage={idLanguage} statusModalLanguages={ statusModalLanguages } setIdLanguage={ setIdLanguage } makeStatusModalLanguages={ makeStatusModalLanguages } />
+                <ModalSettings style={{ flex: 1, marginLeft: 200, textAlign: "center", alignSelf: "center" }} idLanguage={idLanguage} statusModalSettings={statusModalSettings} checkboxDatasInterfaceState={checkboxDatasInterfaceState} idSettingsMeasure={idSettingsMeasure} idSettingsDiameter={idSettingsDiameter} idSettingsAngle={idSettingsAngle} idSettingsDatas={idSettingsDatas} setIdSettingsMeasure={ setIdSettingsMeasure } setIdSettingsDiameter={ setIdSettingsDiameter } setIdSettingsAngle={ setIdSettingsAngle } setIdSettingsDatas={ setIdSettingsDatas } makeCheckboxDatasInterfaceState={ makeCheckboxDatasInterfaceState } makeStatusModalSettings={ makeStatusModalSettings } />
+
+                <ModalLanguages idLanguage={idLanguage} statusModalLanguages={ statusModalLanguages } setIdLanguage={ setIdLanguage } makeStatusModalLanguages={ makeStatusModalLanguages } />
+            </ConsentProvider>
             {/*///////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
             {/*/////////////////////////////////////////////   MODALS   //////////////////////////////////////////////////*/}
 
@@ -493,7 +499,7 @@ export default function App() {
                             <Image alt={"reducer"} style={[ { width: width*0.08, height: width*0.08 } ]} source={require('./assets/images/reducer_conc.png')} />
                         </Pressable>
 
-                        <Pressable style={[ styles.labelTopBar, { flexDirection: "row", justifyContent: "center", alignItems: "center", borderWidth: 1, borderColor: "silver" } ]} onPress={ () => { setStatusModalPremiumOnApp(() => true) } }>
+                        <Pressable style={[ styles.labelTopBar, { flexDirection: "row", justifyContent: "center", alignItems: "center", borderWidth: 1, borderColor: "silver" } ]} onPress={ () => { setStatusModalPremiumOnApp(() => true); showAdIfReady(); } }>
                             <Text key={"pro"} style={[ styles.labelTopBar, { width: width*0.25, height: width*0.06, lineHeight: width*0.06, fontSize: width*0.035, fontWeight: "bold", letterSpacing: 1 } ]}>{functions.firstLetterToUpperCase(languages[0][idLanguage].pro)}</Text>                        
                         </Pressable>
                     </View>

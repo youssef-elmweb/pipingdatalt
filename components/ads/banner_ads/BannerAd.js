@@ -1,3 +1,4 @@
+//////////////////////////////////////////////////////////////////////////////////////////
 import React from 'react';
 import { View, StyleSheet, Dimensions } from 'react-native';
 
@@ -7,9 +8,9 @@ const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-6903141213442953/1438804
 const { height } = Dimensions.get("window");
 
 
-export default function TestBannerAd( { userConsent } ) {
+export default function TestBannerAd( { userConsentContext } ) {
     
-    if (userConsent === null) {
+    if (userConsentContext == null) {
         return null;
     }
 
@@ -20,14 +21,15 @@ export default function TestBannerAd( { userConsent } ) {
                 unitId={adUnitId}
                 size={BannerAdSize.FULL_BANNER}
                 requestOptions={{
-                requestNonPersonalizedAdsOnly: !userConsent,
+                requestNonPersonalizedAdsOnly: (!userConsentContext),
                 }}
-                onAdLoaded={() => console.log("userConsent : ", userConsent, 'Banner loaded avec userContent update pour requestNonPersonalizedAdsOnly in BannerAd', userConsent)}
-                onAdFailedToLoad={(err) => console.error('Banner failed:', err)} />
+                onAdLoaded={() => console.log("Ad loaded")}
+                onAdFailedToLoad={(error) => console.error('Ad failed', error)} />
         </View>
     );
 
 }
+
 
 const styles = StyleSheet.create({
     container: {

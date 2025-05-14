@@ -1,3 +1,4 @@
+//////////////////////////////////////////////////////////////////////////////////////////
 import { useMemo, useState } from "react";
 
 import ModalConsentInitial from "../../modals/ModalConsentInitial";
@@ -5,18 +6,17 @@ import ModalConsentInitial from "../../modals/ModalConsentInitial";
 
 export function InterstitialAd() {
 
-    const [userConsent, setUserConsent] = useState(null);
     const [visible, setVisible] = useState(null);
 
     const CONSENT_MODAL = useMemo(() => {
-        return <ModalConsentInitial visible={visible} setVisible={setVisible} setUserConsent={setUserConsent} />
+        return <ModalConsentInitial visible={visible} setVisible={setVisible} />
     }, [visible])
 
 
     return (
-        (userConsent == null ?
-            CONSENT_MODAL
-        : false)
+
+        CONSENT_MODAL
+
     );
 
 }
