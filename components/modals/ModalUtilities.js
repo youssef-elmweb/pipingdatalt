@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Dimensions, Button, Pressable, Text, Modal, View, Image, SafeAreaView, FlatList } from "react-native";
+import { StyleSheet, Dimensions, Button, Pressable, TouchableOpacity, Text, Modal, View, Image, SafeAreaView, FlatList } from "react-native";
 
 import * as functions from "./../../library/functions.js";
 
@@ -49,11 +49,11 @@ export function ModalUtilities (props) {
         },
         {
             id: 2,
-            title: <Pressable onPress={ () => setStatusModalInfos(true) }><View style={{ width: Number(width*0.6), flexDirection: "row", alignItems: "center", justifyContent: "flex-start" }}><Text style={ {height: height*0.06, lineHeight: Number(height*0.06), fontSize: Number(height*0.02), color: "white"} }>{languages[0][props.idLanguage].info}</Text></View></Pressable>
+            title: languages[0][props.idLanguage].info
         },
         {
             id: 3,
-            title: <Pressable title={languages[0][props.idLanguage].modify_choice} onPress={() => { setShowModalConsent(true); }}><Text style={ {height: height*0.06, lineHeight: Number(height*0.06), fontSize: Number(height*0.02), color: "white"} }>{languages[0][props.idLanguage].ad_preferences}</Text></Pressable>
+            title: languages[0][props.idLanguage].ad_preferences
         },
         {
             id: 4,
@@ -61,14 +61,14 @@ export function ModalUtilities (props) {
         },
         {
             id: 5,
-            title: <Pressable onPress={ () => props.setStatusModalPremium(true) }><View style={{ width: Number(width*0.6), flexDirection: "row", alignItems: "center", justifyContent: "flex-start" }}><Text style={ {height: height*0.06, lineHeight: Number(height*0.06), fontSize: Number(height*0.02), color: "white"} }>{languages[0][props.idLanguage].premium}</Text></View></Pressable>
+            title: languages[0][props.idLanguage].premium
         },
     ];
 
 
     const Item = ({title}) => (
         <View style={ {width: Number(width*0.6), paddingLeft: Number(width*0.075), borderRightWidth: Number(0.75), borderColor: "gray", backgroundColor: '#202020'} }>
-            <Text style={[ styles.titleUtility, {height: height*0.06, lineHeight: Number(height*0.06), fontSize: Number(height*0.02)} ]}>{title}</Text>
+            <Text style={[ styles.titleUtility, {height: height*0.06, lineHeight: Number(height*0.06), fontSize: Number(height*0.02)} ]}>{ title }</Text>
         </View>
     );
 
@@ -110,7 +110,24 @@ export function ModalUtilities (props) {
                                 <SafeAreaView>
                                     <Text style={[ styles.titleUtility, {width: width*0.6, height: Number(height*0.05), marginVertical: Number(height*0.01), textAlign: "center", fontSize: Number(height*0.03)} ]}>{"PipingData"}</Text>
                                     
-                                    <FlatList key={"listUtilities"} data={DATA} renderItem={ ({item}) => <Pressable style={[ {height: height*0.1, marginTop: Number(height*0.0025)} ]} key={item.title} onPress={ () => { if (item.id == 1) { props.makeStatusModalUtilities(false); props.makeStatusModalPrinters(true); } else if (item.id == 4) { functions.onShare(); } }}><Item key={item.title} title={item.title} /></Pressable>} />
+                                    <FlatList
+                                        keyboardShouldPersistTaps="handled"
+                                        keyExtractor={(item) => item.id.toString()}
+                                        data={DATA}
+                                        style={{ zIndex: 999, pointerEvents: 'box-none' }}
+                                        renderItem={({ item }) => (
+                                            <TouchableOpacity
+                                                style={{ zIndex: 10, height: height * 0.1, backgroundColor: 'transparent' }}
+                                                onPress={() => {
+                                                        if (item.id === 1) props.makeStatusModalPrinters();
+                                                        else if (item.id === 2) setStatusModalInfos(true);
+                                                        else if (item.id === 3) setShowModalConsent(true);
+                                                        else if (item.id === 4) functions.onShare();
+                                                        else if (item.id === 5) props.setStatusModalPremium(true);
+                                                }}>
+                                            <Item title={item.title} />
+                                            </TouchableOpacity>
+                                    )}/>
                                 </SafeAreaView>
                             </Pressable>
                         </Pressable> 

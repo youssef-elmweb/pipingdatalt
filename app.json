@@ -14,7 +14,10 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.jos59.pipingdatalt"
+      "bundleIdentifier": "com.jos59.pipingdatalt",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -49,13 +52,16 @@
         "react-native-google-mobile-ads",
         {
           "androidAppId": "ca-app-pub-6903141213442953~8625330593",
-          "iosAppId": "ca-app-pub-3940256099942544/4411468910"
+          "iosAppId": "ca-app-pub-7312653301656268~8357812104"
         }
       ]
     ],
     "extra": {
       "eas": {
         "projectId": "061135af-fb34-4aa1-a649-b3aaaf36d1ce"
+      },
+      "react-native-google-mobile-ads": {
+        "ios_app_id": "ca-app-pub-7312653301656268~8357812104"
       }
     },
     "owner": "jos59"

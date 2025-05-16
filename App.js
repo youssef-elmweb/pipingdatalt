@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 import { React, useRef, useEffect, useState } from "react";
-import { View, Text, Image, Switch, StatusBar, Pressable, TouchableHighlight, StyleSheet, useWindowDimensions, Animated as AnimNat, Platform, Dimensions } from "react-native";
+import { View, Text, Image, Switch, Pressable, TouchableHighlight, StyleSheet, useWindowDimensions, Animated as AnimNat, Platform, Dimensions } from "react-native";
 
 import { useSharedValue, runOnUI } from 'react-native-reanimated';
 
@@ -38,8 +38,6 @@ export default function App() {
     ////////////////////// HOOKS ///////////////////////////////////////
     const [statusModalLanguages, setStatusModalLanguages] = useState(false);
     const [idLanguage, setIdLanguage] = useState('en');
-
-    const heightStautusBar = StatusBar.currentHeight;
     ////////////////////// HOOKS ///////////////////////////////////////
 
 
@@ -437,7 +435,6 @@ export default function App() {
         <View style={[ styles.container ]}>
             {/*///////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
             {/*/////////////////////////////////////////////   HEADER   //////////////////////////////////////////////////*/}
-            <StatusBar style={"auto"} />
 
             {/*///////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
             {/*/////////////////////////////////////////////   MODALS   //////////////////////////////////////////////////*/}
@@ -456,7 +453,7 @@ export default function App() {
                 {/*/////////////////////////////////////////////   MODALS   //////////////////////////////////////////////////*/}
 
                 {(elbowLayer ?
-                <View style={[ { minHeight: height*0.3, maxHeight: height*0.3, paddingTop: heightStautusBar, justifyContent: "flex-start", alignItems: "center", backgroundColor: "transparent" } ]}>
+                <View style={[ { minHeight: height*0.3, maxHeight: height*0.3, paddingTop: Number.parseFloat(height*0.06), justifyContent: "flex-start", alignItems: "center", backgroundColor: "transparent" } ]}>
                     <View style={[ { width: width, height: "35%", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "transparent" } ]}>
                         <View style={[ { width: width, height: "45%", paddingLeft: width*0.035, paddingRight: width*0.035, flexDirection: "row", justifyContent: "center", alignItems: "center" } ]}>
                             <View style={[ { flex: width*0.12 } ]}>

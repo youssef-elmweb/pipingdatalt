@@ -7,7 +7,7 @@ import { useConsent } from '../ads/ads_manager/ConsentContext.js';
 
 export default function ModalConsent({ visible = null, showModalConsent, setVisible }) {
 
-    const { saveConsentContext } = useConsent();
+    const { saveConsentContext } = useConsent(); 
 
     const storedConsent = async (choice) => {
         saveConsentContext(choice);

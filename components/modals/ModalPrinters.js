@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { StyleSheet, Dimensions, Pressable, Text, Modal, View, StatusBar, Platform, NativeModules } from "react-native";
+import { StyleSheet, Dimensions, Pressable, Text, Modal, View, StatusBar, Platform } from "react-native";
 
 import * as Print from 'expo-print';
 import { PressablePrint } from  "../PressablePrint";
@@ -33,10 +33,10 @@ export function ModalPrinters (props) {
 
 
     return  (
-        <View style={[ {justifyContent: "center", alignItems: "center"} ]}>
+        <View style={[ { justifyContent: "center", alignItems: "center" } ]}>
             <Modal visible={props.statusModalPrinters}>
-                <Pressable style={[ {flexDirection: "row", justifyContent: "center", alignItems: "center"} ]} onPress={ props.makeStatusModalPrinters }>
-                    <Text style={[ {flex: 1, height: (Platform.OS == "ios" ? Number(50) : Number(heightStatusBar+30)), lineHeight: (Platform.OS == "ios" ? Number(50) : Number(heightStatusBar+30)), fontSize: Number(15), fontWeight: "bold", textAlign: "center", letterSpacing: 0.5, color: "white", borderBottomWidth: 0.75, borderColor: "white", backgroundColor: 'dodgerblue'} ]}>
+                <Pressable style={[ { paddingTop: height*0.1, flexDirection: "row", justifyContent: "center", alignItems: "center" } ]} onPress={ props.makeStatusModalPrinters }>
+                    <Text style={[ {flex: 1, height: Number(50), lineHeight: Number(50), fontSize: Number(15), fontWeight: "bold", textAlign: "center", letterSpacing: 0.5, color: "white", borderBottomWidth: 0.75, borderColor: "white", backgroundColor: 'dodgerblue'} ]}>
                         {`${languages[0][props.idLanguage].back}`}
                     </Text>
                 </Pressable>
