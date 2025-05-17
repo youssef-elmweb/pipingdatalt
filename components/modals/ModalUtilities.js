@@ -11,7 +11,6 @@ import { languages } from "../../languages/languages";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { ModalInfos } from "./ModalInfos.js";
-import { ModalPremium } from "./ModalPremium.js";
 
 import { showAdIfReady } from "../ads/ads_manager/adsmanager.js";
 
@@ -76,15 +75,10 @@ export function ModalUtilities (props) {
         setStatusModalInfos(false); 
     }
 
-    const makeStatusModalPremium = () => {
-        props.makeStatusModalPremiumOnApp(false);
-    }
-
 
     return  (
                 <View>
                     <ModalInfos idLanguage={props.idLanguage} statusModalInfos={statusModalInfos} makeStatusModalInfos={makeStatusModalInfos} />
-                    <ModalPremium idLanguage={props.idLanguage} statusModalPremium={props.statusModalPremiumOnApp} makeStatusModalPremium={makeStatusModalPremium} />
                     <ModalConsent showModalConsent={showModalConsent || null} setVisible={setShowModalConsent} userConsentContext={userConsentContext} setUserConsentContext={setUserConsentContext} />
 
                     <Modal style={[ {justifyContent: "center", alignItems: "center", backgroundColor: "transparent"} ]} animationType={"slide"} transparent={true} visible={props.statusModalUtilities}>
@@ -123,7 +117,7 @@ export function ModalUtilities (props) {
                                                         else if (item.id === 2) setStatusModalInfos(true);
                                                         else if (item.id === 3) setShowModalConsent(true);
                                                         else if (item.id === 4) functions.onShare();
-                                                        else if (item.id === 5) props.setStatusModalPremium(true);
+                                                        else if (item.id === 5) props.makeStatusModalPremium(true);
                                                 }}>
                                             <Item title={item.title} />
                                             </TouchableOpacity>

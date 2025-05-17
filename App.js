@@ -24,6 +24,7 @@ import { ModalSettings } from "./components/modals/ModalSettings.js";
 import { ModalLanguages } from "./components/modals/ModalLanguages.js";
 import { ModalUtilities } from "./components/modals/ModalUtilities.js";
 import { ModalPrinters } from "./components/modals/ModalPrinters.js";
+import { ModalPremium } from "./components/modals/ModalPremium.js";
 
 import { ViewElbow } from "./components/view/ViewElbow";
 import { ViewReducer } from "./components/view/ViewReducer.js";
@@ -100,6 +101,7 @@ export default function App() {
     const [statusModalSettings, setStatusModalSettings] = useState(false);
     const [statusModalUtilities, setStatusModalUtilities] = useState(false);
     const [statusModalPrinters, setStatusModalPrinters] = useState(false);
+    const [statusModalPremium, setStatusModalPremium] = useState(false);
 
     const [idSettingsMeasure, setIdSettingsMeasure] = useState(0);
     const [idSettingsDiameter, setIdSettingsDiameter] = useState(0);
@@ -111,8 +113,6 @@ export default function App() {
     const [tempElbowDiameterInferior, setTempElbowDiameterInferior] = useState(0);
     const [tempReducerDiameterInferior, setTempReducerDiameterInferior] = useState(1);
     const [tempReducerDiameterSuperior, setTempReducerDiameterSuperior] = useState(1); 
-
-    const [statusModalPremiumOnApp, setStatusModalPremiumOnApp] = useState(false);
 
     const [colorDatasCurves, setColorDatasCurves] = useState("white");
 
@@ -425,11 +425,15 @@ export default function App() {
         setStatusModalPrinters(() => !statusModalPrinters); 
     }
 
-    const makeStatusModalPremiumOnApp = () => {
-        setStatusModalPremiumOnApp(false);
-    } 
-    ///////////////////////////////////////////////////// FUNCTIONS //////////////////////////////////////////////////////
+    const makeStatusModalPremium = () => {
+        setStatusModalUtilities(() => !statusModalUtilities); 
+        setStatusModalPremium(() => !statusModalPremium); 
+    }
 
+    const makeStatusModalPremiumOnModalPremium = () => {
+        setStatusModalPremium(() => false);
+    }
+    ///////////////////////////////////////////////////// FUNCTIONS //////////////////////////////////////////////////////
 
     return (
         <View style={[ styles.container ]}>
@@ -441,7 +445,9 @@ export default function App() {
             <ConsentProvider>
                 <InterstitialAd />
 
-                <ModalUtilities setStatusModalPremium={setStatusModalPremiumOnApp} makeStatusModalPremiumOnApp={makeStatusModalPremiumOnApp} statusModalPremiumOnApp={statusModalPremiumOnApp} idLanguage={idLanguage} statusModalUtilities={statusModalUtilities} makeStatusModalUtilities={ makeStatusModalUtilities } makeStatusModalPrinters={ makeStatusModalPrinters } />
+                <ModalPremium idLanguage={idLanguage} statusModalPremium={statusModalPremium} makeStatusModalPremiumOnModalPremium={makeStatusModalPremiumOnModalPremium} setIdLanguage={ setIdLanguage } makeStatusModalPremium={makeStatusModalPremium} />
+
+                <ModalUtilities setStatusModalPremium={setStatusModalPremium} idLanguage={idLanguage} statusModalUtilities={statusModalUtilities} makeStatusModalUtilities={ makeStatusModalUtilities } makeStatusModalPremium={makeStatusModalPremium} makeStatusModalPrinters={ makeStatusModalPrinters } />
 
                 <ModalPrinters idLanguage={idLanguage} statusModalPrinters={statusModalPrinters} makeStatusModalPrinters={ makeStatusModalPrinters } />
 
@@ -496,7 +502,7 @@ export default function App() {
                                 <Image alt={"reducer"} style={[ { width: width*0.08, height: width*0.08 } ]} source={require('./assets/images/reducer_conc.png')} />
                             </Pressable>
 
-                            <Pressable style={[ styles.labelTopBar, { flexDirection: "row", justifyContent: "center", alignItems: "center", borderWidth: 1, borderColor: "silver" } ]} onPress={ () => { setStatusModalPremiumOnApp(() => true); showAdIfReady(); } }>
+                            <Pressable style={[ styles.labelTopBar, { flexDirection: "row", justifyContent: "center", alignItems: "center", borderWidth: 1, borderColor: "silver" } ]} onPress={ () => { setStatusModalPremium(() => true); showAdIfReady(); } }>
                                 <Text key={"pro"} style={[ styles.labelTopBar, { width: width*0.25, height: width*0.06, lineHeight: width*0.06, fontSize: width*0.035, fontWeight: "bold", letterSpacing: 1 } ]}>{functions.firstLetterToUpperCase(languages[0][idLanguage].pro)}</Text>                        
                             </Pressable>
                         </View>
