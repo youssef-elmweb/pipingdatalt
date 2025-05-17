@@ -10,8 +10,6 @@ import { languages } from "../../languages/languages";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { ModalInfos } from "./ModalInfos.js";
-
 import { showAdIfReady } from "../ads/ads_manager/adsmanager.js";
 
 import ModalConsent from "./ModalConsent.js";
@@ -23,7 +21,6 @@ export function ModalUtilities (props) {
 
     const { userConsentContext, setUserConsentContext } = useConsent(); console.log(userConsentContext, "ModalUtilities global");
 
-    const [statusModalInfos, setStatusModalInfos] = useState(false);
     const [showModalConsent, setShowModalConsent] = useState(false);
 
 
@@ -71,14 +68,10 @@ export function ModalUtilities (props) {
         </View>
     );
 
-    const makeStatusModalInfos = () => {
-        setStatusModalInfos(false); 
-    }
-
 
     return  (
                 <View>
-                    <ModalInfos idLanguage={props.idLanguage} statusModalInfos={statusModalInfos} makeStatusModalInfos={makeStatusModalInfos} />
+                    
                     <ModalConsent showModalConsent={showModalConsent || null} setVisible={setShowModalConsent} userConsentContext={userConsentContext} setUserConsentContext={setUserConsentContext} />
 
                     <Modal style={[ {justifyContent: "center", alignItems: "center", backgroundColor: "transparent"} ]} animationType={"slide"} transparent={true} visible={props.statusModalUtilities}>
@@ -113,11 +106,11 @@ export function ModalUtilities (props) {
                                             <TouchableOpacity
                                                 style={{ zIndex: 10, height: height * 0.1, backgroundColor: 'transparent' }}
                                                 onPress={() => {
-                                                        if (item.id === 1) props.makeStatusModalPrinters(true);
-                                                        else if (item.id === 2) setStatusModalInfos(true);
+                                                        if (item.id === 1) props.makeStatusModalPrinters();
+                                                        else if (item.id === 2) props.makeStatusModalInfos();
                                                         else if (item.id === 3) setShowModalConsent(true);
                                                         else if (item.id === 4) functions.onShare();
-                                                        else if (item.id === 5) props.makeStatusModalPremium(true);
+                                                        else if (item.id === 5) props.makeStatusModalPremium();
                                                 }}>
                                             <Item title={item.title} />
                                             </TouchableOpacity>
