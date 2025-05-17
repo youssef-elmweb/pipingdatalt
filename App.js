@@ -38,7 +38,6 @@ import { showAdIfReady } from "./components/ads/ads_manager/adsmanager.js";
 
 export default function App() {
 
-
     ////////////////////// HOOKS ///////////////////////////////////////
     const [statusModalLanguages, setStatusModalLanguages] = useState(false);
     const [idLanguage, setIdLanguage] = useState('en');

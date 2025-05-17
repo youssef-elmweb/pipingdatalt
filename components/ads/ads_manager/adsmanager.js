@@ -1,4 +1,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////
+import { Platform } from 'react-native';
+
+import { getTrackingPermissionsAsync, requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MobileAds, InterstitialAd, AdEventType, TestIds } from "react-native-google-mobile-ads";
 
@@ -7,6 +10,23 @@ const LAST_SHOWN_KEY = 'last_ad_shown_at';
 
 const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-6903141213442953/3572577794';
 
+////////////////////////////// IOS ATT /////////////////////////////////////////////////////
+export const requestATT = async () => {
+    if (Platform.OS === 'ios') {
+        const { status } = await getTrackingPermissionsAsync();
+
+        if (status === 'undetermined') {
+            const { status: newStatus } = await requestTrackingPermissionsAsync();
+            console.log("ATT permission status:", newStatus);
+            return newStatus;
+        }
+
+        console.log("ATT already requested:", status);
+        return status;
+    }
+    return "not_ios";
+};
+////////////////////////////// IOS ATT /////////////////////////////////////////////////////
 
 export const saveConsent = async (choice = null) => {
     return showAd(choice); 

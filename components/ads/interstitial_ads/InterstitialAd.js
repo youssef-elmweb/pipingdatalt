@@ -1,6 +1,8 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 import { useMemo, useState } from "react";
 
+import { Platform } from "react-native";
+
 import ModalConsentInitial from "../../modals/ModalConsentInitial";
 
 
@@ -15,7 +17,9 @@ export function InterstitialAd() {
 
     return (
 
-        CONSENT_MODAL
+        (Platform.OS == "ios" ?
+        false :
+        CONSENT_MODAL)
 
     );
 
