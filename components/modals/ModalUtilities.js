@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////////////////////
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Dimensions, Button, Pressable, TouchableOpacity, Text, Modal, View, Image, SafeAreaView, FlatList } from "react-native";
 
 import * as functions from "./../../library/functions.js";
@@ -12,7 +12,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { showAdIfReady } from "../ads/ads_manager/adsmanager.js";
 
-import ModalConsent from "./ModalConsent.js";
 import BannerAd from "../ads/banner_ads/BannerAd.js";
 
 export function ModalUtilities (props) {
@@ -20,8 +19,6 @@ export function ModalUtilities (props) {
     const {width, height} = Dimensions.get("window");
 
     const { userConsentContext, setUserConsentContext } = useConsent(); console.log(userConsentContext, "ModalUtilities global");
-
-    const [showModalConsent, setShowModalConsent] = useState(false);
 
 
     useEffect(() => {
@@ -71,9 +68,6 @@ export function ModalUtilities (props) {
 
     return  (
                 <View>
-                    
-                    <ModalConsent showModalConsent={showModalConsent || null} setVisible={setShowModalConsent} userConsentContext={userConsentContext} setUserConsentContext={setUserConsentContext} />
-
                     <Modal style={[ {justifyContent: "center", alignItems: "center", backgroundColor: "transparent"} ]} animationType={"slide"} transparent={true} visible={props.statusModalUtilities}>
                         <Pressable style={[ {width: width, backgroundColor: "transparent"} ]} onPress={ props.makeStatusModalUtilities } >
                             <Pressable style={[ {width: width, height: Number(height*0.74), flexDirection: "row", marginTop: Number(height*0.06), flexDirection: "column", justifyContent: "space-around", alignSelf: "flex-start", alignItems: "flex-start", opacity: 0.95, backgroundColor: "#353535"} ]} onTouchEnd={ (e) => { e.stopPropagation() } }>
@@ -108,7 +102,7 @@ export function ModalUtilities (props) {
                                                 onPress={() => {
                                                         if (item.id === 1) props.makeStatusModalPrinters();
                                                         else if (item.id === 2) props.makeStatusModalInfos();
-                                                        else if (item.id === 3) setShowModalConsent(true);
+                                                        else if (item.id === 3) props.makeStatusModalConsent();
                                                         else if (item.id === 4) functions.onShare();
                                                         else if (item.id === 5) props.makeStatusModalPremium();
                                                 }}>

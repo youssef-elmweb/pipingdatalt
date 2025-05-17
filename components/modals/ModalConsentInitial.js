@@ -15,7 +15,7 @@ export default function ModalConsentInitial( { visible, setVisible } ) {
         const getStoredConsentInitial = async () => {
 
                 let userConsentInitialLocal = await AsyncStorage.getItem("user_consent");
-
+await AsyncStorage.removeItem("user_consent");
                 if (userConsentInitialLocal != null) {
                     setUserConsentContext(true);
                     setVisible(false);

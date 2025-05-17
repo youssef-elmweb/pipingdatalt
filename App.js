@@ -32,6 +32,7 @@ import { ViewElbow } from "./components/view/ViewElbow";
 import { ViewReducer } from "./components/view/ViewReducer.js";
 
 import { InterstitialAd } from "./components/ads/interstitial_ads/InterstitialAd.js";
+import ModalConsent from "./components/modals/ModalConsent.js";
 import { showAdIfReady } from "./components/ads/ads_manager/adsmanager.js";
 
 
@@ -105,6 +106,7 @@ export default function App() {
     const [statusModalUtilities, setStatusModalUtilities] = useState(false);
     const [statusModalPrinters, setStatusModalPrinters] = useState(false);
     const [statusModalInfos, setStatusModalInfos] = useState(false);
+    const [statusModalConsent, setStatusModalConsent] = useState(false);
     const [statusModalPremium, setStatusModalPremium] = useState(false);
 
     const [idSettingsMeasure, setIdSettingsMeasure] = useState(0);
@@ -375,7 +377,7 @@ export default function App() {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////// REDUCER ///////////////////////////////////////////////////////
 
-    
+    ////////////////////////////////////////////////////////////////////////
     const makeFormat = () => {
         makeDatasElbowByAngle(getDatasElbows);
         FORMAT.setValue(formatElbow);
@@ -399,7 +401,9 @@ export default function App() {
                 setSizeText(sizeText+0.5); 
         }
     }
+    ////////////////////////////////////////////////////////////////////////
 
+    ////////////////////////////////////////////////////////////////////////
     const makeColorDatasCurves = () => {
         (DATAS_ELBOWS.roundAngles.includes(ANGLE._value) ? setColorDatasCurves(() => "deepskyblue") : setColorDatasCurves(() => "white"));
     }
@@ -408,18 +412,23 @@ export default function App() {
         setElbowLayer(currentInterface);
     }
 
-    const makeStatusModalSettings = () => {
-        setStatusModalSettings(false);
-    }
-
     const makeCheckboxDatasInterfaceState = () => {
         setCheckboxDatasInterfaceState(!checkboxDatasInterfaceState);
+    }
+    ////////////////////////////////////////////////////////////////////////
+
+    ////////////////////////////////////////////////////////////////////////
+    const makeStatusModalSettings = () => {
+        setStatusModalSettings(false);
     }
 
     const makeStatusModalLanguages = () => {
         setStatusModalLanguages(false);
     }
+    ////////////////////////////////////////////////////////////////////////
+   
 
+    ////////////////////////////////////////////////////////////////////////
     const makeStatusModalUtilities = () => {
         setStatusModalUtilities(false); 
     }
@@ -434,6 +443,11 @@ export default function App() {
         setStatusModalInfos(() => !statusModalInfos); 
     }
 
+    const makeStatusModalConsent = () => {
+        setStatusModalUtilities(() => !statusModalUtilities); 
+        setStatusModalConsent(() => !statusModalConsent); 
+    }
+
     const makeStatusModalPremium = () => {
         setStatusModalUtilities(() => !statusModalUtilities); 
         setStatusModalPremium(() => !statusModalPremium); 
@@ -442,6 +456,8 @@ export default function App() {
     const makeStatusModalPremiumOnModalPremium = () => {
         setStatusModalPremium(() => false);
     }
+    ////////////////////////////////////////////////////////////////////////
+
     ///////////////////////////////////////////////////// FUNCTIONS //////////////////////////////////////////////////////
 
     return (
@@ -457,11 +473,13 @@ export default function App() {
                 <ModalSettings style={{ flex: 1, marginLeft: 200, textAlign: "center", alignSelf: "center" }} idLanguage={idLanguage} statusModalSettings={statusModalSettings} checkboxDatasInterfaceState={checkboxDatasInterfaceState} idSettingsMeasure={idSettingsMeasure} idSettingsDiameter={idSettingsDiameter} idSettingsAngle={idSettingsAngle} idSettingsDatas={idSettingsDatas} setIdSettingsMeasure={ setIdSettingsMeasure } setIdSettingsDiameter={ setIdSettingsDiameter } setIdSettingsAngle={ setIdSettingsAngle } setIdSettingsDatas={ setIdSettingsDatas } makeCheckboxDatasInterfaceState={ makeCheckboxDatasInterfaceState } makeStatusModalSettings={ makeStatusModalSettings } />
                 <ModalLanguages idLanguage={idLanguage} statusModalLanguages={ statusModalLanguages } setIdLanguage={ setIdLanguage } makeStatusModalLanguages={ makeStatusModalLanguages } />
 
-                <ModalUtilities idLanguage={idLanguage} statusModalUtilities={statusModalUtilities} setStatusModalPremium={setStatusModalPremium} makeStatusModalUtilities={ makeStatusModalUtilities } makeStatusModalPrinters={ makeStatusModalPrinters } makeStatusModalInfos={ makeStatusModalInfos }  makeStatusModalPremium={makeStatusModalPremium} />
+                <ModalUtilities idLanguage={idLanguage} statusModalUtilities={statusModalUtilities} setStatusModalPremium={setStatusModalPremium} makeStatusModalUtilities={ makeStatusModalUtilities } makeStatusModalPrinters={ makeStatusModalPrinters } makeStatusModalInfos={ makeStatusModalInfos } makeStatusModalConsent={makeStatusModalConsent} makeStatusModalPremium={makeStatusModalPremium} />
                 
                 <ModalPrinters idLanguage={idLanguage} statusModalPrinters={statusModalPrinters} makeStatusModalPrinters={ makeStatusModalPrinters } />
 
                 <ModalInfos idLanguage={idLanguage} statusModalInfos={statusModalInfos} makeStatusModalInfos={makeStatusModalInfos} />
+
+                <ModalConsent statusModalConsent={statusModalConsent || null} setStatusModalConsent={setStatusModalConsent} />
 
                 <ModalPremium idLanguage={idLanguage} statusModalPremium={statusModalPremium} makeStatusModalPremiumOnModalPremium={makeStatusModalPremiumOnModalPremium} setIdLanguage={ setIdLanguage } makeStatusModalPremium={makeStatusModalPremium} />
 

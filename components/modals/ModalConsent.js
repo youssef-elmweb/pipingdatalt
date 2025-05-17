@@ -4,8 +4,7 @@ import { Modal, View, Text, Pressable, StyleSheet } from 'react-native';
 
 import { useConsent } from '../ads/ads_manager/ConsentContext.js';
 
-
-export default function ModalConsent({ visible = null, showModalConsent, setVisible }) {
+export default function ModalConsent({ statusModalConsent, setStatusModalConsent }) {
 
     const { saveConsentContext } = useConsent(); 
 
@@ -15,18 +14,18 @@ export default function ModalConsent({ visible = null, showModalConsent, setVisi
 
 
     return (
-        <Modal transparent visible={visible || !!showModalConsent} animationType="fade">
+        <Modal transparent visible={statusModalConsent} animationType="fade">
             <View style={styles.overlay}>
                 <View style={styles.modalContainer}>
                     <Text style={styles.title}>Publicité</Text>
                     <Text style={styles.message}>J'accepte les publicités personnalisées pour une meilleure expérience ?</Text>
                     
                     <View style={styles.buttons}>
-                        <Pressable style={styles.button} onPress={() => { storedConsent(false); setVisible(false); }}>
+                        <Pressable style={styles.button} onPress={() => { storedConsent(false); setStatusModalConsent(false); }}>
                             <Text style={styles.buttonText}>Non</Text>
                         </Pressable>
 
-                        <Pressable style={styles.button} onPress={() => { storedConsent(true); setVisible(false); }}>
+                        <Pressable style={styles.button} onPress={() => { storedConsent(true); setStatusModalConsent(false); }}>
                             <Text style={styles.buttonText}>Oui</Text>
                         </Pressable>
                     </View>
