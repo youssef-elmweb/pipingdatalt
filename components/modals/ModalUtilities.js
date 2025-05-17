@@ -119,7 +119,7 @@ export function ModalUtilities (props) {
                                             <TouchableOpacity
                                                 style={{ zIndex: 10, height: height * 0.1, backgroundColor: 'transparent' }}
                                                 onPress={() => {
-                                                        if (item.id === 1) props.makeStatusModalPrinters();
+                                                        if (item.id === 1) props.makeStatusModalPrinters(true);
                                                         else if (item.id === 2) setStatusModalInfos(true);
                                                         else if (item.id === 3) setShowModalConsent(true);
                                                         else if (item.id === 4) functions.onShare();

@@ -25,7 +25,7 @@ export const showAd = async (consent) => {
 
         const adListenerLoaded = interstitial.addAdEventListener(AdEventType.LOADED, () => {
             console.log("Ad interstitial loaded", consent);
-            interstitial.show();
+            //interstitial.show();
         });
 
         const adListenerError = interstitial.addAdEventListener(AdEventType.ERROR, (error) => {
