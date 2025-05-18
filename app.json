@@ -2,7 +2,7 @@
   "expo": {
     "name": "pipingdatalt",
     "slug": "pipingdatalt",
-    "version": "1.2.6",
+    "version": "1.3.5",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "userInterfaceStyle": "light",
@@ -13,7 +13,7 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "buildNumber": "5",
+      "buildNumber": "6",
       "supportsTablet": true,
       "bundleIdentifier": "com.jos59.pipingdatalt",
       "infoPlist": {
@@ -45,7 +45,6 @@
         "expo-build-properties",
         {
           "ios": {
-            "buildNumber": "5",
             "useFrameworks": "static"
           }
         }
@@ -61,7 +60,7 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "061135af-fb34-4aa1-a649-b3aaaf36d1ce"
+        "projectId": "3ff410bb-074e-430c-96dc-9c40a5256422"
       },
       "react-native-google-mobile-ads": {
         "ios_app_id": "ca-app-pub-7312653301656268~8357812104"
