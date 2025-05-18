@@ -49,7 +49,12 @@
           }
         }
       ],
-      "expo-tracking-transparency",
+      [
+        "expo-tracking-transparency",
+        {
+          "userTrackingPermission": "Ce système permet d’afficher des publicités plus pertinentes."
+        }
+      ],
       [
         "react-native-google-mobile-ads",
         {

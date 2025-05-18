@@ -1,8 +1,11 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 import React, { useEffect } from 'react';
-import { Modal, View, Text, Pressable, StyleSheet } from 'react-native';
+import { Modal, View, Text, Pressable, StyleSheet, Platform } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
+
+import { getChoiceATT } from '../ads/ads_manager/adsmanager.js';
 
 import { useConsent } from '../ads/ads_manager/ConsentContext.js';
 
@@ -24,7 +27,35 @@ export default function ModalConsentInitial( { visible, setVisible } ) {
                 }
         };
 
-        getStoredConsentInitial();
+        const getChoiceInitialATT = async () => {
+            let request = await getChoiceATT();
+            console.log(request, "request ATT récupéré");
+
+            const getChoiceUserConsentIOS = async () => {
+                if (request !== "undetermined") {
+                    console.log(request, "voici la valeur actuel de userConsent IOS");
+                }
+                return true; // ici si request !== "undetermined" on retourne false ou true selon la valeur de request
+            }
+
+            if (Platform.OS === 'ios') {
+                if (request === "undetermined") {
+                    const { status } = await requestTrackingPermissionsAsync();
+                    console.log("ATT permission status after request:", status);
+                    return null;
+                } else {
+                    let choiceUserConsentIOS = await getChoiceUserConsentIOS(); // on récupere la valeur true ou false pour setUserConsentContext(true ou false);
+                    console.log(choiceUserConsentIOS, "choiceUserConsentIOS en retour");
+                    //setUserConsentContext(choiceUserConsentIOS);
+                }        
+            } else {
+                getStoredConsentInitial();
+            }
+            return;
+        }
+
+
+        getChoiceInitialATT();
     }, []);
 
 
@@ -35,23 +66,27 @@ export default function ModalConsentInitial( { visible, setVisible } ) {
 
 
     return (
-        (userConsentContext != "true" ?
-            <Modal transparent visible={visible} animationType="fade">
-                <View style={styles.overlay}>
-                    <View style={styles.modalContainer}>
-                        <Text style={styles.title}>Publicité</Text>
-                        <Text style={styles.message}>J'accepte les publicités personnalisées pour une meilleure expérience ?</Text>
-                        <Text style={styles.message}>J'ai la possibilité de changer d'avis dans la section Utilities onglet ad preferences</Text>
+        (Platform.OS === 'ios' == "true" ?
+            getChoiceInitialATT()
+        :
+            (userConsentContext != "true" ?
+                <Modal transparent visible={visible} animationType="fade">
+                    <View style={styles.overlay}>
+                        <View style={styles.modalContainer}>
+                            <Text style={styles.title}>Publicité</Text>
+                            <Text style={styles.message}>J'accepte les publicités personnalisées pour une meilleure expérience.</Text>
+                            <Text style={styles.message}>J'ai la possibilité de changer d'avis dans la section Utilities onglet ad preferences.</Text>
 
-                        <View style={styles.buttons}>
-                            <Pressable style={styles.button} onPress={() => { let choice = true; initStoredConsentInitial(choice); }}>
-                                <Text style={styles.buttonText}>J'ai compris</Text>
-                            </Pressable>
+                            <View style={styles.buttons}>
+                                <Pressable style={styles.button} onPress={() => { let choice = true; initStoredConsentInitial(choice); }}>
+                                    <Text style={styles.buttonText}>J'ai compris</Text>
+                                </Pressable>
+                            </View>
                         </View>
                     </View>
-                </View>
-            </Modal>
-        : false)
+                </Modal>
+            : false)
+        )
 
     );
 

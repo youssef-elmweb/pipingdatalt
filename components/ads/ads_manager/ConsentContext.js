@@ -16,6 +16,9 @@ export const ConsentProvider = ({ children }) => {
         (value == null ? false : setUserConsentContext(value === "true"));
     };
 
+    const makeChoiceUserATT = async (choice) => {
+        console.log("oui le choix est : ", choice);
+    }
 
     useEffect(() => {
             refreshConsent(); 
@@ -36,7 +39,7 @@ export const ConsentProvider = ({ children }) => {
 
 
     return (
-        <ConsentContext.Provider value={{ userConsentContext, saveConsentContext, saveConsentInitialContext }}>
+        <ConsentContext.Provider value={{ userConsentContext, makeChoiceUserATT, saveConsentContext, saveConsentInitialContext }}>
             {children}
         </ConsentContext.Provider>
     );
