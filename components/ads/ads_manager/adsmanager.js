@@ -3,7 +3,7 @@ import { getTrackingPermissionsAsync } from 'expo-tracking-transparency';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MobileAds, InterstitialAd, AdEventType, TestIds } from "react-native-google-mobile-ads";
 
-const MIN_DELAY_MS = 10000; // 5 minutes
+const MIN_DELAY_MS = 300000; // 5 minutes
 const LAST_SHOWN_KEY = 'last_ad_shown_at';
 
 const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-6903141213442953/3572577794';
