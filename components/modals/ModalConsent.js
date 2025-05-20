@@ -1,37 +1,67 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 import React from 'react';
-import { Modal, View, Text, Pressable, StyleSheet } from 'react-native';
+import { Modal, View, Text, Pressable, StyleSheet, Platform, Linking } from 'react-native';
+
+import { getChoiceATT, getStatusConsentIos } from '../ads/ads_manager/adsmanager.js';
 
 import { useConsent } from '../ads/ads_manager/ConsentContext.js';
 
 export default function ModalConsent({ statusModalConsent, setStatusModalConsent }) {
 
     const { saveConsentContext } = useConsent(); 
+    
 
-    const storedConsent = async (choice) => {
-        saveConsentContext(choice);
+    const storedConsent = async (choice = null) => {        
+        if (Platform.OS === "ios") {
+            Linking.openURL('app-settings:');
+
+            let choiceUserConsentIOS = await getChoiceATT();
+            let choiceUserConsentIOSToBoolean = await getStatusConsentIos(choiceUserConsentIOS);
+
+            saveConsentContext(choiceUserConsentIOSToBoolean);
+        }   else {
+                saveConsentContext(choice);
+            }
     };
 
 
     return (
-        <Modal transparent visible={statusModalConsent} animationType="fade">
-            <View style={styles.overlay}>
-                <View style={styles.modalContainer}>
-                    <Text style={styles.title}>Publicité</Text>
-                    <Text style={styles.message}>J'accepte les publicités personnalisées pour une meilleure expérience ?</Text>
-                    
-                    <View style={styles.buttons}>
-                        <Pressable style={styles.button} onPress={() => { storedConsent(false); setStatusModalConsent(false); }}>
-                            <Text style={styles.buttonText}>Non</Text>
-                        </Pressable>
+                (
+                    Platform.OS === "ios" ?
+                        <Modal transparent visible={statusModalConsent} animationType="fade">
+                            <View style={styles.overlay}>
+                                <View style={styles.modalContainer}>
+                                    <Text style={styles.title}>Publicité</Text>
+                                    <Text style={styles.message}>Je modifie mon choix sur le suivi publicité ?</Text>
+                                    
+                                    <View style={styles.buttons}>
+                                        <Pressable style={styles.button} onPress={() => { setStatusModalConsent(false); storedConsent(); }}>
+                                            <Text style={styles.buttonText}>Modifiez dans Reglages</Text>
+                                        </Pressable>
+                                    </View> 
+                                </View> 
+                            </View>
+                        </Modal>
+                        :
+                        <Modal transparent visible={statusModalConsent} animationType="fade">
+                            <View style={styles.overlay}>
+                                <View style={styles.modalContainer}>
+                                    <Text style={styles.title}>Publicité</Text>
+                                    <Text style={styles.message}>J'accepte les publicités personnalisées pour une meilleure expérience ?</Text>
+                        
+                                    <View style={styles.buttons}>
+                                        <Pressable style={styles.button} onPress={() => { storedConsent(false); setStatusModalConsent(false); }}>
+                                            <Text style={styles.buttonText}>Non</Text>
+                                        </Pressable>
 
-                        <Pressable style={styles.button} onPress={() => { storedConsent(true); setStatusModalConsent(false); }}>
-                            <Text style={styles.buttonText}>Oui</Text>
-                        </Pressable>
-                    </View>
-                </View>
-            </View>
-        </Modal>
+                                        <Pressable style={styles.button} onPress={() => { storedConsent(true); setStatusModalConsent(false); }}>
+                                            <Text style={styles.buttonText}>Oui</Text>
+                                        </Pressable>
+                                    </View>
+                                </View>
+                            </View>
+                        </Modal>
+                )
     );
 
 }

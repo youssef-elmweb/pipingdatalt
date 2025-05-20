@@ -5,6 +5,8 @@ import { Dimensions, Pressable, Text, Modal, View, SafeAreaView } from "react-na
 import RadioGroup from 'react-native-radio-buttons-group';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 
+import { showAdIfReady } from "../ads/ads_manager/adsmanager.js";
+
 import BannerAd from "../ads/banner_ads/BannerAd.js";
 
 import { useConsent } from "../ads/ads_manager/ConsentContext.js";
@@ -182,7 +184,7 @@ const settingsDatas = useMemo(() => ([
                             </View>
                         </View>
 
-                        <Pressable style={[ {justifyContent: "center", alignItems: "center"} ]} onPressOut={ props.makeStatusModalSettings }>
+                        <Pressable style={[ {justifyContent: "center", alignItems: "center"} ]} onPressOut={ () => { props.makeStatusModalSettings(); showAdIfReady();} }>
                             <Text style={[ {width: width*0.35, height: height*0.035, lineHeight: height*0.035, fontSize: height*0.02, textAlign: "center", color: "white", letterSpacing: 0.5, borderRadius: 25, backgroundColor: '#3498db'} ]}>{`${languages[0][props.idLanguage].close}`}</Text>
                         </Pressable>
                     </Pressable>

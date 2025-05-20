@@ -10,8 +10,6 @@ import { languages } from "../../languages/languages";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { showAdIfReady } from "../ads/ads_manager/adsmanager.js";
-
 import BannerAd from "../ads/banner_ads/BannerAd.js";
 
 export function ModalUtilities (props) {
@@ -77,7 +75,7 @@ export function ModalUtilities (props) {
                                     </View>
                                     
                                     {(height > 650 ?
-                                    <Pressable style={[ {width: width*0.2, height: height*0.06, flexDirection: "row", justifyContent: "center", alignItems: "center"} ]} onPress={ () => { props.makeStatusModalUtilities(); showAdIfReady();} }>
+                                    <Pressable style={[ {width: width*0.2, height: height*0.06, flexDirection: "row", justifyContent: "center", alignItems: "center"} ]} onPress={ () => { props.makeStatusModalUtilities(); } }>
                                         <View style={[ {width: width*0.2, height: height*0.06, lineHeight: height*0.035, fontSize: height*0.02, justifyContent: "center", alignItems: "center", textAlign: "center", letterSpacing: 0.5, color: "white", borderBottomWidth: 0.75, borderColor: "white", backgroundColor: 'dodgerblue'} ]}>
                                             <Image alt={"down"} style={[ {width: height*0.06, height: height*0.06} ]} source={ require("../../assets/images/chevron-bas.png") } />
                                         </View>

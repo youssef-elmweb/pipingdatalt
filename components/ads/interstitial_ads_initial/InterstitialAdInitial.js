@@ -1,12 +1,10 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 import { useMemo, useState } from "react";
 
-import { Platform } from "react-native";
-
 import ModalConsentInitial from "../../modals/ModalConsentInitial.js";
 
 
-export function InterstitialAd() {
+export function InterstitialAdInitial() {
 
     const [visible, setVisible] = useState(null);
 

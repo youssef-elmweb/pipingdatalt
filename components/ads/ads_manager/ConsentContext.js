@@ -1,8 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { saveConsent } from './adsmanager';
-
 const ConsentContext = createContext();
 
 
@@ -16,21 +14,10 @@ export const ConsentProvider = ({ children }) => {
         (value == null ? false : setUserConsentContext(value === "true"));
     };
 
-    const makeChoiceUserATT = async (choice) => {
-        console.log("oui le choix est : ", choice);
-    }
-
-    useEffect(() => {
-            refreshConsent(); 
-    }, []);
-
-
     const saveConsentInitialContext = async (choice) => {
         await AsyncStorage.setItem("user_consent", choice.toString());
         setUserConsentContext(choice); 
-        saveConsent(choice);
     };
-
 
     const saveConsentContext = async (choice) => {
         await AsyncStorage.setItem("user_consent", choice.toString());
@@ -38,8 +25,13 @@ export const ConsentProvider = ({ children }) => {
     };
 
 
+    useEffect(() => {
+            refreshConsent(); 
+    }, []);
+
+
     return (
-        <ConsentContext.Provider value={{ userConsentContext, makeChoiceUserATT, saveConsentContext, saveConsentInitialContext }}>
+        <ConsentContext.Provider value={{ userConsentContext, setUserConsentContext, saveConsentContext, saveConsentInitialContext }}>
             {children}
         </ConsentContext.Provider>
     );

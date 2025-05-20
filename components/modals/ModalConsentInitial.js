@@ -1,61 +1,59 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 import React, { useEffect } from 'react';
-import { Modal, View, Text, Pressable, StyleSheet, Platform } from 'react-native';
+import { Modal, View, Text, Pressable, StyleSheet, Platform, AppState } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
 
-import { getChoiceATT } from '../ads/ads_manager/adsmanager.js';
+import { getChoiceATT, getStatusConsentIos } from '../ads/ads_manager/adsmanager.js';
 
 import { useConsent } from '../ads/ads_manager/ConsentContext.js';
 
 
 export default function ModalConsentInitial( { visible, setVisible } ) {
 
-    const { saveConsentInitialContext, setUserConsentContext, userConsentContext } = useConsent();
+    const { saveConsentInitialContext, setUserConsentContext, saveConsentContext } = useConsent();
 
     useEffect(() => {
-        const getStoredConsentInitial = async () => {
+        const getStoredConsentInitialAndroid = async () => {
 
-                let userConsentInitialLocal = await AsyncStorage.getItem("user_consent");
+            let userConsentInitialLocal = await AsyncStorage.getItem("user_consent");
 
-                if (userConsentInitialLocal != null) {
-                    setUserConsentContext(true);
-                    setVisible(false);
-                } else {
+            if (userConsentInitialLocal != null) {
+                setVisible(false);
+                setUserConsentContext(true); // true = valeur initialisée par defaut
+            }   else {
                     setVisible(true);
                 }
         };
 
-        const getChoiceInitialATT = async () => {
-            let request = await getChoiceATT();
-            console.log(request, "request ATT récupéré");
-
-            const getChoiceUserConsentIOS = async () => {
-                if (request !== "undetermined") {
-                    console.log(request, "voici la valeur actuel de userConsent IOS");
-                }
-                return true; // ici si request !== "undetermined" on retourne false ou true selon la valeur de request
-            }
-
+        const getStoredConsentInitial = async () => {
             if (Platform.OS === 'ios') {
+                let request = await getChoiceATT();
+
                 if (request === "undetermined") {
-                    const { status } = await requestTrackingPermissionsAsync();
-                    console.log("ATT permission status after request:", status);
-                    return null;
-                } else {
-                    let choiceUserConsentIOS = await getChoiceUserConsentIOS(); // on récupere la valeur true ou false pour setUserConsentContext(true ou false);
-                    console.log(choiceUserConsentIOS, "choiceUserConsentIOS en retour");
-                    //setUserConsentContext(choiceUserConsentIOS);
-                }        
-            } else {
-                getStoredConsentInitial();
-            }
-            return;
+
+                    await requestTrackingPermissionsAsync();
+                    
+                    const subscription = AppState.addEventListener('change', async (nextAppState) => {
+                    if (nextAppState === 'active') {
+                        let choiceUserConsentIOS = await getChoiceATT();
+                        let choiceUserConsentIOSToBoolean = await getStatusConsentIos(choiceUserConsentIOS);
+                        
+                        saveConsentInitialContext(choiceUserConsentIOSToBoolean);
+                    }
+                    }); return () => subscription.remove();
+
+                }   else {
+                        let choiceUserConsentIOSToBoolean = await getStatusConsentIos(request);
+                        saveConsentContext(choiceUserConsentIOSToBoolean);
+                }
+            }   else {
+                    getStoredConsentInitialAndroid();
+                }
         }
 
-
-        getChoiceInitialATT();
+        getStoredConsentInitial();
     }, []);
 
 
@@ -65,29 +63,23 @@ export default function ModalConsentInitial( { visible, setVisible } ) {
     };
 
 
+    if (Platform.OS === "ios") return null;
     return (
-        (Platform.OS === 'ios' == "true" ?
-            getChoiceInitialATT()
-        :
-            (userConsentContext != "true" ?
-                <Modal transparent visible={visible} animationType="fade">
-                    <View style={styles.overlay}>
-                        <View style={styles.modalContainer}>
-                            <Text style={styles.title}>Publicité</Text>
-                            <Text style={styles.message}>J'accepte les publicités personnalisées pour une meilleure expérience.</Text>
-                            <Text style={styles.message}>J'ai la possibilité de changer d'avis dans la section Utilities onglet ad preferences.</Text>
+        <Modal transparent visible={visible} animationType="fade">
+            <View style={styles.overlay}>
+                <View style={styles.modalContainer}>
+                    <Text style={styles.title}>Publicité</Text>
+                    <Text style={styles.message}>J'accepte les publicités personnalisées pour une meilleure expérience.</Text>
+                    <Text style={styles.message}>J'ai la possibilité de changer d'avis dans la section Utilities onglet ad preferences.</Text>
 
-                            <View style={styles.buttons}>
-                                <Pressable style={styles.button} onPress={() => { let choice = true; initStoredConsentInitial(choice); }}>
-                                    <Text style={styles.buttonText}>J'ai compris</Text>
-                                </Pressable>
-                            </View>
-                        </View>
+                    <View style={styles.buttons}>
+                        <Pressable style={styles.button} onPress={() => { initStoredConsentInitial(true); }}>
+                            <Text style={styles.buttonText}>J'ai compris</Text>
+                        </Pressable>
                     </View>
-                </Modal>
-            : false)
-        )
-
+                </View>
+            </View>
+        </Modal>
     );
 
 }

@@ -31,7 +31,7 @@ import { ModalPremium } from "./components/modals/ModalPremium.js";
 import { ViewElbow } from "./components/view/ViewElbow";
 import { ViewReducer } from "./components/view/ViewReducer.js";
 
-import { InterstitialAd } from "./components/ads/interstitial_ads/InterstitialAd.js";
+import { InterstitialAdInitial } from "./components/ads/interstitial_ads_initial/InterstitialAdInitial.js";
 import ModalConsent from "./components/modals/ModalConsent.js";
 import { showAdIfReady } from "./components/ads/ads_manager/adsmanager.js";
 
@@ -429,7 +429,8 @@ export default function App() {
 
     ////////////////////////////////////////////////////////////////////////
     const makeStatusModalUtilities = () => {
-        setStatusModalUtilities(false); 
+        setStatusModalUtilities(!statusModalUtilities); 
+        showAdIfReady();
     }
 
     const makeStatusModalPrinters = () => {
@@ -453,7 +454,7 @@ export default function App() {
     }
 
     const makeStatusModalPremiumOnModalPremium = () => {
-        setStatusModalPremium(() => false);
+        setStatusModalPremium(false);
     }
     ////////////////////////////////////////////////////////////////////////
 
@@ -468,7 +469,7 @@ export default function App() {
             {/*///////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
             {/*/////////////////////////////////////////////   MODALS   //////////////////////////////////////////////////*/}
             <ConsentProvider>
-                <InterstitialAd />
+                <InterstitialAdInitial />
 
                 <ModalSettings style={{ flex: 1, marginLeft: 200, textAlign: "center", alignSelf: "center" }} idLanguage={idLanguage} statusModalSettings={statusModalSettings} checkboxDatasInterfaceState={checkboxDatasInterfaceState} idSettingsMeasure={idSettingsMeasure} idSettingsDiameter={idSettingsDiameter} idSettingsAngle={idSettingsAngle} idSettingsDatas={idSettingsDatas} setIdSettingsMeasure={ setIdSettingsMeasure } setIdSettingsDiameter={ setIdSettingsDiameter } setIdSettingsAngle={ setIdSettingsAngle } setIdSettingsDatas={ setIdSettingsDatas } makeCheckboxDatasInterfaceState={ makeCheckboxDatasInterfaceState } makeStatusModalSettings={ makeStatusModalSettings } />
                 <ModalLanguages idLanguage={idLanguage} statusModalLanguages={ statusModalLanguages } setIdLanguage={ setIdLanguage } makeStatusModalLanguages={ makeStatusModalLanguages } />
@@ -530,7 +531,7 @@ export default function App() {
                                 <Image alt={"reducer"} style={[ { width: width*0.08, height: width*0.08 } ]} source={require('./assets/images/reducer_conc.png')} />
                             </Pressable>
 
-                            <Pressable style={[ styles.labelTopBar, { flexDirection: "row", justifyContent: "center", alignItems: "center", borderWidth: 1, borderColor: "silver" } ]} onPress={ () => { setStatusModalPremium(() => true); showAdIfReady(); } }>
+                            <Pressable style={[ styles.labelTopBar, { flexDirection: "row", justifyContent: "center", alignItems: "center", borderWidth: 1, borderColor: "silver" } ]} onPress={ () => { setStatusModalPremium(() => true); } }>
                                 <Text key={"pro"} style={[ styles.labelTopBar, { width: width*0.25, height: width*0.06, lineHeight: width*0.06, fontSize: width*0.035, fontWeight: "bold", letterSpacing: 1 } ]}>{functions.firstLetterToUpperCase(languages[0][idLanguage].pro)}</Text>                        
                             </Pressable>
                         </View>
