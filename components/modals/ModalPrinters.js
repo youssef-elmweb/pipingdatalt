@@ -11,10 +11,8 @@ export function ModalPrinters (props) {
 
     const [selectedPrinter] = useState(null);
 
-
     const {width} = Dimensions.get("window");
     const {height} = Dimensions.get("window"); 
-
 
     const makePrintSheet = async (printSheet) => {
         // On iOS/android prints the given html. On web prints the HTML from the current page.
@@ -30,7 +28,7 @@ export function ModalPrinters (props) {
 
     const firstLetterToUpperCase = (word) => word.charAt(0).toUpperCase() + word.slice(1);
 
-
+    
     return  (
         <View style={[ { justifyContent: "center", alignItems: "center" } ]}>
             <Modal visible={props.statusModalPrinters}>

@@ -2,6 +2,8 @@
 import { React, useRef, useEffect, useState } from "react";
 import { View, Text, Image, Switch, Pressable, TouchableHighlight, StyleSheet, useWindowDimensions, Animated as AnimNat, Platform, Dimensions } from "react-native";
 
+import * as functions from "./library/functions.js";
+
 import { useSharedValue, runOnUI } from 'react-native-reanimated';
 
 import { ReText } from  "./components/ReText";
@@ -9,8 +11,6 @@ import { ValidatedValue } from "./components/ValidatedValue.js";
 import Slider from '@react-native-community/slider';
 
 import { ConsentProvider } from "./components/ads/ads_manager/ConsentContext.js";
-
-import * as functions from "./library/functions.js";
 
 import { languages } from './languages/languages.js';
 
@@ -31,6 +31,9 @@ import { ModalPremium } from "./components/modals/ModalPremium.js";
 import { ViewElbow } from "./components/view/ViewElbow";
 import { ViewReducer } from "./components/view/ViewReducer.js";
 
+import { ValuesElbow } from "./components/ValuesElbow.js";
+import { ValuesReducers } from "./components/ValuesReducers.js";
+
 import { InterstitialAdInitial } from "./components/ads/interstitial_ads_initial/InterstitialAdInitial.js";
 import ModalConsent from "./components/modals/ModalConsent.js";
 import { showAdIfReady } from "./components/ads/ads_manager/adsmanager.js";
@@ -50,7 +53,6 @@ export default function App() {
     ///////////////// constants values /////////////////////////////////
 
     ///////////// constants api Animated ///////////////////////////////
-    const ReTextAnimated = AnimNat.createAnimatedComponent(ReText); 
     const ValidatedValueAnimated = AnimNat.createAnimatedComponent(ValidatedValue);
 
     const angleBaseShared = useSharedValue(DATAS_ELBOWS.angle);
@@ -94,6 +96,10 @@ export default function App() {
     const [currentDiameterSuperiorReducer, setCurrentDiameterSuperiorReducer] = useState(1);
     const [currentDiameterInferiorReducer, setCurrentDiameterInferiorReducer] = useState(0); // current line of array DATAS_PIPES
     const [currentReducer, setCurrentReducer] = useState("reducer-conc");
+
+    const [currentDiameterForSlider, setCurrentDiameterForSlider] = useState(0);
+    const [currentDiameterForSliderReducerInf, setCurrentDiameterForSliderReducerInf] = useState(0);
+    const [currentDiameterForSliderReducerSup, setCurrentDiameterForSliderReducerSup] = useState(1); 
     
     const [isShown, setIsShown] = useState(false); // Show or Hide the purple box
     const [labelNorme, setLabelNorme] = useState("iso/ansi");
@@ -115,23 +121,18 @@ export default function App() {
 
     const [checkboxDatasInterfaceState, setCheckboxDatasInterfaceState] = useState(true);
 
-    const [tempElbowDiameterInferior, setTempElbowDiameterInferior] = useState(0);
-    const [tempReducerDiameterInferior, setTempReducerDiameterInferior] = useState(1);
-    const [tempReducerDiameterSuperior, setTempReducerDiameterSuperior] = useState(1); 
-
     const [colorDatasCurves, setColorDatasCurves] = useState("white");
 
 
     useEffect(() => {
-        makeFormat();
-        MEASUREUNIT.setValue(idSettingsMeasure);
-        BASEANGLE.setValue(idSettingsAngle);
-        BASEDATAS.setValue(idSettingsDatas);
-
-        setIdSettingsMeasure(() => idSettingsMeasure);
-        setIdSettingsAngle(() => idSettingsAngle);
-        (idSettingsMeasure === 1 ? (idSettingsDatas == 1 ? setIdSettingsDatas(1) : setIdSettingsDatas(2)) : setIdSettingsDatas(() => idSettingsDatas));
-    })
+        if (idSettingsMeasure === 1) {
+            const newId = idSettingsDatas === 1 ? 1 : 2;
+            
+            if (idSettingsDatas !== newId) {
+                setIdSettingsDatas(newId);
+            }
+        }
+    }, []);
     //////////////////  HOOKS //////////////////////////////////////////
 
 
@@ -139,13 +140,13 @@ export default function App() {
 
     /////////////////////////////////////////////////////// ELBOW ////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    const getDatasElbows = (datas) => {
+    const getDatasElbows = (datas = DATAS_ELBOWS) => {
         return datas;
     }
 
     const makeDatasElbowByAngle = (datas) => { // callback datas argument is return of getDatasElbows
         if (datas.angle) {
-            ANGLE.setValue(datas.angle);
+            ANGLE.setValue(Number.parseFloat(datas.angle.toFixed(idSettingsAngle)));
         }
 
         if (Number(parseFloat(Math.tan((DATAS_TRIGONOMETRICS.oneDegreRad * ANGLE._value) / 2) * DATAS_PIPES[DIAMETER._value][FORMAT._value] * UNITS_MEASURES[0].unit).toFixed(1)) <= 0.6) { // pour ne pas avoir undefined si valeur trop basse en mm
@@ -377,12 +378,6 @@ export default function App() {
     ////////////////////////////////////////////////////// REDUCER ///////////////////////////////////////////////////////
 
     ////////////////////////////////////////////////////////////////////////
-    const makeFormat = () => {
-        makeDatasElbowByAngle(getDatasElbows);
-        FORMAT.setValue(formatElbow);
-        return FORMAT._value;
-    }
-
     const toggleTheBox = () => { // This function will be triggered when the Switch changes
         setIsShown((previousState) => !previousState);
         setLabelNorme((value) => (value === "iso" ? "ansi" : "iso"));
@@ -419,6 +414,12 @@ export default function App() {
     ////////////////////////////////////////////////////////////////////////
     const makeStatusModalSettings = () => {
         setStatusModalSettings(false);
+        BASEANGLE.setValue(idSettingsAngle);
+        MEASUREUNIT.setValue(idSettingsMeasure);
+        BASEDATAS.setValue(idSettingsDatas);
+        MEASUREUNIT.setValue(idSettingsMeasure);
+        ANGLE.setValue(Number.parseFloat(ANGLE._value.toFixed(idSettingsAngle)));
+        makeDatasElbowByAngle(getDatasElbows);
     }
 
     const makeStatusModalLanguages = () => {
@@ -426,7 +427,6 @@ export default function App() {
     }
     ////////////////////////////////////////////////////////////////////////
    
-
     ////////////////////////////////////////////////////////////////////////
     const makeStatusModalUtilities = () => {
         setStatusModalUtilities(!statusModalUtilities); 
@@ -462,7 +462,7 @@ export default function App() {
 
 
     return (
-        <View style={[ styles.container ]}>
+        <View style={[ styles.container, { flex: 1, flexDirection: "column" } ]}>
             {/*///////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
             {/*/////////////////////////////////////////////   HEADER   //////////////////////////////////////////////////*/}
 
@@ -487,214 +487,134 @@ export default function App() {
                 {/*///////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
                 {/*/////////////////////////////////////////////   MODALS   //////////////////////////////////////////////////*/}
 
-                {(elbowLayer ?
-                <View style={[ { minHeight: height*0.3, maxHeight: height*0.3, paddingTop: Number.parseFloat(height*0.06), justifyContent: "flex-start", alignItems: "center", backgroundColor: "transparent" } ]}>
-                    <View style={[ { width: width, height: "35%", flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "transparent" } ]}>
-                        <View style={[ { width: width, height: "45%", paddingLeft: width*0.035, paddingRight: width*0.035, flexDirection: "row", justifyContent: "center", alignItems: "center" } ]}>
-                            <View style={[ { flex: width*0.12 } ]}>
-                                <Pressable style={[ {justifyContent: "center", alignItems: "flex-start"} ]} onPressOut={ () => setStatusModalUtilities(true) }>
-                                    <Image alt={"utility"} style={[ { width: width*0.075, height: width*0.075 } ]} source={require("./assets/images/utility.png")} />
-                                </Pressable>
-                            </View>
-
-                            <View style={[ {flex: width*0.23, flexDirection: "row", justifyContent: "space-between", alignItems: "center"} ]}>
-                                <TouchableHighlight style={[ {width: width*0.09, height: width*0.065, justifyContent: "center", alignItems: "center", borderTopRightRadius: 5, borderBottomRightRadius: 5, borderBottomLeftRadius: 10, borderTopLeftRadius: 10, backgroundColor: "#313131"} ]} activeOpacity={0.25} onPressOut={ () => decreaseText() }>
-                                    <Image alt={"decrease"} style={[ {width: width*0.04, height: width*0.05} ]} source={require("./assets/images/text-decrease.png")} />
-                                </TouchableHighlight>
-
-                                <TouchableHighlight style={[ {width: width*0.09, height: width*0.065, justifyContent: "center", alignItems: "center", borderTopRightRadius: 10, borderBottomRightRadius: 10, borderBottomLeftRadius: 5, borderTopLeftRadius: 5, backgroundColor: "#313131"} ]} activeOpacity={0.25} onPressOut={ () => increaseText() }>
-                                    <Image alt={"increase"} style={[ {width: width*0.04, height: width*0.05} ]} source={require("./assets/images/text-increase.png")} />
-                                </TouchableHighlight>
-                            </View>
-
-                            <View style={[ {height: width*0.12, marginTop: (height > 1200 ? (height*0.045) : (height*0.0075)), flex: (height > 700 ? width*0.30 : width*0.53), justifyContent: "flex-start", alignContent: "flex-start", alignItems: "center"} ]}>
-                                <Text style={[ {height: width*0.12, fontSize: width*0.025, color: "#D1D1D1"} ]}>{`${languages[0][idLanguage].unit} | ${languages[0][idLanguage][UNITS_MEASURES[idSettingsMeasure].label]}`}</Text>
-                            </View>
-
-                            <View style={[ {flex: width*0.35, flexDirection: "row", justifyContent: "flex-end", alignItems: "flex-end"} ]}>
-                                <Pressable style={[ {marginRight: 25, justifyContent: "center", alignItems: (height > 700 ? "center" : "flex-start")} ]} onPressOut={ () => setStatusModalLanguages(true) }>
-                                    <Image alt={"languages"} style={[ {width: width*0.075, height: width*0.075} ]} source={require("./assets/images/languages.png")} />
-                                </Pressable>
-
-                                <Pressable style={[ {justifyContent: "center", alignItems: (height > 700 ? "center" : "flex-start")} ]} title={"settings"} onPressOut={ () => setStatusModalSettings(true) }>
-                                    <Image alt={"settings"} style={[ {width: width*0.075, height: width*0.075} ]} source={require("./assets/images/setting.png")} />
-                                </Pressable>
-                            </View>
+            {(elbowLayer ?
+            <View style={[ { minHeight: height*0.325, maxHeight: height*0.325, paddingTop: Number.parseFloat(height*0.06), justifyContent: "flex-start", alignItems: "center", backgroundColor: "transparent" } ]}>
+                <View style={[ { width: width, flexDirection: "column", justifyContent: "center", alignItems: "center", backgroundColor: "transparent" } ]}>
+                    <View style={[ { width: width, paddingLeft: width*0.035, paddingRight: width*0.035, flexDirection: "row", justifyContent: "center", alignItems: "center" } ]}>
+                        <View style={[ { flex: width*0.12 } ]}>
+                            <Pressable style={[ {justifyContent: "center", alignItems: "flex-start"} ]} onPressOut={ () => setStatusModalUtilities(true) }>
+                                <Image alt={"utility"} style={[ { width: width*0.075, height: width*0.075 } ]} source={require("./assets/images/utility.png")} />
+                            </Pressable>
                         </View>
 
-                        <View style={[ {width: width, padding: width*0.00725, flexDirection: "row", justifyContent: "space-around", alignItems: "center", backgroundColor: "#313131"} ]}>
-                            <Pressable style={[ styles.menuBox ]} backgroundColor={(elbowLayer === "elbow" ? "forestgreen" : "tomato")} onPress={ () => { setCurrentInterface("elbow"); setTempElbowDiameterInferior(currentDiameter) } }>
-                                <Image alt={"elbow"} style={[ { width: width*0.08, height: width*0.08 } ]} source={require('./assets/images/elbow.png')} />
+                        <View style={[ {flex: width*0.23, flexDirection: "row", justifyContent: "space-between", alignItems: "center"} ]}>
+                            <TouchableHighlight style={[ {width: width*0.09, height: width*0.065, justifyContent: "center", alignItems: "center", borderTopRightRadius: 5, borderBottomRightRadius: 5, borderBottomLeftRadius: 10, borderTopLeftRadius: 10, backgroundColor: "#313131"} ]} activeOpacity={0.25} onPressOut={ () => decreaseText() }>
+                                <Image alt={"decrease"} style={[ {width: width*0.04, height: width*0.05} ]} source={require("./assets/images/text-decrease.png")} />
+                            </TouchableHighlight>
+
+                            <TouchableHighlight style={[ {width: width*0.09, height: width*0.065, justifyContent: "center", alignItems: "center", borderTopRightRadius: 10, borderBottomRightRadius: 10, borderBottomLeftRadius: 5, borderTopLeftRadius: 5, backgroundColor: "#313131"} ]} activeOpacity={0.25} onPressOut={ () => increaseText() }>
+                                <Image alt={"increase"} style={[ {width: width*0.04, height: width*0.05} ]} source={require("./assets/images/text-increase.png")} />
+                            </TouchableHighlight>
+                        </View>
+
+                        <View style={[ {height: width*0.1, marginTop: (height > 1200 ? (height*0.045) : (height*0.0075)), flex: (height > 700 ? width*0.30 : width*0.53), justifyContent: "flex-start", alignContent: "flex-start", alignItems: "center"} ]}>
+                            <Text style={[ {height: width*0.1, fontSize: width*0.025, color: "#D1D1D1"} ]}>{`${languages[0][idLanguage].unit} | ${languages[0][idLanguage][UNITS_MEASURES[idSettingsMeasure].label]}`}</Text>
+                        </View>
+
+                        <View style={[ {flex: width*0.35, flexDirection: "row", justifyContent: "flex-end", alignItems: "flex-end"} ]}>
+                            <Pressable style={[ {marginRight: 25, justifyContent: "center", alignItems: (height > 700 ? "center" : "flex-start")} ]} onPressOut={ () => setStatusModalLanguages(true) }>
+                                <Image alt={"languages"} style={[ {width: width*0.075, height: width*0.075} ]} source={require("./assets/images/languages.png")} />
                             </Pressable>
 
-                            <Pressable style={[ styles.menuBox ]} backgroundColor={(elbowLayer === 'reducer' ? "forestgreen" : "tomato")} onPress={ () => { setCurrentInterface("reducer"); setTempReducerDiameterInferior(currentDiameterInferiorReducer); setTempReducerDiameterSuperior(currentDiameterSuperiorReducer); } }>
-                                <Image alt={"reducer"} style={[ { width: width*0.08, height: width*0.08 } ]} source={require('./assets/images/reducer_conc.png')} />
-                            </Pressable>
-
-                            <Pressable style={[ styles.labelTopBar, { flexDirection: "row", justifyContent: "center", alignItems: "center", borderWidth: 1, borderColor: "silver" } ]} onPress={ () => { setStatusModalPremium(() => true); } }>
-                                <Text key={"pro"} style={[ styles.labelTopBar, { width: width*0.25, height: width*0.06, lineHeight: width*0.06, fontSize: width*0.035, fontWeight: "bold", letterSpacing: 1 } ]}>{functions.firstLetterToUpperCase(languages[0][idLanguage].pro)}</Text>                        
+                            <Pressable style={[ {justifyContent: "center", alignItems: (height > 700 ? "center" : "flex-start")} ]} title={"settings"} onPressOut={ () => setStatusModalSettings(true) }>
+                                <Image alt={"settings"} style={[ {width: width*0.075, height: width*0.075} ]} source={require("./assets/images/setting.png")} />
                             </Pressable>
                         </View>
                     </View>
 
+                    <View style={[ {width: width, padding: width*0.00725, flexDirection: "row", justifyContent: "space-around", alignItems: "center", backgroundColor: "#313131"} ]}>
+                        <Pressable style={[ styles.menuBox ]} backgroundColor={(elbowLayer === "elbow" ? "forestgreen" : "tomato")} onPress={ () => { setCurrentInterface("elbow"); setCurrentDiameterForSlider(currentDiameter) } }>
+                            <Image alt={"elbow"} style={[ { width: width*0.08, height: width*0.08 } ]} source={require('./assets/images/elbow.png')} />
+                        </Pressable>
 
-                    <View style={[ { width: width*0.98, minHeight: height*0.08, maxHeight: height*0.08, marginTop: height*0.0025, flexDirection: "row", justifyContent: "space-between", backgroundColor: "transparent" } ]}>                  
-                        {
-                            <View style={[ { width: width*0.98, flexDirection: "column", alignItems: "flex-end", backgroundColor: "transparent" } ]}>
-                                <View style={[ { width: width*0.95, minHeight: height*0.08, maxHeight: height*0.08, flexDirection: "row", backgroundColor: "transparent" } ]}>
-                                    {(elbowLayer == "elbow" ?
-                                        [<View key={"diam-elbows"} style={[ { width: width*0.19, flexDirection: "column", justifyContent: "space-between", backgroundColor: "transparent" } ]}>
-                                            <View style={[ { lineHeight: height*0.0225, flexDirection: "row", justifyContent: "space-between", alignItems: "center", backgroundColor: "transparent" } ]}>
-                                                <Text style={[ styles.labelTopBar, {width: width*0.15, lineHeight: height*0.0225, fontSize: width*0.03} ]}>{`Ø`}</Text>
+                        <Pressable style={[ styles.menuBox ]} backgroundColor={(elbowLayer === 'reducer' ? "forestgreen" : "tomato")} onPress={ () => { setCurrentInterface("reducer"); setCurrentDiameterForSliderReducerInf(currentDiameterInferiorReducer); setCurrentDiameterForSliderReducerSup(currentDiameterSuperiorReducer); } }>
+                            <Image alt={"reducer"} style={[ { width: width*0.08, height: width*0.08 } ]} source={require('./assets/images/reducer_conc.png')} />
+                        </Pressable>
+
+                        <Pressable style={[ styles.labelTopBar, { flexDirection: "row", justifyContent: "center", alignItems: "center", borderWidth: 1, borderColor: "silver" } ]} onPress={ () => { setStatusModalPremium(() => true); } }>
+                            <Text key={"pro"} style={[ styles.labelTopBar, { width: width*0.25, height: width*0.06, lineHeight: width*0.06, fontSize: width*0.035, fontWeight: "bold", letterSpacing: 1 } ]}>{functions.firstLetterToUpperCase(languages[0][idLanguage].pro)}</Text>                        
+                        </Pressable>
+                    </View>
+                </View>
+
+                <View style={[ { width: width*0.98, minHeight: height*0.08, maxHeight: height*0.08, marginTop: height*0.0025, flexDirection: "row", justifyContent: "space-between", backgroundColor: "transparent" } ]}>                  
+                    {
+                        <View style={[ { width: width*0.98, flexDirection: "column", alignItems: "flex-end", backgroundColor: "transparent" } ]}>
+                            <View style={[ { width: width*0.95, minHeight: height*0.08, maxHeight: height*0.08, flexDirection: "row", backgroundColor: "transparent" } ]}>
+                                
+                                {( elbowLayer == "elbow" ?
+                                    <ValuesElbow idLanguage={idLanguage} sizeText={sizeText} currentDiameter={currentDiameter} norme={NORME} angle={ANGLE} intra={INTRA} extra={EXTRA} radius={RADIUS} colorDatasCurves={colorDatasCurves} idSettingsDiameter={idSettingsDiameter} />
+                                : false )}
+
+                                {(elbowLayer == "reducer" ?
+                                    <ValuesReducers sizeText={sizeText} idSettingsDiameter={idSettingsDiameter} currentReducer={currentReducer} norme={NORME} currentDiameterInferiorReducer={currentDiameterInferiorReducer} currentDiameterSuperiorReducer={currentDiameterSuperiorReducer} curveReducerTop={CURVE_REDUCER_TOP} curveReducerBottom={CURVE_REDUCER_BOTTOM} curveReducerTopExc={CURVE_REDUCER_TOP_EXC} curveReducerBottomExc={CURVE_REDUCER_BOTTOM_EXC} heightReducerTop={HEIGHT_REDUCER_TOP} heightReducerBottom={HEIGHT_REDUCER_BOTTOM} />                               
+                                : false )}
+
+                            </View>
+
+                            <View style={[ { width: (elbowLayer == "elbow" ? width*0.3 : width*0.95), marginTop: height*0.005, flexDirection: "row", justifyContent: "flex-end", backgroundColor: "transparent" } ]}>
+                                {(elbowLayer == "reducer" ?
+                                    <View style={[ { flexDirection: "row", alignItems: "center", backgroundColor: "transparent" } ]}>
+                                        <View style={[ { width: width*0.5, flexDirection: "row", alignItems: "center", backgroundColor: "transparent" } ]}>
+                                            <View style={[ { width: width*0.175, flexDirection: "row", alignItems: "center", backgroundColor: "transparent" } ]}>
+                                                <Text style={[ styles.labelTopBar, {width: width*0.15, minHeight: height*0.025, maxHeight: height*0.025, lineHeight: height*0.025, fontSize: width*0.03 } ]}>
+                                                    {`\u2015`}
+                                                </Text>
                                             </View>
 
-                                            <View style={[ {paddingLeft: width*0.007, justifyContent: "space-between", alignItems: "flex-start", backgroundColor: "transparent"} ]}>
-                                                <ReTextAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color="aqua" name={DATAS_PIPES[currentDiameter][NORME._value]} />
-                                                <ReTextAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color="aqua" name={`DN ${DATAS_PIPES[currentDiameter][0]}`} />
-                                            </View>
-                                        </View>,
-
-                                        <View key={"intra-extra"} style={[ { flexDirection: "column", justifyContent: "space-between", backgroundColor: "transparent" } ]}>
-                                            <View style={[ { flexDirection: "row", justifyContent: "space-between", alignItems: "center", borderRightWidth: width*0.025, borderColor: "#252525", backgroundColor: "transparent" } ]}>
-                                                <Text style={[ styles.labelTopBar, {width: width*0.375, lineHeight: height*0.0225, fontSize: width*0.03} ]}>{`${languages[0][idLanguage].intra} / ${languages[0][idLanguage].extra}`}</Text>
-                                            </View>
-
-                                            <View style={[ { width: width*0.35, paddingInlineStart: width*0.125, backgroundColor: "transparent"} ]}>
-                                                <ReTextAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color={colorDatasCurves} name={INTRA} />
-                                                <ReTextAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color={colorDatasCurves} name={EXTRA} />
-                                            </View>
-                                        </View>,
-
-                                        <View key={"angle-radius"} style={[ { flexDirection: "column", justifyContent: "space-between", backgroundColor: "transparent" } ]}>
-                                            <View style={[ { lineHeight: height*0.0225, flexDirection: "row", justifyContent: "space-between", alignItems: "center", backgroundColor: "transparent" } ]}>
-                                                <Text style={[ styles.labelTopBar, {width: width*0.325, lineHeight: height*0.0225, fontSize: width*0.03} ]}>{`${languages[0][idLanguage].angle} / ${languages[0][idLanguage].radius}`}</Text>
-                                            </View>
-
-                                            <View style={[ {width: width*0.35, paddingInlineStart: width*0.125, justifyContent: "space-between", alignItems: "flex-start", backgroundColor: "transparent"} ]}>
-                                                <ValidatedValueAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color="white" valueForCheck={ ANGLE } />
-                                                <ValidatedValueAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color="lime" valueForCheck={ RADIUS } />
-                                            </View>
-                                        </View>
-                                        ]
-                                    : 
-                                    
-                                    [<View key={"diam-red-inf"} style={[ { width: width*0.2, flexDirection: "column", justifyContent: "space-between", backgroundColor: "transparent" } ]}>
-                                        <View style={[ { flexDirection: "row", justifyContent: "space-between", alignItems: "center", backgroundColor: "transparent" } ]}>
-                                            <Text style={[ styles.labelTopBar, {width: width*0.15, lineHeight: height*0.0225, fontSize: width*0.03} ]}>{`Ø inf`}</Text>
-                                        </View>
-
-                                        <View style={[ {paddingLeft: width*0.007, backgroundColor: "transparent"} ]}>
-                                            <ReTextAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color="magenta" name={DATAS_PIPES[currentDiameterInferiorReducer][NORME._value]} />
-                                            <ReTextAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color="magenta" name={(idSettingsDiameter == 0 ? `DN ${DATAS_PIPES[currentDiameterInferiorReducer][0]}` : `${DATAS_PIPES[currentDiameterInferiorReducer][idSettingsDiameter]} "`)} />
-                                        </View>
-                                    </View>,
-
-                                    <View key={"diam-red-sup"} style={[ { width: width*0.25, flexDirection: "column", justifyContent: "space-between", backgroundColor: "transparent" } ]}>
-                                        <View style={[ { lineHeight: height*0.0225, flexDirection: "row", justifyContent: "space-between", alignItems: "center", backgroundColor: "transparent" } ]}>
-                                            <Text style={[ styles.labelTopBar, {width: width*0.15, lineHeight: height*0.0225, fontSize: width*0.03} ]}>{`Ø sup`}</Text>
-                                        </View>
-
-                                        <View style={[ {paddingLeft: width*0.007, justifyContent: "space-between", alignItems: "flex-start", backgroundColor: "transparent"} ]}>
-                                            <ReTextAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color="aqua" name={DATAS_PIPES[currentDiameterSuperiorReducer][NORME._value]} />
-                                            <ReTextAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color="aqua" name={(idSettingsDiameter == 0 ? `DN ${DATAS_PIPES[currentDiameterSuperiorReducer][0]}` : `${DATAS_PIPES[currentDiameterSuperiorReducer][idSettingsDiameter]} "`)} />
-                                        </View>
-                                    </View>,
-
-                                    <View key={"diam-red-curves"} style={[ { width: width*0.25, flexDirection: "column", justifyContent: "space-between", backgroundColor: "transparent" } ]}>
-                                        <View style={[ { lineHeight: height*0.0225, flexDirection: "row", justifyContent: "space-between", alignItems: "center", backgroundColor: "transparent" } ]}>
-                                            <Text style={[ styles.labelTopBar, {width: width*0.15, lineHeight: height*0.0225, fontSize: width*0.03} ]}>{"/"}</Text>
-                                        </View>
-
-                                        {(currentReducer == "reducer-conc" ?
-                                            <View style={[ {paddingLeft: width*0.007, justifyContent: "space-between", alignItems: "flex-start", backgroundColor: "transparent"} ]}>
-                                                <ValidatedValueAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color="silver" valueForCheck={CURVE_REDUCER_TOP} />
-                                                <ValidatedValueAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color="white" valueForCheck={CURVE_REDUCER_BOTTOM} />
-                                            </View>
-                                        : false)}
-
-                                        {(currentReducer == "reducer-exc" ?
-                                            <View style={[ {paddingLeft: width*0.007, justifyContent: "space-between", alignItems: "flex-start", backgroundColor: "transparent"} ]}>
-                                                <ValidatedValueAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color="silver" valueForCheck={CURVE_REDUCER_TOP_EXC} />
-                                                <ValidatedValueAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color="white" valueForCheck={CURVE_REDUCER_BOTTOM_EXC} />
-                                            </View>
-                                        : false)}
-                                    </View>,
-
-                                    <View key={"diam-red-heights"} style={[ { width: width*0.25, flexDirection: "column", justifyContent: "space-between", backgroundColor: "transparent" } ]}>
-                                        <View style={[ { lineHeight: height*0.0225, flexDirection: "row", justifyContent: "space-between", alignItems: "center", backgroundColor: "transparent" } ]}>
-                                            <Text style={[ styles.labelTopBar, {width: width*0.15, lineHeight: height*0.0225, fontSize: width*0.03} ]}>{`H`}</Text>
-                                        </View>
-
-                                        <View style={[ {paddingLeft: width*0.007, justifyContent: "space-between", alignItems: "flex-start", backgroundColor: "transparent"} ]}>
-                                            <ValidatedValueAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color="silver" valueForCheck={ HEIGHT_REDUCER_TOP } />
-                                            <ValidatedValueAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color="lime" valueForCheck={ HEIGHT_REDUCER_BOTTOM } />
-                                        </View>
-                                    </View>] )}
-                                </View>
-
-                                <View style={[ { width: (elbowLayer == "elbow" ? width*0.3 : width*0.95), marginTop: height*0.005, flexDirection: "row", justifyContent: "flex-end", backgroundColor: "transparent" } ]}>
-                                    {(elbowLayer == "reducer" ?
-                                        <View style={[ { flexDirection: "row", alignItems: "center", backgroundColor: "transparent" } ]}>
-                                            <View style={[ { width: width*0.5, flexDirection: "row", alignItems: "center", backgroundColor: "transparent" } ]}>
-                                                <View style={[ { width: width*0.175, flexDirection: "row", alignItems: "center", backgroundColor: "transparent" } ]}>
-                                                    <Text style={[ styles.labelTopBar, {width: width*0.15, minHeight: height*0.025, maxHeight: height*0.025, lineHeight: height*0.025, fontSize: width*0.03 } ]}>
-                                                        {`\u2015`}
-                                                    </Text>
-                                                </View>
-
-                                                <View style={[ { width: width*0.275, backgroundColor: "transparent"} ]}>
-                                                    <ValidatedValueAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color={"white"} valueForCheck={ CURRENT_DIAMETER_REDUCER_CONC_EXC } />
-                                                </View>
-                                            </View>
-
-                                            <View style={[ { width: width*0.15, flexDirection: "row", justifyContent: "space-evenly", alignItems: "center", backgroundColor: "transparent" } ]}>
-                                                <TouchableHighlight key={"reducers"} style={[ { width: width*0.085, height: width*0.085, justifyContent: "center", alignItems: "center", borderWidth: 1, borderColor: "white", borderTopRightRadius: 25, borderBottomRightRadius: 25, borderBottomLeftRadius: 25, borderTopLeftRadius: 25, backgroundColor: "#414141" } ]} activeOpacity={0.25} onPress={ () => setCurrentReducer(() => (currentReducer == "reducer-conc" ? "reducer-exc" : "reducer-conc")) }>
-                                                    {
-                                                        (
-                                                            currentReducer == "reducer-conc" ?
-                                                                <Image alt={"reducer"} style={[ { width: width*0.085, height: width*0.085 } ]} source={require('./assets/images/reducer_conc.png')} /> :
-                                                                <Image alt={"reducer"} style={[ { width: width*0.085, height: width*0.085 } ]} source={require('./assets/images/reducer_exc.png')} />
-                                                        )
-                                                    }
-                                                </TouchableHighlight>
+                                            <View style={[ { width: width*0.275, backgroundColor: "transparent"} ]}>
+                                                <ValidatedValueAnimated style={[ styles.datasTopBar ]} fontSize={sizeText} color={"white"} valueForCheck={ CURRENT_DIAMETER_REDUCER_CONC_EXC } />
                                             </View>
                                         </View>
-                                    : false) }
 
-                                    {(elbowLayer == "elbow" ? 
-                                        (idSettingsAngle != 0 ?
-                                            <View style={[ {minHeight: height*0.05, maxHeight: height*0.05, flexDirection: "row", justifyContent: "flex-end", alignItems: "center", backgroundColor: "transparent"} ]}> 
-                                                <View style={[ {width: width*0.3, flexDirection: "row", justifyContent: "space-evenly", alignItems: "flex-end", alignSelf: "center"} ]}>
-                                                    <TouchableHighlight style={[ {width: width*0.1, height: width*0.065, justifyContent: "center", alignItems: "center", borderTopRightRadius: 3.5, borderBottomRightRadius: 3.5, borderBottomLeftRadius: 7.5, borderTopLeftRadius: 7.5, backgroundColor: "#414141"}]} activeOpacity={0.25} onPress={ () => { subtractAnglePrecision(); makeDatasElbowByAngle(getDatasElbows); } }>
-                                                        <Text style={[ {fontSize: width*0.05, fontWeight: "bold", lineHeight: width*0.05, color: "whitesmoke"} ]}>-</Text>
-                                                    </TouchableHighlight>
+                                        <View style={[ { width: width*0.15, flexDirection: "row", justifyContent: "space-evenly", alignItems: "center", backgroundColor: "transparent" } ]}>
+                                            <TouchableHighlight key={"reducers"} style={[ { width: width*0.085, height: width*0.085, justifyContent: "center", alignItems: "center", borderWidth: 1, borderColor: "white", borderTopRightRadius: 25, borderBottomRightRadius: 25, borderBottomLeftRadius: 25, borderTopLeftRadius: 25, backgroundColor: "#414141" } ]} activeOpacity={0.25} onPress={ () => setCurrentReducer(() => (currentReducer == "reducer-conc" ? "reducer-exc" : "reducer-conc")) }>
+                                                {
+                                                    (
+                                                        currentReducer == "reducer-conc" ?
+                                                            <Image alt={"reducer"} style={[ { width: width*0.085, height: width*0.085 } ]} source={require('./assets/images/reducer_conc.png')} /> :
+                                                            <Image alt={"reducer"} style={[ { width: width*0.085, height: width*0.085 } ]} source={require('./assets/images/reducer_exc.png')} />
+                                                    )
+                                                }
+                                            </TouchableHighlight>
+                                        </View>
+                                    </View>
+                                : false) }
 
-                                                    <TouchableHighlight style={[ {width: width*0.1, height: width*0.065, justifyContent: "center", alignItems: "center", borderTopRightRadius: 7.5, borderBottomRightRadius: 7.5, borderBottomLeftRadius: 3.5, borderTopLeftRadius: 3.5, backgroundColor: "#414141"} ]} activeOpacity={0.25} onPress={ () => { addAnglePrecision(); makeDatasElbowByAngle(getDatasElbows); } }>
-                                                        <Text style={[ {fontSize: width*0.05, lineHeight: width*0.05, color: "whitesmoke"} ]}>+</Text>
-                                                    </TouchableHighlight>
-                                                </View>
-                                            </View>  
-                                        : <View style={[ {width: width*0.3, minHeight: height*0.05, maxHeight: height*0.05, backgroundColor: "transparent"} ]}></View>) :
-                                    false)}
-
-                                    {(elbowLayer == "reducer" ? 
+                                {(elbowLayer == "elbow" ? 
+                                    (idSettingsAngle != 0 ?
                                         <View style={[ {minHeight: height*0.05, maxHeight: height*0.05, flexDirection: "row", justifyContent: "flex-end", alignItems: "center", backgroundColor: "transparent"} ]}> 
                                             <View style={[ {width: width*0.3, flexDirection: "row", justifyContent: "space-evenly", alignItems: "flex-end", alignSelf: "center"} ]}>
-                                                <TouchableHighlight style={[ {width: width*0.1, height: width*0.065, justifyContent: "center", alignItems: "center", borderTopRightRadius: 3.5, borderBottomRightRadius: 3.5, borderBottomLeftRadius: 7.5, borderTopLeftRadius: 7.5, backgroundColor: "#414141"}]} activeOpacity={0.25} onPress={ () => { makePrecisionDatasReducer(subtractDatasReducerPrecision); } }>
+                                                <TouchableHighlight style={[ {width: width*0.1, height: width*0.065, justifyContent: "center", alignItems: "center", borderTopRightRadius: 3.5, borderBottomRightRadius: 3.5, borderBottomLeftRadius: 7.5, borderTopLeftRadius: 7.5, backgroundColor: "#414141"}]} activeOpacity={0.25} onPress={ () => { subtractAnglePrecision(); makeDatasElbowByAngle(getDatasElbows); } }>
                                                     <Text style={[ {fontSize: width*0.05, fontWeight: "bold", lineHeight: width*0.05, color: "whitesmoke"} ]}>-</Text>
                                                 </TouchableHighlight>
 
-                                                <TouchableHighlight style={[ {width: width*0.1, height: width*0.065, justifyContent: "center", alignItems: "center", borderTopRightRadius: 7.5, borderBottomRightRadius: 7.5, borderBottomLeftRadius: 3.5, borderTopLeftRadius: 3.5, backgroundColor: "#414141"} ]} activeOpacity={0.25} onPress={ () => { makePrecisionDatasReducer(addDatasReducerPrecision); } }>
+                                                <TouchableHighlight style={[ {width: width*0.1, height: width*0.065, justifyContent: "center", alignItems: "center", borderTopRightRadius: 7.5, borderBottomRightRadius: 7.5, borderBottomLeftRadius: 3.5, borderTopLeftRadius: 3.5, backgroundColor: "#414141"} ]} activeOpacity={0.25} onPress={ () => { addAnglePrecision(); makeDatasElbowByAngle(getDatasElbows); } }>
                                                     <Text style={[ {fontSize: width*0.05, lineHeight: width*0.05, color: "whitesmoke"} ]}>+</Text>
                                                 </TouchableHighlight>
                                             </View>
-                                        </View> :
-                                    false)}
-                                </View>
+                                        </View>  
+                                    : <View style={[ {width: width*0.3, minHeight: height*0.05, maxHeight: height*0.05, backgroundColor: "transparent"} ]}></View>) :
+                                false)}
+
+                                {(elbowLayer == "reducer" ? 
+                                    <View style={[ {minHeight: height*0.05, maxHeight: height*0.05, flexDirection: "row", justifyContent: "flex-end", alignItems: "center", backgroundColor: "transparent"} ]}> 
+                                        <View style={[ {width: width*0.3, flexDirection: "row", justifyContent: "space-evenly", alignItems: "flex-end", alignSelf: "center"} ]}>
+                                            <TouchableHighlight style={[ {width: width*0.1, height: width*0.065, justifyContent: "center", alignItems: "center", borderTopRightRadius: 3.5, borderBottomRightRadius: 3.5, borderBottomLeftRadius: 7.5, borderTopLeftRadius: 7.5, backgroundColor: "#414141"}]} activeOpacity={0.25} onPress={ () => { makePrecisionDatasReducer(subtractDatasReducerPrecision); } }>
+                                                <Text style={[ {fontSize: width*0.05, fontWeight: "bold", lineHeight: width*0.05, color: "whitesmoke"} ]}>-</Text>
+                                            </TouchableHighlight>
+
+                                            <TouchableHighlight style={[ {width: width*0.1, height: width*0.065, justifyContent: "center", alignItems: "center", borderTopRightRadius: 7.5, borderBottomRightRadius: 7.5, borderBottomLeftRadius: 3.5, borderTopLeftRadius: 3.5, backgroundColor: "#414141"} ]} activeOpacity={0.25} onPress={ () => { makePrecisionDatasReducer(addDatasReducerPrecision); } }>
+                                                <Text style={[ {fontSize: width*0.05, lineHeight: width*0.05, color: "whitesmoke"} ]}>+</Text>
+                                            </TouchableHighlight>
+                                        </View>
+                                    </View> :
+                                false)}
                             </View>
-                        }
-                    </View>                 
-                </View> : false)}
+                        </View>
+                    }
+                </View>                 
+            </View> : false)}
             </ConsentProvider>
             {/*/////////////////////////////////////////////   HEADER   //////////////////////////////////////////////////*/}
             {/*///////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
@@ -708,8 +628,7 @@ export default function App() {
 
             {(elbowLayer == "reducer" ?
                 <ViewReducer sizeText={sizeText} baseDatas={BASEDATAS} absoluteHeight={absoluteHeightBaseShared} currentDiameterInferiorReducer={currentDiameterInferiorReducer} currentDiameterSuperiorReducer={currentDiameterSuperiorReducer} diameterSuperiorReducer={DIAMETER_SUPERIOR_REDUCER} diameterInferiorReducer={DIAMETER_INFERIOR_REDUCER} absolutePositionHeight={ABSOLUTE_POSITION_HEIGHT} currentReducer={currentReducer} currentDiameterRedConcExc={CURRENT_DIAMETER_REDUCER_CONC_EXC} norme={NORME} idSettingsMeasure={idSettingsMeasure} idSettingsDatas={idSettingsDatas} checkboxDatasInterfaceState={checkboxDatasInterfaceState} shareDiameterAndHeight={getDatasReducer} /> 
-            : 
-            false)}
+            : false)}
             {/*///////////////////////////////////////////////////////////////////////////////////////////////////////////*/}
             {/*/////////////////////////////////////////   INTERFACE VIEW   //////////////////////////////////////////////*/}
 
@@ -718,13 +637,13 @@ export default function App() {
             {/*/////////////////////////////////////////////   FOOTER   //////////////////////////////////////////////////*/}
             
             {(elbowLayer != "reducer" ?
-                <View key={"square-screen-options-footer"} style={[ { width: width, height: height*0.23, justifyContent: "flex-start", alignItems: "center", backgroundColor: "transparent" } ]}> 
+                <View key={"square-screen-options-footer"} style={[ { width: width, minHeight: height*0.23, maxHeight: height*0.23, justifyContent: "flex-start", alignItems: "center", backgroundColor: "transparent" } ]}> 
 
-                    <View style={[ { width: width*0.95, height: height*0.1, flexDirection: 'row', justifyContent: 'space-evenly', alignItems: "center", backgroundColor: "transparent" } ]}>
+                    <View style={[ { width: width*0.95, height: height*0.125, flexDirection: 'row', justifyContent: 'space-evenly', alignItems: "center", backgroundColor: "transparent" } ]}>
                         <View style={[ {width: width*0.475, flexDirection: 'row', justifyContent: 'space-between', alignItems: "center", backgroundColor: "transparent"} ]} key="bloc-formats" id="formats">
-                            <Pressable style={[ styles.format, {width: width*0.125, height: height*0.045 } ]} backgroundColor={(formatElbow === 4 ? "forestgreen" : "#525252")} onPressOut={ () => { setFormatElbow(4), FORMAT.setValue(4) }}><Text style={[ {fontSize: width*0.04, fontWeight: '600', color: 'white'} ]}>{`2D`}</Text></Pressable>
-                            <Pressable style={[ styles.formatStd, {width: width*0.125, height: height*0.045} ]} backgroundColor={(formatElbow === 3 ? "forestgreen" : "#525252")} onPressOut={ () => { setFormatElbow(3), FORMAT.setValue(3) }}><Text style={[ {fontSize: width*0.04, fontWeight: '600', color: 'white'} ]}>{`3D`}</Text></Pressable>
-                            <Pressable style={[ styles.format, {width: width*0.125, height: height*0.045} ]} backgroundColor={(formatElbow === 5 ? "forestgreen" : "#525252")} onPressOut={ () => { setFormatElbow(5), FORMAT.setValue(5) }}><Text style={[ {fontSize: width*0.04, fontWeight: '600', color: 'white'} ]}>{`5D`}</Text></Pressable>
+                            <Pressable style={[ styles.format, {width: width*0.125, height: height*0.045 } ]} backgroundColor={(formatElbow === 4 ? "forestgreen" : "#525252")} onPressOut={ () => { setFormatElbow(4), FORMAT.setValue(4); makeDatasElbowByAngle(getDatasElbows); }}><Text style={[ {fontSize: width*0.04, fontWeight: '600', color: 'white'} ]}>{`2D`}</Text></Pressable>
+                            <Pressable style={[ styles.formatStd, {width: width*0.125, height: height*0.045} ]} backgroundColor={(formatElbow === 3 ? "forestgreen" : "#525252")} onPressOut={ () => { setFormatElbow(3), FORMAT.setValue(3); makeDatasElbowByAngle(getDatasElbows); }}><Text style={[ {fontSize: width*0.04, fontWeight: '600', color: 'white'} ]}>{`3D`}</Text></Pressable>
+                            <Pressable style={[ styles.format, {width: width*0.125, height: height*0.045} ]} backgroundColor={(formatElbow === 5 ? "forestgreen" : "#525252")} onPressOut={ () => { setFormatElbow(5), FORMAT.setValue(5); makeDatasElbowByAngle(getDatasElbows); }}><Text style={[ {fontSize: width*0.04, fontWeight: '600', color: 'white'} ]}>{`5D`}</Text></Pressable>
                         </View>
 
                         <View style={[ {width: width*0.3, height: height*0.045, flexDirection: "row", justifyContent: "center", alignItems: "center", borderRadius: (Platform.OS != "ios" ? 5 : false), backgroundColor: (Platform.OS != "ios" ? "#525252" : false)} ]}>
@@ -734,7 +653,7 @@ export default function App() {
                                 trackColor={ {false: "#ddd", true: "#ddd"} }
                                 thumbColor={isShown ? colorSwitch : colorSwitch}
                                 ios_backgroundColor="#3e3e3e"
-                                onValueChange={toggleTheBox}
+                                onValueChange={ () => { toggleTheBox(); makeDatasElbowByAngle(getDatasElbows);} }
                                 value={isShown}
                                 disabled={statutSwitch}
                             />}
@@ -749,7 +668,7 @@ export default function App() {
                             minimumValue = {0}
                             maximumValue = {DATAS_PIPES.length-1}
                             step = {1}
-                            value={tempElbowDiameterInferior}
+                            value={ currentDiameterForSlider }
                             minimumTrackTintColor = {"white"}
                             maximumTrackTintColor = {"white"}
                             onValueChange = {
@@ -764,6 +683,7 @@ export default function App() {
 
                                                     setCurrentDiameter(value);
                                                     DIAMETER.setValue(value);
+                                                    makeDatasElbowByAngle(getDatasElbows);
                                                 }
                                             }
                         />
@@ -779,7 +699,7 @@ export default function App() {
                         minimumValue = {0}
                         maximumValue = {DATAS_PIPES.length-1}
                         step = {1}
-                        value={tempReducerDiameterInferior}
+                        value={ currentDiameterForSliderReducerInf }
                         minimumTrackTintColor = {"white"}
                         maximumTrackTintColor = {"white"}
                         onValueChange = {
@@ -805,11 +725,11 @@ export default function App() {
                         <Slider 
                             aria-label = {"superior-reducer"}
                             thumbTintColor	= {"aqua"}
-                            style = {[ {width: width*0.97, height: height*0.03} ]} 
+                            style = {[ {width: width*0.97, height: height*0.08} ]} 
                             minimumValue = {0}
                             maximumValue = {DATAS_PIPES.length-1}
                             step = {1}
-                            value = {tempReducerDiameterSuperior}
+                            value = { currentDiameterForSliderReducerSup }
                             minimumTrackTintColor = {"white"}
                             maximumTrackTintColor = {"white"}
                             onValueChange = {
@@ -893,9 +813,3 @@ const styles = StyleSheet.create({
         height: 8,
     }
 });
-
-
-
-
-
-

@@ -47,6 +47,7 @@ export const showAd = async (consent) => {
 
         const adListenerLoaded = interstitial.addAdEventListener(AdEventType.LOADED, () => {
             interstitial.show();
+            console.log("Ad loaded");
         });
 
         const adListenerError = interstitial.addAdEventListener(AdEventType.ERROR, (error) => {
@@ -82,8 +83,6 @@ export const showAdIfReady = async () => {
     if (!isReady) {
         return false;
     }
-
-    console.log("ad ready");
 
     let userConsentLocal = await AsyncStorage.getItem("user_consent");
     (userConsentLocal !== null ? (userConsentLocal === "true" ? userConsentLocal = true : userConsentLocal = false) : false);

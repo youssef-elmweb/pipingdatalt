@@ -147,7 +147,8 @@ export function ViewReducer (props) {
 const styles = StyleSheet.create({
     elementSvg: {
         width: Dimensions.get("window").width,
-        height: Dimensions.get("window").height*0.47,
+        minHeight: Dimensions.get("window").height*0.445,
+        maxHeight: Dimensions.get("window").height*0.445,
         justifyContent: "center", 
         alignItems: "center", 
         backgroundColor: "#252525" 

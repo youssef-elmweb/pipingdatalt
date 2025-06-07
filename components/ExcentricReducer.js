@@ -15,9 +15,7 @@ export function ExcentricReducer (props) {
     const hypotenuseBaseBase = Math.hypot(DATAS_REDUCER.reducerHeight, DATAS_REDUCER.diameterReductionDiffBase);
     const angleBase = Math.asin(DATAS_REDUCER.reducerHeight / hypotenuseBaseBase) * DATAS_TRIGONOMETRICS.oneRad;
 
-
     const PathAnimated = Animated.createAnimatedComponent(Path);
-
 
     const reducerInferior = useAnimatedProps(() => {
         let maxDiameter = Math.round(width*0.8);

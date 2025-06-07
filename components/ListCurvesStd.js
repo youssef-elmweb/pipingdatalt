@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import { Dimensions } from "react-native";
 import { G } from 'react-native-svg';
 import { ReTextSvg } from "./ReTextSvg.js";
@@ -20,7 +21,7 @@ export function ListCurvesStd (props) {
     const TABEXTRA = [];
     const RADIUSEXTRA = (width*0.8);
     const RADIUSINTRA = (width*0.24);
-    const UNITMEASURE = parseFloat(UNITS_MEASURES[props.idSettingsMeasure].unit).toFixed(props.idSettingsDatas);
+    const UNITMEASURE = parseFloat(UNITS_MEASURES[props.idSettingsMeasure].unit);
 
 
     useAnimatedReaction(

@@ -89,10 +89,10 @@ export function Elbow (props) {
         };
     });
     
-
+    
     useEffect(() => {
         functions.adjustSvgToScreen(setScale);
-    })
+    }, [])
 
 
     return (

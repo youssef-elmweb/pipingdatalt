@@ -19,7 +19,7 @@ export function ModalSettings (props) {
 
     const {width, height} = Dimensions.get("window");
 
-    const { userConsentContext } = useConsent(); console.log(userConsentContext, "ModalSettings global");
+    const { userConsentContext } = useConsent();
 
 
 ///////////////// constants datas //////////////////////////////////
@@ -141,7 +141,7 @@ const settingsDatas = useMemo(() => ([
         <View style={[ {justifyContent: "center", alignItems: "center"} ]}>
             <Modal style={[ {justifyContent: "center", alignItems: "center"} ]} animationType={"fade"} transparent={true} visible={props.statusModalSettings}>
                 <Pressable style={[ {width: width, marginBottom: height*0.025, justifyContent: 'space-between', alignSelf: "center", alignItems: 'center', opacity: (height > 650 ? 0.9 : 0.97), backgroundColor : "#151515"} ]} onPressOut={ props.makeStatusModalSettings }>
-                    <Pressable style={[ {width: (width*0.9), height: Number(height*0.65), marginTop: Number(height*0.06), paddingBottom: height*0.025, justifyContent: 'space-between', alignSelf: "center", alignItems: 'center', borderRadius: 5, backgroundColor : "#3b3b3b"} ]} onTouchEnd={ (e) => e.stopPropagation() }>
+                    <Pressable style={[ {width: (width*0.9), height: Number(height*0.6), marginTop: Number(height*0.11), paddingBottom: height*0.025, justifyContent: 'space-between', alignSelf: "center", alignItems: 'center', borderRadius: 5, backgroundColor : "#3b3b3b"} ]} onTouchEnd={ (e) => e.stopPropagation() }>
                         <View style={[ {width: width*0.9, paddingTop: 5, paddingBottom: 7.5, flexDirection: "row", justifyContent: "center", alignItems: "center", borderTopLeftRadius: 5, borderBottomWidth: 0.75, borderTopRightRadius: 5, borderColor: "white", backgroundColor: "#2c3e50"} ]}>
                             <Text style={[ {fontSize: height*0.02, fontWeight: "bold", textAlign: "center", color: "white", letterSpacing: 0.5} ]}>{`${languages[0][props.idLanguage].settings}`}</Text> 
                         </View>
@@ -184,8 +184,8 @@ const settingsDatas = useMemo(() => ([
                             </View>
                         </View>
 
-                        <Pressable style={[ {justifyContent: "center", alignItems: "center"} ]} onPressOut={ () => { props.makeStatusModalSettings(); showAdIfReady();} }>
-                            <Text style={[ {width: width*0.35, height: height*0.035, lineHeight: height*0.035, fontSize: height*0.02, textAlign: "center", color: "white", letterSpacing: 0.5, borderRadius: 25, backgroundColor: '#3498db'} ]}>{`${languages[0][props.idLanguage].close}`}</Text>
+                        <Pressable style={[ { height: height*0.1, justifyContent: "center", alignItems: "center" } ]} onPressOut={ () => { props.makeStatusModalSettings(); showAdIfReady();} }>
+                            <Text style={[ { width: width*0.35, height: height*0.06, lineHeight: height*0.06, fontSize: height*0.02, textAlign: "center", color: "white", letterSpacing: 0.5, borderRadius: 25, backgroundColor: '#3498db' } ]}>{`${languages[0][props.idLanguage].close}`}</Text>
                         </Pressable>
                     </Pressable>
                 </Pressable> 

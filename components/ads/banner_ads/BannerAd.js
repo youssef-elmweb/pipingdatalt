@@ -24,7 +24,7 @@ export default function TestBannerAd( { userConsentContext } ) {
                 requestOptions={{
                 requestNonPersonalizedAdsOnly: (!userConsentContext),
                 }}
-                onAdLoaded={() => console.log("Ad banner loaded", userConsentContext)}
+                onAdLoaded={() => console.log("Ad loaded")}
                 onAdFailedToLoad={(error) => console.error('Ad failed', error)} />
         </View>
     );

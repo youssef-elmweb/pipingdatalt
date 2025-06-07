@@ -14,39 +14,6 @@ import { DATAS_TRIGONOMETRICS } from "../datas/datas_trigonometrics";
         return Math.acos(adjacent / hypotenuse) / DATAS_TRIGONOMETRICS.oneDegreRad; // DEGREE
     }
 
-    /*export function getDiameterAndHeight(value) { 
-        
-        let maxDiameter = (width*0.8);
-        let minDiameter = (width*0.4);
-
-        let heightRemainder = (height - (height*0.24));
-        let reducerHeight = height*0.4;
-        let reducerHeightRemainder = (heightRemainder - value);
-
-        let adjacentBase = ((maxDiameter-minDiameter) / 2);
-        console.log(Math.round(adjacentBase), "adjacentBase");
-
-        let hypotenuseBase = Math.hypot(reducerHeight, adjacentBase);
-        console.log(Math.round(hypotenuseBase), "hypotenuseBase");
-
-        let angle = Math.asin(reducerHeight / hypotenuseBase) * DATAS_TRIGONOMETRICS.oneRad;
-        console.log(Math.round(angle), "angle");
-        
-        let hypotenuse = reducerHeightRemainder / Math.sin(angle*DATAS_TRIGONOMETRICS.oneDegreRad);
-        console.log(Math.round(hypotenuse), "hypotenuse");
-
-        console.log(Math.round(reducerHeightRemainder), "opposé");
-
-        let adjacent = Math.cos(angle*DATAS_TRIGONOMETRICS.oneDegreRad) * hypotenuse;
-        console.log(Number(Math.round(adjacentBase) - Math.round(adjacent)), "adjacent");
-
-        console.log(Math.round((maxDiameter - minDiameter) / 2), "adjacent de base");
-
-        console.log("\n");
-
-        return value;
-    }*/
-
     export const onShare = async () => {
         "worklet";
         try {
