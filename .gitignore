@@ -3,7 +3,12 @@
 # dependencies
 node_modules/
 android/
-ios/
+# Autoriser ios sauf les fichiers sensibles
+!ios/
+!ios/**/*
+ios/Pods/
+ios/.xcode/
+ios/build/
 
 # Expo
 .expo/
