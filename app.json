@@ -16,7 +16,6 @@
       "buildNumber": "8",
       "supportsTablet": true,
       "bundleIdentifier": "com.jos59.pipingdatalt",
-      "googleServicesFile": "./ios/pipingdatalt/GoogleService-Info.plist",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSUserTrackingUsageDescription": "Ce système permet d’afficher des publicités plus pertinentes."
