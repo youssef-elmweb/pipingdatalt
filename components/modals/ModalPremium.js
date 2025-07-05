@@ -88,7 +88,7 @@ export function ModalPremium (props) {
                                     </Pressable>
                                 </View>
 
-                                <Pressable style={[ { justifyContent: "center", alignSelf: "center", alignItems: "center", borderTopWidth: (height*0.01), borderBottomWidth: (height*0.05), borderColor: "transparent", } ]} onPress={ () => { props.makeStatusModalPremiumOnModalPremium(); showAdIfReady();} }>
+                                <Pressable style={[ { justifyContent: "center", alignSelf: "center", alignItems: "center", borderTopWidth: (height*0.01), borderBottomWidth: (height*0.05), borderColor: "transparent", } ]} onPress={ () => { props.makeStatusModalPremiumOnModalPremium(); showAdIfReady(); } }>
                                     <Text style={[ { width: Number(width*0.45), lineHeight: Number(height*0.05), fontSize: Number(height*0.02), textAlign: "center", letterSpacing: 0.5, color: "white", borderRadius: 25, backgroundColor: '#3498db' } ]}>{languages[0][props.idLanguage].later}</Text>
                                 </Pressable>
                             </View>

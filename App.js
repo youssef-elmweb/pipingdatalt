@@ -6,7 +6,6 @@ import * as functions from "./library/functions.js";
 
 import { useSharedValue, runOnUI } from 'react-native-reanimated';
 
-import { ReText } from  "./components/ReText";
 import { ValidatedValue } from "./components/ValidatedValue.js";
 import Slider from '@react-native-community/slider';
 
@@ -36,7 +35,7 @@ import { ValuesReducers } from "./components/ValuesReducers.js";
 
 import { InterstitialAdInitial } from "./components/ads/interstitial_ads_initial/InterstitialAdInitial.js";
 import ModalConsent from "./components/modals/ModalConsent.js";
-import { showAdIfReady } from "./components/ads/ads_manager/adsmanager.js";
+import { showAdIfReady, showAdInterfaceIfReady } from "./components/ads/ads_manager/adsmanager.js";
 
 
 export default function App() {
@@ -523,7 +522,7 @@ export default function App() {
                     </View>
 
                     <View style={[ {width: width, padding: width*0.00725, flexDirection: "row", justifyContent: "space-around", alignItems: "center", backgroundColor: "#313131"} ]}>
-                        <Pressable style={[ styles.menuBox ]} backgroundColor={(elbowLayer === "elbow" ? "forestgreen" : "tomato")} onPress={ () => { setCurrentInterface("elbow"); setCurrentDiameterForSlider(currentDiameter) } }>
+                        <Pressable style={[ styles.menuBox ]} backgroundColor={(elbowLayer === "elbow" ? "forestgreen" : "tomato")} onPress={ () => { setCurrentInterface("elbow"); setCurrentDiameterForSlider(currentDiameter); showAdInterfaceIfReady(); } }>
                             <Image alt={"elbow"} style={[ { width: width*0.08, height: width*0.08 } ]} source={require('./assets/images/elbow.png')} />
                         </Pressable>
 
@@ -639,7 +638,7 @@ export default function App() {
             {(elbowLayer != "reducer" ?
                 <View key={"square-screen-options-footer"} style={[ { width: width, minHeight: height*0.23, maxHeight: height*0.23, justifyContent: "flex-start", alignItems: "center", backgroundColor: "transparent" } ]}> 
 
-                    <View style={[ { width: width*0.95, height: height*0.125, flexDirection: 'row', justifyContent: 'space-evenly', alignItems: "center", backgroundColor: "transparent" } ]}>
+                    <View style={[ { width: width*0.95, height: height*0.07, flexDirection: 'row', justifyContent: 'space-evenly', alignItems: "center", backgroundColor: "transparent" } ]}>
                         <View style={[ {width: width*0.475, flexDirection: 'row', justifyContent: 'space-between', alignItems: "center", backgroundColor: "transparent"} ]} key="bloc-formats" id="formats">
                             <Pressable style={[ styles.format, {width: width*0.125, height: height*0.045 } ]} backgroundColor={(formatElbow === 4 ? "forestgreen" : "#525252")} onPressOut={ () => { setFormatElbow(4), FORMAT.setValue(4); makeDatasElbowByAngle(getDatasElbows); }}><Text style={[ {fontSize: width*0.04, fontWeight: '600', color: 'white'} ]}>{`2D`}</Text></Pressable>
                             <Pressable style={[ styles.formatStd, {width: width*0.125, height: height*0.045} ]} backgroundColor={(formatElbow === 3 ? "forestgreen" : "#525252")} onPressOut={ () => { setFormatElbow(3), FORMAT.setValue(3); makeDatasElbowByAngle(getDatasElbows); }}><Text style={[ {fontSize: width*0.04, fontWeight: '600', color: 'white'} ]}>{`3D`}</Text></Pressable>
@@ -664,7 +663,7 @@ export default function App() {
                         <Slider 
                             aria-label = {"diameter"}
                             thumbTintColor	= {"aqua"}
-                            style = {[ {width: width*0.97, height: height*0.03} ]} 
+                            style = {[ {width: width*0.97, height: height*0.045} ]} 
                             minimumValue = {0}
                             maximumValue = {DATAS_PIPES.length-1}
                             step = {1}
@@ -695,7 +694,7 @@ export default function App() {
                     <Slider 
                         aria-label = {"inferior-reducer"}
                         thumbTintColor	= {"magenta"}
-                        style = {[ {width: width*0.97, height: height*0.1} ]} 
+                        style = {[ {width: width*0.97, height: height*0.0525} ]} 
                         minimumValue = {0}
                         maximumValue = {DATAS_PIPES.length-1}
                         step = {1}

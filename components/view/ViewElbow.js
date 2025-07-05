@@ -91,7 +91,7 @@ export function ViewElbow (props) {
         <GestureHandlerRootView style={[ styles.elementSvg ]}>
             <GestureDetector gesture={ panGesture }>
                 <Animated.View>
-                    <Svg style={[ styles.elementSvg ]} viewBox={`-${width*0.1} -${(height*0.49)} ${width} ${(height*0.5)}`}> 
+                    <Svg style={[ styles.elementSvg ]} viewBox={`-${width*0.1} -${(height*0.45)} ${width} ${(height*0.5)}`}> 
                         { ELBOW_MEMOIZED }
 
                         {   
@@ -112,8 +112,8 @@ export function ViewElbow (props) {
 const styles = StyleSheet.create({
     elementSvg: {
         width: Dimensions.get("window").width,
-        minHeight: Dimensions.get("window").height*0.445,
-        maxHeight: Dimensions.get("window").height*0.445,
+        minHeight: Dimensions.get("window").height*0.5,
+        maxHeight: Dimensions.get("window").height*0.5,
         justifyContent: "center", 
         alignItems: "center", 
         backgroundColor: "#252525" 

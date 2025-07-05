@@ -129,7 +129,7 @@ export function ViewReducer (props) {
                 <GestureHandlerRootView style={[ styles.elementSvg ]}>
                     <GestureDetector gesture={panGesture}>
                         <Animated.View>
-                            <Svg preserveAspectRatio="xMidYMid slice" style={[ styles.elementSvg ]} viewBox={`${0} ${0} ${width} ${(height*1.12)}`}>
+                            <Svg preserveAspectRatio="xMidYMid slice" style={[ styles.elementSvg ]} viewBox={`${0} ${0} ${width} ${(height*1.15)}`}>
                                 {(props.currentReducer == "reducer-conc" ?
                                     REDUCER_CONC_MEMOIZED 
                                 : false)}
@@ -147,8 +147,8 @@ export function ViewReducer (props) {
 const styles = StyleSheet.create({
     elementSvg: {
         width: Dimensions.get("window").width,
-        minHeight: Dimensions.get("window").height*0.445,
-        maxHeight: Dimensions.get("window").height*0.445,
+        minHeight: Dimensions.get("window").height*0.5,
+        maxHeight: Dimensions.get("window").height*0.5,
         justifyContent: "center", 
         alignItems: "center", 
         backgroundColor: "#252525" 

@@ -25,7 +25,7 @@ export function Elbow (props) {
         let angle = props.angle.value * DATAS_TRIGONOMETRICS.oneDegreRad;
     
         return  {   d: `M ${Math.cos(angle) * width*0.24} ${-Math.sin(angle) * width*0.24} L ${Math.cos(angle) * width*0.8} ${-Math.sin(angle) * width*0.8}`,
-                    stroke: props.angleBegin.value ? "white" : "white",
+                    stroke: "white",
                     strokeWidth: props.angleBegin.value ? "5" : "2.75",
                 };
     });
@@ -55,7 +55,7 @@ export function Elbow (props) {
     
         return  { 
                     d: `M ${radiusExtra}, 0 A ${radiusExtra}, ${radiusExtra} 0 0 0, ${x * radiusExtra}, ${y * radiusExtra}`, 
-                    stroke: props.angleBegin.value ? "white" : "white",
+                    stroke: "white",
                     strokeWidth: props.angleBegin.value ? "5.5" : "2.75"
                 };
     });
@@ -67,14 +67,14 @@ export function Elbow (props) {
     
         return  { 
                     d: `M ${radiusIntra}, 0 A ${radiusIntra}, ${radiusIntra} 0 0 0, ${x * radiusIntra}, ${y * radiusIntra}`, 
-                    stroke: props.angleBegin.value ? "white" : "white",
+                    stroke: "white",
                     strokeWidth: props.angleBegin.value ? "5.5" : "2.75"
                 };
     });
 
     const pathBaseStatic = useAnimatedProps(() => {
         return  { 
-                    stroke: props.angleBegin.value ? "white" : "white",
+                    stroke: "white",
                     strokeWidth: props.angleBegin.value ? "5.5" : "2.75"
                 };
     });

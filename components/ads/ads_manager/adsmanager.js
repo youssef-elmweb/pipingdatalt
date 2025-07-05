@@ -3,7 +3,8 @@ import { getTrackingPermissionsAsync } from 'expo-tracking-transparency';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MobileAds, InterstitialAd, AdEventType, TestIds } from "react-native-google-mobile-ads";
 
-const MIN_DELAY_MS = 300000; // 5 minutes
+const MIN_DELAY_MS = 180000; // 3 minutes
+const MIN_DELAY_MS_INTERFACE = 300000; // 5 minutes
 const LAST_SHOWN_KEY = 'last_ad_shown_at';
 
 const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-6903141213442953/3572577794';
@@ -76,9 +77,32 @@ export const canShowAd = async () => {
   
     return (now - lastShownAt) >= MIN_DELAY_MS;
 };
+
+export const canShowAdInterface = async () => {
+    const last = await AsyncStorage.getItem(LAST_SHOWN_KEY);
+    const lastShownAt = parseInt(last, 10) || 10000;
+    const now = Date.now();
+  
+    return (now - lastShownAt) >= MIN_DELAY_MS;
+};
   
 export const showAdIfReady = async () => {
     const isReady = await canShowAd();
+
+    if (!isReady) {
+        return false;
+    }
+
+    let userConsentLocal = await AsyncStorage.getItem("user_consent");
+    (userConsentLocal !== null ? (userConsentLocal === "true" ? userConsentLocal = true : userConsentLocal = false) : false);
+    
+    await AsyncStorage.setItem(LAST_SHOWN_KEY, Date.now().toString());
+
+    showAd(userConsentLocal, adUnitId); 
+};
+
+export const showAdInterfaceIfReady = async () => {
+    const isReady = await canShowAdInterface();
 
     if (!isReady) {
         return false;
