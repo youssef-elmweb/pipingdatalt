@@ -1,10 +1,14 @@
 //////////////////////////////////////////////////////////////////////////////////////////
 import React from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
+import { View, StyleSheet, Dimensions, Platform } from 'react-native';
 
 import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 
-const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-6903141213442953/1438804207';
+const adUnitId = __DEV__
+  ? TestIds.BANNER
+  : Platform.OS === 'ios'
+    ? 'ca-app-pub-4768526828490678/6177407790' 
+    : 'ca-app-pub-4768526828490678/7490489462';
 
 const { height } = Dimensions.get("window");
 

@@ -1,4 +1,5 @@
 //////////////////////////////////////////////////////////////////////////////////////////
+import { Platform } from 'react-native';
 import { getTrackingPermissionsAsync } from 'expo-tracking-transparency';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MobileAds, InterstitialAd, AdEventType, TestIds } from "react-native-google-mobile-ads";
@@ -7,7 +8,11 @@ const MIN_DELAY_MS = 180000; // 3 minutes
 const MIN_DELAY_MS_INTERFACE = 300000; // 5 minutes
 const LAST_SHOWN_KEY = 'last_ad_shown_at';
 
-const adUnitId = __DEV__ ? TestIds.INTERSTITIAL : 'ca-app-pub-6903141213442953/3572577794';
+const adUnitId = __DEV__
+  ? TestIds.INTERSTITIAL
+  : Platform.OS === 'ios'
+    ? 'ca-app-pub-4768526828490678/5418859894'
+    : 'ca-app-pub-4768526828490678/8047541594';
 
 ////////////////////////////// IOS ATT /////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////
