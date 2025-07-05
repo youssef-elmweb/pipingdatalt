@@ -83,7 +83,7 @@ export const canShowAdInterface = async () => {
     const lastShownAt = parseInt(last, 10) || 10000;
     const now = Date.now();
   
-    return (now - lastShownAt) >= MIN_DELAY_MS;
+    return (now - lastShownAt) >= MIN_DELAY_MS_INTERFACE;
 };
   
 export const showAdIfReady = async () => {
