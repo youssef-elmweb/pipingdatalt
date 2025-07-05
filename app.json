@@ -19,8 +19,7 @@
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSUserTrackingUsageDescription": "Ce système permet d’afficher des publicités plus pertinentes."
-      },
-      "googleServicesFile": "./ios/pipingdatalt/GoogleService-Info.plist"
+      }
     },
     "android": {
       "adaptiveIcon": {
