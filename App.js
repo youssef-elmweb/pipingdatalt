@@ -636,10 +636,10 @@ export default function App() {
             {/*/////////////////////////////////////////////   FOOTER   //////////////////////////////////////////////////*/}
             
             {(elbowLayer != "reducer" ?
-                <View key={"square-screen-options-footer"} style={[ { width: width, minHeight: height*0.23, maxHeight: height*0.23, justifyContent: "flex-start", alignItems: "center", backgroundColor: "transparent" } ]}> 
+                <View key={"square-screen-options-footer"} style={[ { width: width, minHeight: height*0.23, maxHeight: height*0.23, padding: 0, justifyContent: "flex-start", alignItems: "center", backgroundColor: "transparent" } ]}> 
 
-                    <View style={[ { width: width*0.95, height: height*0.07, flexDirection: 'row', justifyContent: 'space-evenly', alignItems: "center", backgroundColor: "transparent" } ]}>
-                        <View style={[ {width: width*0.475, flexDirection: 'row', justifyContent: 'space-between', alignItems: "center", backgroundColor: "transparent"} ]} key="bloc-formats" id="formats">
+                    <View style={[ { width: width*0.95, flexDirection: 'row', justifyContent: 'space-evenly', alignItems: "center", backgroundColor: "transparent" } ]}>
+                        <View style={[ {width: width*0.475, minHeight: height*0.075, maxHeight: height*0.075, flexDirection: 'row', justifyContent: 'space-between', alignItems: "center", backgroundColor: "transparent"} ]} key="bloc-formats" id="formats">
                             <Pressable style={[ styles.format, {width: width*0.125, height: height*0.045 } ]} backgroundColor={(formatElbow === 4 ? "forestgreen" : "#525252")} onPressOut={ () => { setFormatElbow(4), FORMAT.setValue(4); makeDatasElbowByAngle(getDatasElbows); }}><Text style={[ {fontSize: width*0.04, fontWeight: '600', color: 'white'} ]}>{`2D`}</Text></Pressable>
                             <Pressable style={[ styles.formatStd, {width: width*0.125, height: height*0.045} ]} backgroundColor={(formatElbow === 3 ? "forestgreen" : "#525252")} onPressOut={ () => { setFormatElbow(3), FORMAT.setValue(3); makeDatasElbowByAngle(getDatasElbows); }}><Text style={[ {fontSize: width*0.04, fontWeight: '600', color: 'white'} ]}>{`3D`}</Text></Pressable>
                             <Pressable style={[ styles.format, {width: width*0.125, height: height*0.045} ]} backgroundColor={(formatElbow === 5 ? "forestgreen" : "#525252")} onPressOut={ () => { setFormatElbow(5), FORMAT.setValue(5); makeDatasElbowByAngle(getDatasElbows); }}><Text style={[ {fontSize: width*0.04, fontWeight: '600', color: 'white'} ]}>{`5D`}</Text></Pressable>
@@ -663,7 +663,7 @@ export default function App() {
                         <Slider 
                             aria-label = {"diameter"}
                             thumbTintColor	= {"aqua"}
-                            style = {[ {width: width*0.97, height: height*0.045} ]} 
+                            style = {[ {width: width*0.95, height: height*0.075} ]} 
                             minimumValue = {0}
                             maximumValue = {DATAS_PIPES.length-1}
                             step = {1}
@@ -694,7 +694,7 @@ export default function App() {
                     <Slider 
                         aria-label = {"inferior-reducer"}
                         thumbTintColor	= {"magenta"}
-                        style = {[ {width: width*0.97, height: height*0.0525} ]} 
+                        style = {[ {width: width*0.95, minHeight: height*0.075, maxHeight: height*0.075, backgroundColor: "transparent"} ]} 
                         minimumValue = {0}
                         maximumValue = {DATAS_PIPES.length-1}
                         step = {1}
@@ -724,7 +724,7 @@ export default function App() {
                         <Slider 
                             aria-label = {"superior-reducer"}
                             thumbTintColor	= {"aqua"}
-                            style = {[ {width: width*0.97, height: height*0.08} ]} 
+                            style = {[ { width: width*0.95, height: height*0.075 } ]} 
                             minimumValue = {0}
                             maximumValue = {DATAS_PIPES.length-1}
                             step = {1}

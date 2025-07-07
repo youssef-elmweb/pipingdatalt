@@ -58,8 +58,8 @@
       [
         "react-native-google-mobile-ads",
         {
-          "androidAppId": "ca-app-pub-6903141213442953~8625330593",
-          "iosAppId": "ca-app-pub-7312653301656268~8357812104"
+          "androidAppId": "ca-app-pub-4768526828490678~7356442304",
+          "iosAppId": "ca-app-pub-4768526828490678~9870925007"
         }
       ]
     ],
@@ -68,7 +68,8 @@
         "projectId": "5300ae95-dedf-4651-b631-3ed58f75b336"
       },
       "react-native-google-mobile-ads": {
-        "ios_app_id": "ca-app-pub-7312653301656268~8357812104"
+        "android_app_id": "ca-app-pub-4768526828490678~7356442304",
+        "ios_app_id": "ca-app-pub-4768526828490678~9870925007"
       }
     },
     "owner": "jos59"

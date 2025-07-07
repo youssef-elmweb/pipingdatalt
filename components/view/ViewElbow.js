@@ -116,6 +116,6 @@ const styles = StyleSheet.create({
         maxHeight: Dimensions.get("window").height*0.5,
         justifyContent: "center", 
         alignItems: "center", 
-        backgroundColor: "#252525" 
+        backgroundColor: "transparent" 
     }
 });
